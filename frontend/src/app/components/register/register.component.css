@@ -1,0 +1,59 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+  }
+  select {
+    width: 88%;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  select:focus {
+    min-width: 80%;
+    width: auto;
+  }
+  .registerbtn {
+    display: block;
+    width: 80%;
+    border: none;
+    background-color: #4caf50;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 30px;
+  }
+  
+  .mat-form-field{
+      
+      text-align: right;
+      direction: rtl; 
+      height:50%;
+      margin-left: 70px;
+
+  }
