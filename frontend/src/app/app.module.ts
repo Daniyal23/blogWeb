@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule, } from '@angular/material/form-field';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSnackBarModule,
     MatInputModule,
     MatFormFieldModule,
-    MatGridListModule
+    MatGridListModule,
+    AngularEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent],
