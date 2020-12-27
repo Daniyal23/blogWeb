@@ -18,7 +18,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule, } from '@angular/material/form-field';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { RecaptchaModule } from 'ng-recaptcha';
+import { CommonModule } from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+import { CommentComponent } from './components/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     BlogAddComponent,
     DashboardComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +42,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
     AngularMaterialModule,
     BrowserModule,
     AppRoutingModule,
+    RecaptchaModule,
+    CommonModule,
+    MatCardModule,
+    MatTabsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

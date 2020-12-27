@@ -6,15 +6,9 @@
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
 </ul>
+<div class="row">
+    <div class="col-md-4 offset-4">
 
-<mat-grid-list cols="8" rowHeight="fit" style="height:1000px">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
-
-
-
-    <mat-grid-tile colspan="2">
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="container">
@@ -23,7 +17,7 @@
                 <hr>
 
 
-                <mat-form-field class="form-group" appearance="outline">
+                <mat-form-field class="form-group" appearance="outline" >
 
                     <input matInput type="text" formControlName="username" name="username" placeholder="اسم المستخدم"
                         class="form-control" required minlength="3" required />
@@ -36,7 +30,7 @@
                         UserName should contain more than 3 letters
                     </div>
                 </mat-form-field>
-
+                 <br>
                 <mat-form-field class="form-group" appearance="outline">
                     <input matInput type="email" formControlName="email" name="email" placeholder="Email"
                         class="form-control" required type="email" required>
@@ -137,19 +131,26 @@
                     <input type="checkbox" id="terms" name="terms" value="terms" style="margin-left: 10px;"
                         (click)="Checkbox()" required>
                 </label>
+
                 <div *ngIf="errorCheckbox==true">
                     <span class="text-danger">
                         Please tick the checkbox
                     </span>
                 </div>
+                <re-captcha
+                 (resolved)="resolved($event)"
+                 (error)="onError($event)"
+                  errorMode="handled"
+                  siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"
+                                 ></re-captcha>
                 <br>
 
                 <div class="form-group">
-                    <button class="registerbtn" type="submit">Register</button>
+                    <button mat-raised-button class="registerbtn" type="submit">Register</button>
 
                 </div>
             </div>
 
         </form>
-    </mat-grid-tile>
-</mat-grid-list>
+    
+</div></div>
