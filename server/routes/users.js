@@ -81,60 +81,179 @@ router.post("/login", (req, res) => {
     User.find()
         .then(users => {
             if (!users) {
-                return res.status(404).json(errors);
-            }
-
-        })
-
-
-    console.log(email, password, "2");
-    //find user by username
-    User.findOne({
-        'email': email
-    }).then(user => {
-        //Check for user
-        if (!user) {
-            //errors.username = "User not found";
-            console.log("username error");
-            return res.json({ error: "Password incorrect" });
-        }
-
-        // Check Password
-        bcrypt.compare(password, user.Password).then(isMatch => {
-            if (isMatch) {
-                //User Matched
-
-                const payload = {
-                    id: user.id,
-                    //name: user.name,
-                    //avatar: user.avatar
-                    //perm: user.perm
-                }; // Create Jwt payload
-
-                //Sign Token
-                jwt.sign(
-                    payload,
-                    keys.secretOrKey,
-                    {
-                        expiresIn: 3600 * 4
-                    },
-                    (err, token) => {
-                        res.json({
-                            success: true,
-                            token: "Bearer " + token
-
-                        });
-                    }
-                );
-                console.log("success");
-            } else {
-                //errors.password = "Password incorrect";
-                console.log("pass errir");
                 return res.json({ error: "Password incorrect" });
             }
-        });
-    });
+            users.forEach((item) => {
+                console.log(item.Email, "jeje");
+                bcrypt.compare(email, item.Email).then(isMatch => {
+                    if (isMatch) {
+                        console.log("match");
+                        bcrypt.compare(password, item.Password).then(isMatch => {
+                            if (isMatch) {
+                                //User Matched
+
+                                const payload = {
+                                    id: item.id,
+                                    //name: user.name,
+                                    //avatar: user.avatar
+                                    //perm: user.perm
+                                }; // Create Jwt payload
+
+                                //Sign Token
+                                jwt.sign(
+                                    payload,
+                                    keys.secretOrKey,
+                                    {
+                                        expiresIn: 3600 * 4
+                                    },
+                                    (err, token) => {
+                                        res.json({
+                                            success: true,
+                                            token: "Bearer " + token
+
+                                        });
+                                    }
+                                );
+                                console.log("success");
+                            } else {
+                                //errors.password = "Password incorrect";
+                                console.log("pass errir");
+                                return res.json({ error: "Password incorrect" });
+                            }
+                        });
+                    }
+                    else {
+                        //errors.password = "Password incorrect";
+                        console.log("pass errir");
+                        return res.json({ error: "Password incorrect" });
+                    }
+                }
+                )
+            })
+
+        })
 });
 
+/*
+//@route    GET api/users/current
+//@desc     Return Current user
+//@access   Private
+router.get(
+    "/current",
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    (req, res) => {
+        res.json({
+            //id: req.user.id,
+            //name: req.user.name,
+            username: req.user.username,
+            permission: req.user.permission
+        });
+    }
+);
+
+router.get("/getAllUsers",
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    (req, res) => {
+        User.find()
+            .then(users => {
+                if (!users) {
+                    return res.status(404).json(errors);
+                }
+                res.json(users);
+            })
+            //return res.json({ error: "Password incorrect" });
+            .catch(err => res.json({
+                user: 'There are no users'
+            }));
+
+    });
+
+router.get("/getAll",
+    // passport.authenticate("jwt", {
+    //     session: false
+    // }),
+    (req, res) => {
+        User.find()
+            .then(users => {
+                if (!users) {
+                    return res.status(404).json(errors);
+                }
+                res.json(users);
+            })
+            //return res.json({ error: "Password incorrect" });
+            .catch(err => res.json({
+                user: 'There are no users'
+            }));
+
+    });
+
+router.delete("/delete/:id", passport.authenticate("jwt", {
+    session: false
+}),
+    (req, res) => {
+        User.findOneAndDelete({ '_id': req.params.id })
+            .then(user => {
+                res.json("Deleted Successfully");
+            })
+            .catch(err =>
+                res.status(404).json({
+                    nouserfound: "no user found with that id",
+                    id: req.params.id
+                })
+            );
+    });
+
+
+router.get("/getUser/:id",
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    (req, res) => {
+        console.log(req.param.id)
+        User.findOne({ '_id': (req.params.id) })
+            .then(user => res.json(user))
+            .catch(err =>
+                res.status(404).json({
+                    nouserfound: "no user found with that id"
+                })
+            );
+    });
+
+router.post("/update/:id", passport.authenticate("jwt", {
+    session: false
+}),
+    (req, res) => {
+        User.findById(req.params.id)
+            .then(user => {
+                user.username = req.body.username;
+                user.perm = req.body.permissions;
+                user.password = req.body.password
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(user.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        user.password = hash;
+                        user
+                            .save()
+                            .then(user => {
+                                res.json('Update complete')
+                                    .catch(err =>
+                                        res.status(404).json({
+                                            nouserfound: "no user found with that id"
+                                        })
+                                    );
+                            });
+
+
+
+                    })
+                });
+            })
+    })
+*/
 
 module.exports = router;
