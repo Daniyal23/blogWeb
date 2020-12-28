@@ -6,32 +6,36 @@
 
 </ul>
 <div class="col-md-8 offset-2">
-<mat-card class="card">
-    <div class="img_div col-md-8 offset-4">
+    <mat-card class="card">
+        <div class="img_div col-md-8 offset-4">
 
-        <img [src]="imgsrcs" alt="" height="250px" class="img_ele">
-        <div class="img_overlay">
-            <div *ngIf="imgcheck==1" class="c">
-                <h1 class="text" (click)="removeImage()">Remove</h1>
+            <div *ngFor="let imgsrc of imgsrcs" class="img_div">
+
+                <img [src]="imgsrc" alt="" height="150px" class="img_ele">
+                <div class="img_overlay">
+                    <div class="c">
+                        <h1 class="text" (click)="removeImage(imgsrc)">remove</h1>
+                    </div>
+
+                </div>
             </div>
-
         </div>
-    </div>
-    <mat-card-header class="col-md-4 offset-5">
+        <mat-card-header class="col-md-4 offset-5">
 
-       
-        <mat-card-title >Add header image</mat-card-title>
-    </mat-card-header>
-    
-    <button mat-raised-button color="primary" (click)="fileInput.click()" class="col-md-3 offset-8">Upload</button>
-    <input hidden type="file" multiple #fileInput (change)="handleFileSelect($event)">
-    <mat-card-content>
-        <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
-        
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button (click)="Publish()">Publish</button>
 
-    </mat-card-actions>
-</mat-card>
+            <mat-card-title>Add header image</mat-card-title>
+        </mat-card-header>
+
+        <button mat-raised-button color="primary" (click)="fileInput.click()" class="col-md-3 offset-8">Upload</button>
+        <input hidden type="file" multiple #fileInput (change)="handleFileSelect($event)">
+        <mat-card-content>
+            <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="Publish()">Publish</button>
+
+        </mat-card-actions>
+
+    </mat-card>
 </div>

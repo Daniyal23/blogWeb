@@ -21,7 +21,7 @@ export class BlogAddComponent implements OnInit {
   userdetials: any;
 
   public base64textString = '';
-  public imgsrcs: any = "/assets/noimage.png";
+  public imgsrcs: Array<any> = ["/assets/noimage.png"];
   public imgcheck: number = 0;
 
 
@@ -55,6 +55,7 @@ export class BlogAddComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     console.log(this.userdetials);
     console.log(this.userdetials.username);
@@ -81,19 +82,21 @@ export class BlogAddComponent implements OnInit {
 
     const binaryString = readerEvt.target.result;
     this.base64textString = btoa(binaryString);
-    //console.log('data:image/png;charset=utf-8;base64,' + this.base64textString);
 
-    //this.property.imgsrcs['data:image/png;charset=utf-8;base64,' + this.base64textString] =
-    this.sanitizer.bypassSecurityTrustUrl('data:image/png;charset=utf-8;base64,' + this.base64textString);
-    this.imgsrcs = (this.sanitizer.bypassSecurityTrustUrl('data:image/png;charset=utf-8;base64,' + this.base64textString));
-    //  console.log(btoa(binaryString));
+    this.blogobj.blogHeaderImage["data:image/png;charset=utf-8;base64," + this.base64textString] = this.sanitizer.bypassSecurityTrustUrl("data:image/png;charset=utf-8;base64," + this.base64textString);
+    if (this.imgsrcs.length > 0) {
+      this.imgsrcs.pop();
+    }
+    this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl("data:image/png;charset=utf-8;base64," + this.base64textString));
+
     console.log(this.imgsrcs, "img");
+    console.log(this.blogobj.blogHeaderImage, "header");
     this.imgcheck = 1;
   }
 
   removeImage() {
     console.log("remove func");
-    this.imgsrcs = "/assets/noimage.png";
+    this.imgsrcs[0] = "/assets/noimage.png";
     this.imgcheck = 0;
 
 
@@ -104,7 +107,7 @@ export class BlogAddComponent implements OnInit {
       return;
     }
     else {
-      this.blogobj.blogHeaderImage = this.imgsrcs;
+      //this.blogobj.blogHeaderImage = this.imgsrcs;
       this.blogobj.datePublished = null;
       this.blogobj.dateSubmitted = new Date();
       this.blogobj.dateUpdated = this.blogobj.dateSubmitted;

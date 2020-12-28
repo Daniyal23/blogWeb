@@ -19,52 +19,101 @@ router.get("/test", (req, res) =>
 );
 
 router.post("/signup", (req, res) => {
-
-    User.findOne({
-        "email": req.body.email
-    }).then(user => {
-        if (user) {
-            //errors.username = "username already exists";
-            console.log(user, "sfdf");
-            return res.json({ error: "email already exists" });
-            //return res.json({ error: "Password incorrect" });
-        } else {
-
-            console.log(req.body.UserName, "in ese");
-            const newUser = new User({
-                //name: req.body.name,
-                UserName: req.body.UserName,
-                Email: req.body.Email,
-                Password: req.body.Password,
-                Country: req.body.Country,
-                Avatar: req.body.Avatar,
+    var bools=false;
+    User.find()
+        .then(users => {
+            if (!users) {
+                console.log(req.body.UserName, "in ese 1");
+                const newUser = new User({
+                    //name: req.body.name,
+                    UserName: req.body.UserName,
+                    Email: req.body.Email,
+                    Password: req.body.Password,
+                    Country: req.body.Country,
+                    Avatar: req.body.Avatar,
 
 
-
-            });
-            //console.log(newUser.password, "jeje");
-
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.Password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.Password = hash;
-                });
-            });
-
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.Email, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.Email = hash;
-                    newUser
-                        .save()
-                        .then(user => res.json({ success: "Added" }))
-                        .catch(err => { return res.json(err.code) });
 
                 });
+                //console.log(newUser.password, "jeje");
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.Password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.Password = hash;
+                    });
+                });
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.Email, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.Email = hash;
+                        newUser
+                            .save()
+                            .then(user => res.json({ success: "Added" }))
+                            .catch(err => { return res.json(err.code) });
+
+                    });
+                });
+            }
+        users.forEach((item) => {
+                console.log(item.Email, "jeje");
+                var temp=bcrypt.compareSync(req.body.Email, item.Email);
+               /* bcrypt.compareSync(req.body.Email, item.Email).then(isMatch => {
+                    if (isMatch) {
+                        bools=true;
+                        console.log(bools, "this is the bools man focus");
+                        return res.json({ error: "email already exists" });
+                        
+
+                    }
+                });*/
+                if (temp==true){
+                    bools=true;
+                    console.log(bools, "this is the bools man focus");
+                    return res.json({ error: "email already exists" });
+                }
             });
-        }
-    });
-});
+                   if (bools==false)   {
+                          
+                        console.log(req.body.UserName, "in ese");
+                        const newUser = new User({
+                            //name: req.body.name,
+                            UserName: req.body.UserName,
+                            Email: req.body.Email,
+                            Password: req.body.Password,
+                            Country: req.body.Country,
+                            Avatar: req.body.Avatar,
+
+
+
+                        });
+                        //console.log(newUser.password, "jeje");
+
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.Password, salt, (err, hash) => {
+                                if (err) throw err;
+                                newUser.Password = hash;
+                            });
+                        });
+
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.Email, salt, (err, hash) => {
+                                if (err) throw err;
+                                newUser.Email = hash;
+                                newUser
+                                    .save()
+                                    .then(user => res.json({ success: "Added" }))
+                                    .catch(err => { return res.json(err.code) });
+
+                            });
+                        });
+                    }
+                });
+            });
+  
+
+
 
 
 
@@ -73,9 +122,9 @@ router.post("/signup", (req, res) => {
 //@access   Public
 router.post("/login", (req, res) => {
 
-
+    var temp=false;
     var email = req.body.Email;
-
+    var temp2=false;
     const password = req.body.Password;
 
     User.find()
@@ -85,54 +134,52 @@ router.post("/login", (req, res) => {
             }
             users.forEach((item) => {
                 console.log(item.Email, "jeje");
-                bcrypt.compare(email, item.Email).then(isMatch => {
-                    if (isMatch) {
-                        console.log("match");
-                        bcrypt.compare(password, item.Password).then(isMatch => {
-                            if (isMatch) {
-                                //User Matched
+                temp=bcrypt.compareSync(email, item.Email);
+                if (temp==true){
+                    temp2=bcrypt.compareSync(password, item.Password)
+                    if (temp2==true){
+                         //User Matched
 
-                                const payload = {
-                                    id: item.id,
-                                    username: item.UserName
-                                    //name: user.name,
-                                    //avatar: user.avatar
-                                    //perm: user.perm
-                                }; // Create Jwt payload
+                         const payload = {
+                            id: item.id,
+                            username: item.UserName
+                            //name: user.name,
+                            //avatar: user.avatar
+                            //perm: user.perm
+                        }; // Create Jwt payload
 
-                                //Sign Token
-                                jwt.sign(
-                                    payload,
-                                    keys.secretOrKey,
-                                    {
-                                        expiresIn: 3600 * 4
-                                    },
-                                    (err, token) => {
-                                        res.json({
-                                            success: true,
-                                            token: "Bearer " + token
+                        //Sign Token
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey,
+                            {
+                                expiresIn: 3600 * 4
+                            },
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: "Bearer " + token
 
-                                        });
-                                    }
-                                );
-                                console.log("success");
-                            } else {
-                                //errors.password = "Password incorrect";
-                                console.log("pass errir");
-                                return res.json({ error: "Password incorrect" });
-                            }
-                        });
-                    }
-                    else {
-                        //errors.password = "Password incorrect";
-                        console.log("pass errir");
-                        return res.json({ error: "Password incorrect" });
-                    }
-                }
-                )
-            })
+                                });
+                            })
+
+                    }   
+            }
+            else{
+                temp==false;
+                
+            }
 
         })
+        console.log(temp,temp2,"this is the error  ")
+       
+            if (temp2==false){
+                return res.json({ error: "Password incorrect" });
+            }
+        
+        
+});
+
 });
 
 /*

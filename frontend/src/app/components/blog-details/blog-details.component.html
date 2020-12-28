@@ -13,19 +13,40 @@
             <div mat-card-avatar class="header-image"></div>
             <mat-card-title class="rtl">{{blogs.creatorName}}</mat-card-title>
             <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
+            <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image [src]="blogs.blogHeaderImage" alt="Photo">
+          <img mat-card-image [src]="img" alt="Photo" >
           <mat-card-content>
-            <p class="rtl">
-              {{blogs.text}}
-            </p>
+            <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+
           </mat-card-content>
+          <mat-card-footer class="rtl">
+            <h3 class="rtl">  Likes : {{blogs.numLikes}}   Dislikes : {{blogs.numDislikes}}    Reports : {{blogs.reportsCounter}}</h3> 
+             
+          </mat-card-footer>
           <mat-card-actions>
             <button mat-button>LIKE</button>
             <button mat-button>SHARE</button>
           </mat-card-actions>
         </mat-card>
      </div>
+ </div>
+ <div class="row">
+   <div class="col-md-6 offset-3">
+     <h2 style="text-align: center;"> Enter a Comment</h2>
+   </div>
+   
+   <div class="col-md-4 offset-4">
+     <mat-card style="background-color: chartreuse;">
+     <mat-card-header> 
+      <textarea name="comment" form="usrform" cols="50">Enter text here...</textarea>
+     </mat-card-header>
+     <mat-card-actions>
+      <button mat-button>Submit</button>
+     
+     </mat-card-actions>
+     </mat-card>
+    </div>
  </div>
  <app-comment *ngFor="let comment of comments"
       [comment]="comment"></app-comment>

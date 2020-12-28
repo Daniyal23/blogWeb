@@ -4,7 +4,7 @@ export class Blog {
     id!: number;
     creatorId: string;
     title: string;
-    blogHeaderImage: any;
+    blogHeaderImage: any={};
     text: string;
     images: any = {};
 
