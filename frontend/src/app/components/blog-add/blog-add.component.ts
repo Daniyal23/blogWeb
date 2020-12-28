@@ -120,6 +120,7 @@ export class BlogAddComponent implements OnInit {
       this.blogobj.creatorName = this.userdetials.username;
 
       console.log(this.blogobj);
+      localStorage.setItem('blog', JSON.stringify(this.blogobj));
     }
   }
 

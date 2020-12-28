@@ -11,15 +11,13 @@
       <mat-card class="card">
           <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
-            <mat-card-title class="rtl">Name of the person whatever it is</mat-card-title>
-            <mat-card-subtitle class="rtl">Title etc Or Some shit you can comeup with</mat-card-subtitle>
+            <mat-card-title class="rtl">{{blogs.creatorName}}</mat-card-title>
+            <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image src="./shiba2.jpg" alt="Photo">
+          <img mat-card-image [src]="blogs.blogHeaderImage" alt="Photo">
           <mat-card-content>
             <p class="rtl">
-              Here is where are the blog shit will go. Savvy ?
-              I think it is savvy cause i am da best and every mofo knows that eh.
-              so dont you mess with me and dont you pull shit cause bitch imma f you up
+              {{blogs.text}}
             </p>
           </mat-card-content>
           <mat-card-actions>
@@ -30,5 +28,4 @@
      </div>
  </div>
  <app-comment *ngFor="let comment of comments"
-      [comment]="comment">
- </app-comment>
+      [comment]="comment"></app-comment>
