@@ -94,6 +94,7 @@ router.post("/login", (req, res) => {
 
                                 const payload = {
                                     id: item.id,
+                                    username: item.UserName
                                     //name: user.name,
                                     //avatar: user.avatar
                                     //perm: user.perm

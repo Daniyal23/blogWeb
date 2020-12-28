@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 import { BlogAddComponent } from './components/blog-add/blog-add.component';
+import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 
 
 const routes: Routes = [
@@ -35,11 +36,15 @@ const routes: Routes = [
     component: BlogAddComponent,
     canActivate: [AuthGuard],
     children: [
-
     ]
-
   },
-
+  {
+    path: 'blog/detail',
+    component: BlogDetailsComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
   {
     path: 'login',
     component: LoginComponent,

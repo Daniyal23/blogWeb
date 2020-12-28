@@ -20,6 +20,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
+import { RecaptchaModule } from 'ng-recaptcha';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CommentComponent } from './components/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     BlogAddComponent,
     DashboardComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +44,10 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AngularMaterialModule,
     BrowserModule,
     AppRoutingModule,
+    RecaptchaModule,
+    CommonModule,
+    MatCardModule,
+    MatTabsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
