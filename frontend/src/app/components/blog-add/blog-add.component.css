@@ -1,71 +1,68 @@
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  }
-  
-  li {
-    float: left;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  /* Change the link color to #111 (black) on hover */
-  li a:hover {
-    background-color: #111;
-  }
-  
-  .header-image {
-   height: 150px;
-    background-size: cover;
-  }
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
 
-  /*image*/
-  .img_div {
-    position: relative;
-    background-size: cover ;
+li {
+  float: left;
+}
 
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+.header-image {
+  height: 150px;
+  background-size: cover;
+}
+
+/*image*/
+.img_div {
+  position: center;
+  background-size: cover;
 }
 
 .img_ele {
-    opacity: 1;
-    transition: .5s ease;
-    backface-visibility: hidden;
-    display: block;
+  opacity: 1;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  display: block;
 }
 
 .img_overlay {
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100% ;
-
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
 }
 .c {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    margin-left: -50px;
-    
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-left: -150px;
 }
-.img_div:hover .img_ele{
-    opacity: 0.3;
+.img_div:hover .img_ele {
+  opacity: 0.3;
 }
 .img_div:hover .img_overlay {
-    opacity: 1;
+  opacity: 1;
 }

@@ -55,7 +55,8 @@ const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-
+  
+  
 
 
 ];

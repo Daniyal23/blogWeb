@@ -5,34 +5,33 @@
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
 </ul>
-
+<div class="col-md-8 offset-2">
 <mat-card class="card">
-    <div class="img_div">
+    <div class="img_div col-md-8 offset-4">
 
-        <img [src]="imgsrcs" alt="" height="150px" class="img_ele">
+        <img [src]="imgsrcs" alt="" height="250px" class="img_ele">
         <div class="img_overlay">
             <div *ngIf="imgcheck==1" class="c">
-                <h1 class="text" (click)="removeImage()">remove</h1>
+                <h1 class="text" (click)="removeImage()">Remove</h1>
             </div>
 
         </div>
     </div>
-    <mat-card-header>
+    <mat-card-header class="col-md-4 offset-5">
 
-
-        <mat-card-title class="rtl">Add header image</mat-card-title>
+       
+        <mat-card-title >Add header image</mat-card-title>
     </mat-card-header>
-    <button mat-raised-button color="primary" (click)="fileInput.click()">Upload</button>
+    
+    <button mat-raised-button color="primary" (click)="fileInput.click()" class="col-md-3 offset-8">Upload</button>
     <input hidden type="file" multiple #fileInput (change)="handleFileSelect($event)">
     <mat-card-content>
         <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
-        <h5 class="html-header">HTML Output</h5>
-        <div class="html">
-            {{ htmlContent }}
-        </div>
+        
     </mat-card-content>
     <mat-card-actions>
         <button mat-button (click)="Publish()">Publish</button>
 
     </mat-card-actions>
 </mat-card>
+</div>
