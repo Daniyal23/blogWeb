@@ -19,7 +19,7 @@
                 <hr>
 
 
-                <mat-form-field class="form-group" appearance="outline">
+                <mat-form-field class="form-group" appearance="">
 
                     <input matInput type="text" formControlName="username" name="username" placeholder="اسم المستخدم"
                         class="form-control" required minlength="3" required />
@@ -33,7 +33,7 @@
                     </div>
                 </mat-form-field>
                 <br>
-                <mat-form-field class="form-group" appearance="outline">
+                <mat-form-field class="form-group" appearance="">
                     <input matInput type="email" formControlName="email" name="email" placeholder="Email"
                         class="form-control" required type="email" required>
                     <span class="text-danger"
@@ -46,7 +46,7 @@
                     </span>
                 </mat-form-field>
 
-                <mat-form-field class="form-group" appearance="outline">
+                <mat-form-field class="form-group" appearance="">
                     <input matInput type="password" formControlName="password" id="password" placeholder="Password"
                         class="form-control" required minlength="8" required>
                     <span class="text-danger"
@@ -59,7 +59,7 @@
                     </span>
                 </mat-form-field>
 
-                <mat-form-field class="form-group" appearance="outline">
+                <mat-form-field class="form-group" appearance="">
                     <input matInput type="password" formControlName="repeatPassword" id="repeatPassword"
                         placeholder="Repeate Password" class="form-control" required minlength="8"
                         [errorStateMatcher]="matcher" required>
