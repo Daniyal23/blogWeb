@@ -64,6 +64,11 @@ export class AuthenticationService {
     return this.http.post(`${this.uri}/signup`, user)
   }
 
+  signup2(user: User) {
+    return this.http.post(`${this.uri}/emailupdate`, user)
+  }
+
+
 
   async logout() {
     // remove user from local storage to log user out

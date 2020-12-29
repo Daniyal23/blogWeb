@@ -18,19 +18,22 @@ router.get("/test", (req, res) =>
     })
 );
 
+
+//@route    GET api/users/register
+//@desc     Register user route
+//@access   Public
 router.post("/signup", (req, res) => {
 
     User.findOne({
-        "email": req.body.email
+        "UserName": req.body.UserName
     }).then(user => {
         if (user) {
             //errors.username = "username already exists";
-            console.log(user, "sfdf");
-            return res.json({ error: "email already exists" });
+            return res.json("email already exists");
             //return res.json({ error: "Password incorrect" });
         } else {
 
-            console.log(req.body.UserName, "in ese");
+            console.log(req.body.UserName, "in ese 1");
             const newUser = new User({
                 //name: req.body.name,
                 UserName: req.body.UserName,
@@ -44,27 +47,162 @@ router.post("/signup", (req, res) => {
             });
             //console.log(newUser.password, "jeje");
 
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.Password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.Password = hash;
-                });
-            });
 
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.Email, salt, (err, hash) => {
                     if (err) throw err;
                     newUser.Email = hash;
-                    newUser
-                        .save()
-                        .then(user => res.json({ success: "Added" }))
-                        .catch(err => { return res.json(err.code) });
 
                 });
             });
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.Password, salt, (err, hash) => {
+                    if (err) throw err;
+                    newUser.Password = hash;
+                    newUser
+                        .save()
+                        .then(user => res.json({ success: "Added" }))
+                        .catch(err => { return res.json("error in password") });
+
+                });
+            });
+
         }
     });
 });
+
+
+router.post("/emailupdate", (req, res) => {
+    console.log("in update");
+    User.findOne({
+        "UserName": req.body.UserName
+    }).then(user => {
+        if (user) {
+            console.log("in update");
+            //errors.username = "username already exists";
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(user.Email, salt, (err, hash) => {
+                    if (err) throw err;
+                    user.Email = hash;
+                    user
+                        .save()
+                        .then(user => {
+                            res.json('Update complete')
+                                .catch(err =>
+                                    res.status(404).json({
+                                        nouserfound: "no user found with that id"
+                                    })
+                                );
+                        });
+                });
+
+            });
+        }
+        else {
+            console.log("not found in update")
+        }
+    });
+});
+
+
+/*
+router.post("/signup", (req, res) => {
+    var bools = false;
+    User.find()
+        .then(users => {
+            if (!users) {
+                console.log(req.body.UserName, "in ese 1");
+                const newUser = new User({
+                    //name: req.body.name,
+                    UserName: req.body.UserName,
+                    Email: req.body.Email,
+                    Password: req.body.Password,
+                    Country: req.body.Country,
+                    Avatar: req.body.Avatar,
+ 
+ 
+ 
+                });
+                //console.log(newUser.password, "jeje");
+ 
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.Password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.Password = hash;
+                    });
+                });
+ 
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.Email, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.Email = hash;
+                        newUser
+                            .save()
+                            .then(user => res.json({ success: "Added" }))
+                            .catch(err => { return res.json(err.code) });
+ 
+                    });
+                });
+            }
+            users.forEach((item) => {
+                console.log(item.Email, "jeje");
+                var temp = bcrypt.compareSync(req.body.Email, item.Email);
+                /* bcrypt.compareSync(req.body.Email, item.Email).then(isMatch => {
+                     if (isMatch) {
+                         bools=true;
+                         console.log(bools, "this is the bools man focus");
+                         return res.json({ error: "email already exists" });
+                         
+ 
+                     }
+                 });*/
+/*
+if (temp == true) {
+   bools = true;
+   console.log(bools, "this is the bools man focus");
+   return res.json({ error: "email already exists" });
+}
+});
+if (bools == false) {
+ 
+console.log(req.body.UserName, "in ese");
+const newUser = new User({
+   //name: req.body.name,
+   UserName: req.body.UserName,
+   Email: req.body.Email,
+   Password: req.body.Password,
+   Country: req.body.Country,
+   Avatar: req.body.Avatar,
+ 
+ 
+ 
+});
+//console.log(newUser.password, "jeje");
+ 
+bcrypt.genSalt(10, (err, salt) => {
+   bcrypt.hash(newUser.Password, salt, (err, hash) => {
+       if (err) throw err;
+       newUser.Password = hash;
+   });
+});
+ 
+bcrypt.genSalt(10, (err, salt) => {
+   bcrypt.hash(newUser.Email, salt, (err, hash) => {
+       if (err) throw err;
+       newUser.Email = hash;
+       newUser
+           .save()
+           .then(user => res.json({ success: "Added" }))
+           .catch(err => { return res.json(err.code) });
+ 
+   });
+});
+}
+});
+});
+ 
+*/
+
 
 
 
@@ -83,6 +221,7 @@ router.post("/login", (req, res) => {
             if (!users) {
                 return res.json({ error: "Password incorrect" });
             }
+            var check = false;
             users.forEach((item) => {
                 console.log(item.Email, "jeje");
                 bcrypt.compare(email, item.Email).then(isMatch => {
@@ -91,31 +230,33 @@ router.post("/login", (req, res) => {
                         bcrypt.compare(password, item.Password).then(isMatch => {
                             if (isMatch) {
                                 //User Matched
+                                if (check == false) {
+                                    const payload = {
+                                        id: item.id,
+                                        username: item.UserName
+                                        //name: user.name,
+                                        //avatar: user.avatar
+                                        //perm: user.perm
+                                    }; // Create Jwt payload
 
-                                const payload = {
-                                    id: item.id,
-                                    username: item.UserName
-                                    //name: user.name,
-                                    //avatar: user.avatar
-                                    //perm: user.perm
-                                }; // Create Jwt payload
+                                    //Sign Token
+                                    jwt.sign(
+                                        payload,
+                                        keys.secretOrKey,
+                                        {
+                                            expiresIn: 3600 * 4
+                                        },
+                                        (err, token) => {
+                                            res.json({
+                                                success: true,
+                                                token: "Bearer " + token
 
-                                //Sign Token
-                                jwt.sign(
-                                    payload,
-                                    keys.secretOrKey,
-                                    {
-                                        expiresIn: 3600 * 4
-                                    },
-                                    (err, token) => {
-                                        res.json({
-                                            success: true,
-                                            token: "Bearer " + token
-
-                                        });
-                                    }
-                                );
-                                console.log("success");
+                                            });
+                                        }
+                                    );
+                                    console.log("success");
+                                    check = true;
+                                }
                             } else {
                                 //errors.password = "Password incorrect";
                                 console.log("pass errir");
@@ -153,7 +294,7 @@ router.get(
         });
     }
 );
-
+ 
 router.get("/getAllUsers",
     passport.authenticate("jwt", {
         session: false
@@ -170,9 +311,9 @@ router.get("/getAllUsers",
             .catch(err => res.json({
                 user: 'There are no users'
             }));
-
+ 
     });
-
+ 
 router.get("/getAll",
     // passport.authenticate("jwt", {
     //     session: false
@@ -189,9 +330,9 @@ router.get("/getAll",
             .catch(err => res.json({
                 user: 'There are no users'
             }));
-
+ 
     });
-
+ 
 router.delete("/delete/:id", passport.authenticate("jwt", {
     session: false
 }),
@@ -207,8 +348,8 @@ router.delete("/delete/:id", passport.authenticate("jwt", {
                 })
             );
     });
-
-
+ 
+ 
 router.get("/getUser/:id",
     passport.authenticate("jwt", {
         session: false
@@ -223,7 +364,7 @@ router.get("/getUser/:id",
                 })
             );
     });
-
+ 
 router.post("/update/:id", passport.authenticate("jwt", {
     session: false
 }),
@@ -233,7 +374,7 @@ router.post("/update/:id", passport.authenticate("jwt", {
                 user.username = req.body.username;
                 user.perm = req.body.permissions;
                 user.password = req.body.password
-
+ 
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(user.password, salt, (err, hash) => {
                         if (err) throw err;
@@ -248,9 +389,9 @@ router.post("/update/:id", passport.authenticate("jwt", {
                                         })
                                     );
                             });
-
-
-
+ 
+ 
+ 
                     })
                 });
             })

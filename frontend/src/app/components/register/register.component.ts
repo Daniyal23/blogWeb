@@ -121,9 +121,9 @@ export class RegisterComponent implements OnInit {
       console.log(this.user, "dwd");
       this.AuthService.signup(this.user).subscribe(res => {
 
-        console.log(res)
-        if (res == "11000") {
-          this.snackBar.open('Email already exists', "", {
+        console.log(JSON.stringify(res));
+        if (res == "email already exists") {
+          this.snackBar.open('Username already exists', "", {
             duration: 2000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'right',
@@ -137,6 +137,8 @@ export class RegisterComponent implements OnInit {
             horizontalPosition: 'right',
             verticalPosition: 'top'
           });
+          //this.AuthService.signup2(this.user);
+          this.router.navigate(['/login']);
         }
 
       });
