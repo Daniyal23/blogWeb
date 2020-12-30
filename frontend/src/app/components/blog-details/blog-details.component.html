@@ -14,7 +14,7 @@
                 <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
                 <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image [src]="img" alt="Photo">
+            <img mat-card-image [src]="img" alt="Photo" style="max-width:fit-content; max-height: 450px;">
             <mat-card-content>
                 <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
 
@@ -25,7 +25,7 @@
 
             </mat-card-footer>
             <mat-card-actions>
-                <button mat-button>LIKE</button>
+                <button mat-button (click)="nbrL()" class="men">LIKE</button>
                 <button mat-button>SHARE</button>
             </mat-card-actions>
         </mat-card>

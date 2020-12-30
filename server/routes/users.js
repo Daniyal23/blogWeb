@@ -22,56 +22,31 @@ router.get("/test", (req, res) =>
 //@route    GET api/users/register
 //@desc     Register user route
 //@access   Public
-router.post("/signup", (req, res) => {
-
-    User.findOne({
-        "UserName": req.body.UserName
-    }).then(user => {
-        if (user) {
-            //errors.username = "username already exists";
-            return res.json("email already exists");
-            //return res.json({ error: "Password incorrect" });
-        } else {
-
-            console.log(req.body.UserName, "in ese 1");
-            const newUser = new User({
-                //name: req.body.name,
-                UserName: req.body.UserName,
-                Email: req.body.Email,
-                Password: req.body.Password,
-                Country: req.body.Country,
-                Avatar: req.body.Avatar,
-
-
-
-            });
-            //console.log(newUser.password, "jeje");
-
-
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.Email, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.Email = hash;
-
-                });
-            });
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.Password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.Password = hash;
-                    newUser
-                        .save()
-                        .then(user => res.json({ success: "Added" }))
-                        .catch(err => { return res.json("error in password") });
-
-                });
-            });
-
-        }
-    });
-});
-
-
+router.post('/signup', async (req, res) => {
+    try {
+      let { UserName, Email, Password, Country, Avatar } = req.body;
+      const user = await User.findOne({
+        UserName,
+      });
+      if (user) return res.json('email already exists');
+      const salt = await bcrypt.genSalt(10);
+      Email = await bcrypt.hash(Email, salt);
+      Password = await bcrypt.hash(Password, salt);
+      const newUser = new User({
+        UserName,
+        Email,
+        Password,
+        Country,
+        Avatar,
+      });
+      await newUser.save(function (error, obj) {
+        if (error) res.send(error);
+        return res.json({ success: 'Added' });
+      });
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  });
 router.post("/emailupdate", (req, res) => {
     console.log("in update");
     User.findOne({
@@ -211,9 +186,9 @@ bcrypt.genSalt(10, (err, salt) => {
 //@access   Public
 router.post("/login", (req, res) => {
 
-
+    var temp=false;
     var email = req.body.Email;
-
+    var temp2=false;
     const password = req.body.Password;
 
     User.find()
@@ -221,61 +196,55 @@ router.post("/login", (req, res) => {
             if (!users) {
                 return res.json({ error: "Password incorrect" });
             }
-            var check = false;
             users.forEach((item) => {
                 console.log(item.Email, "jeje");
-                bcrypt.compare(email, item.Email).then(isMatch => {
-                    if (isMatch) {
-                        console.log("match");
-                        bcrypt.compare(password, item.Password).then(isMatch => {
-                            if (isMatch) {
-                                //User Matched
-                                if (check == false) {
-                                    const payload = {
-                                        id: item.id,
-                                        username: item.UserName
-                                        //name: user.name,
-                                        //avatar: user.avatar
-                                        //perm: user.perm
-                                    }; // Create Jwt payload
+                temp=bcrypt.compareSync(email, item.Email);
+                if (temp==true){
+                    temp2=bcrypt.compareSync(password, item.Password)
+                    if (temp2==true){
+                         //User Matched
 
-                                    //Sign Token
-                                    jwt.sign(
-                                        payload,
-                                        keys.secretOrKey,
-                                        {
-                                            expiresIn: 3600 * 4
-                                        },
-                                        (err, token) => {
-                                            res.json({
-                                                success: true,
-                                                token: "Bearer " + token
+                         const payload = {
+                            id: item.id,
+                            username: item.UserName
+                            //name: user.name,
+                            //avatar: user.avatar
+                            //perm: user.perm
+                        }; // Create Jwt payload
 
-                                            });
-                                        }
-                                    );
-                                    console.log("success");
-                                    check = true;
-                                }
-                            } else {
-                                //errors.password = "Password incorrect";
-                                console.log("pass errir");
-                                return res.json({ error: "Password incorrect" });
-                            }
-                        });
-                    }
-                    else {
-                        //errors.password = "Password incorrect";
-                        console.log("pass errir");
-                        return res.json({ error: "Password incorrect" });
-                    }
-                }
-                )
-            })
+                        //Sign Token
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey,
+                            {
+                                expiresIn: 3600 * 4
+                            },
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: "Bearer " + token
+
+                                });
+                            })
+
+                    }   
+            }
+            else{
+                temp==false;
+                
+            }
 
         })
+        console.log(temp,temp2,"this is the error  ")
+       
+            if (temp2==false){
+                return res.json({ error: "Password incorrect" });
+            }
+        
+        
 });
 
+});
 /*
 //@route    GET api/users/current
 //@desc     Return Current user

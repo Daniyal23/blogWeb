@@ -9,16 +9,17 @@
 
 </ul>
 <div class="row">
-    <div class="col-md-4 offset-4">
+    <div class="wrapper fadeInDown col-md-4 offset-4">
 
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="container">
+                <div class="fadeIn first">
                 <h1 style="text-align: center;">Register</h1>
                 <p style="text-align: center;">Please fill in this form to create an account.</p>
                 <hr>
-
-
+            </div>
+               <div class="fadeIn second">
                 <mat-form-field class="form-group" appearance="">
 
                     <input matInput type="text" formControlName="username" name="username" placeholder="اسم المستخدم"
@@ -75,8 +76,9 @@
                 </mat-form-field>
 
 
-
-                <div class="form-group">
+            </div>
+            <div class="fadeIn third">
+                <div class="form-group offset-2">
                     <select id="country" formControlName="country" style="direction: rtl;" class="form-control">
                         <option value="select" selected disabled>Country</option>
                         <option value="pak">Pakistan</option>
@@ -89,7 +91,7 @@
                         Country is required
                     </span>
                 </div>
-                <div class="form-group" appearance="fill">
+                <div class="form-group offset-2" appearance="fill">
                     <div>
                         <img type="image" style="margin-left: 15px;" src="./assets/avatar1.jpg" alt="non" class="avatar"
                             (click)="imageSelect('./assets/avatar1.jpg',1)">
@@ -128,7 +130,7 @@
                     </div>
                 </div>
 
-                <label for="vehicle1" style="margin-left: 10%; text-align: center;"> I agree to the Terms
+                <label for="vehicle1" style="margin-left: 30%; text-align: center;"> I agree to the Terms
                     and Conditions
                     <input type="checkbox" id="terms" name="terms" value="terms" style="margin-left: 10px;"
                         (click)="Checkbox()" required>
@@ -139,11 +141,13 @@
                         Please tick the checkbox
                     </span>
                 </div>
+                <div class="offset-3">
                 <re-captcha (resolved)="resolved($event)" (error)="onError($event)" errorMode="handled"
-                    siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
+                    siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU" ></re-captcha>
+                </div>
                 <br>
-
-                <div class="form-group">
+            </div>
+                <div class="form-group offset-2">
                     <button mat-raised-button class="registerbtn" type="submit">Register</button>
 
                 </div>

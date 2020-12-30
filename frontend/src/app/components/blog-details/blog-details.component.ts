@@ -17,7 +17,7 @@ export class BlogDetailsComponent implements OnInit {
   public img: any;
   public imgsrcs: Array<any> = [];
 
-
+  bckColor = 'white'
   name = 'Angular 6';
   htmlContent = '';
   userdetials: any;
@@ -28,7 +28,7 @@ export class BlogDetailsComponent implements OnInit {
     spellcheck: true,
     enableToolbar: false,
     showToolbar: false,
-    height: '15rem',
+    height: 'auto',
     minHeight: '5rem',
     placeholder: 'Enter text here...',
     translate: 'no',
@@ -76,6 +76,20 @@ export class BlogDetailsComponent implements OnInit {
 
   }
 
+  nbrL() {
+    if(this.bckColor=='white'){
+      this.blogs.numLikes=this.blogs.numLikes+1;
+      this.bckColor = 'green';
+
+    }
+    else{
+      this.bckColor = 'white';
+      this.blogs.numLikes=this.blogs.numLikes-1;
+      
+
+    }
+    
+  }
 
 
 }
