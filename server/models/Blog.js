@@ -32,11 +32,11 @@ const BlogSchema = new Schema({
     },
     datePublished: {
         type: Date,
-        required: true
+        //required: true
     },
     dateUpdated: {
         type: Date,
-        required: true
+        //required: true
     },
     isApproved: {
         type: Boolean,

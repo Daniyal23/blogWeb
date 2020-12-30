@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const users = require("./routes/users");
+const blogs = require("./routes/blogs");
 const passport = require("passport");
 
 //Connect Database
@@ -27,6 +28,8 @@ require('./config/passport')(passport);
 // Routes
 // app.use('/api/auth', require('./routes/auth'));
 app.use("/users", users);
+app.use("/blogs", blogs);
+
 
 
 const PORT = process.env.PORT || 3000;

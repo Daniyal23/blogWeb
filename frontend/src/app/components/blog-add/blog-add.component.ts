@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BlogService } from 'src/app/services/blog.service';
+
 import { Blog } from 'src/app/models/blog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
@@ -14,6 +16,7 @@ export class BlogAddComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private AuthService: AuthenticationService,
+    private blogService: BlogService,
   ) { }
   name = 'Angular 6';
   htmlContent = '';
@@ -129,6 +132,7 @@ export class BlogAddComponent implements OnInit {
 
       console.log(this.blogobj);
       localStorage.setItem('blog', JSON.stringify(this.blogobj));
+      this.blogService.addBlog(this.blogobj);
     }
   }
 

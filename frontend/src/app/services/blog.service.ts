@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BlogService {
 
-  uri = 'http://localhost:3000/users';
+  uri = 'http://localhost:3000/blogs';
 
   constructor(
     private http: HttpClient,
@@ -16,6 +16,7 @@ export class BlogService {
 
   public getheader() {
     var a = localStorage.getItem("id_token");
+    console.log(a);
     // a.split(',', 2);
     // a = a.substr(24, (a.length));
     // a = a.substr(1, (a.length - 1));
@@ -25,7 +26,7 @@ export class BlogService {
     return a;
   }
 
-  public addDealer(blog: Blog): void {
+  public addBlog(blog: Blog): void {
 
     this.http.post(`${this.uri}/add`, blog, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
