@@ -14,6 +14,7 @@ const BlogSchema = new Schema({
     },
     blogHeaderImage: {
         type: Schema.Types.Mixed,
+        required: true
     },
     text: {
         type: String,

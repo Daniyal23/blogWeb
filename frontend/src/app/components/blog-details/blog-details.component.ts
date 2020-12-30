@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comments } from 'src/app/models/comments'
 import { DomSanitizer } from '@angular/platform-browser';
-
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { fakeAsync } from '@angular/core/testing';
+import { BlogService } from 'src/app/services/blog.service';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-blog-details',
   templateUrl: './blog-details.component.html',
@@ -12,7 +14,7 @@ import { fakeAsync } from '@angular/core/testing';
 })
 export class BlogDetailsComponent implements OnInit {
   comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
-  constructor(private sanitizer: DomSanitizer,) { }
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private blogService: BlogService) { }
   public blogs: Blog = new Blog();
   public img: any;
   public imgsrcs: Array<any> = [];
@@ -79,6 +81,7 @@ export class BlogDetailsComponent implements OnInit {
     console.log(this.img);
     this.htmlContent = this.blogs.text;
 
+    console.log(this.getbyid());
   }
 
   nbrL() {
@@ -94,6 +97,22 @@ export class BlogDetailsComponent implements OnInit {
 
     }
 
+
+  }
+
+  getbyid(): Blog {
+
+    this.route.params.subscribe(param => {
+      this.blogService.getBlog(param['id'], this.blogs).then((res) => {
+        this.blogs = res
+        console.log(this.blogs, "iddddd");
+      }
+        //console.log(this.propertyService.getProperty(param['id']), " ;lj");
+      )
+    }
+
+    )
+    return this.blogs;
   }
 
 

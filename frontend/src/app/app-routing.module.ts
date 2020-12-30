@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 import { BlogAddComponent } from './components/blog-add/blog-add.component';
 import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
+import { BlogListComponent } from './components/blog-list/blog-list.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,14 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'blog',
+    component: BlogListComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
+
+  {
     path: 'login',
     component: LoginComponent,
     canActivate: [GuestGuard]
@@ -55,8 +64,8 @@ const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-  
-  
+
+
 
 
 ];

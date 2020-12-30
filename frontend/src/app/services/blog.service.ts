@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Blog } from '../models/blog';
 import { HttpClient } from '@angular/common/http';
+import axios from 'axios'
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,7 @@ export class BlogService {
   public getheader() {
     var a = localStorage.getItem("id_token");
     console.log(a);
-    // a.split(',', 2);
-    // a = a.substr(24, (a.length));
-    // a = a.substr(1, (a.length - 1));
-    // a = a.substr(0, (a.length - 2));
 
-    //console.log(a);
     return a;
   }
 
@@ -32,4 +28,19 @@ export class BlogService {
       .subscribe(res => console.log('Done'));
 
   }
-}
+  public getAllBlogs() {
+
+    return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`, { headers: { 'Authorization': this.getheader() } })
+
+
+  }
+
+  async getBlog(id: number, prop: Blog) {
+
+    await axios.get(`${this.uri}/getBlog/${id}`, { headers: { 'Authorization': this.getheader() } }).
+      then((res) => prop = res.data)
+    return prop
+
+
+  }
+};
