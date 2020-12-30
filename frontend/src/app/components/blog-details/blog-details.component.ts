@@ -12,7 +12,7 @@ import { fakeAsync } from '@angular/core/testing';
 })
 export class BlogDetailsComponent implements OnInit {
   comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
-  constructor(private sanitizer: DomSanitizer, ) { }
+  constructor(private sanitizer: DomSanitizer,) { }
   public blogs: Blog = new Blog();
   public img: any;
   public imgsrcs: Array<any> = [];
@@ -29,7 +29,8 @@ export class BlogDetailsComponent implements OnInit {
     enableToolbar: false,
     showToolbar: false,
     height: 'auto',
-    minHeight: '5rem',
+    minHeight: 'auto',
+    maxHeight: 'auto',
     placeholder: 'Enter text here...',
     translate: 'no',
     defaultParagraphSeparator: 'p',
@@ -51,6 +52,10 @@ export class BlogDetailsComponent implements OnInit {
         name: "titleText",
         class: "titleText",
         tag: "h1",
+      },
+      {
+        name: "img",
+        class: "img",
       },
     ]
   };
@@ -77,18 +82,18 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   nbrL() {
-    if(this.bckColor=='white'){
-      this.blogs.numLikes=this.blogs.numLikes+1;
+    if (this.bckColor == 'white') {
+      this.blogs.numLikes = this.blogs.numLikes + 1;
       this.bckColor = 'green';
 
     }
-    else{
+    else {
       this.bckColor = 'white';
-      this.blogs.numLikes=this.blogs.numLikes-1;
-      
+      this.blogs.numLikes = this.blogs.numLikes - 1;
+
 
     }
-    
+
   }
 
 

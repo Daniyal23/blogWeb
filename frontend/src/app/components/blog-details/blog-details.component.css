@@ -34,6 +34,9 @@ li a:hover {
 .rtl {
   direction: rtl;
 }
-men {
+.men {
   background-color: bckcolor;
+}
+.img{
+  height: 50px;
 }

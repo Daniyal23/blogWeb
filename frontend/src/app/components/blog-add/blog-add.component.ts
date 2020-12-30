@@ -28,8 +28,8 @@ export class BlogAddComponent implements OnInit {
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
+    height: 'auto',
+    minHeight: '15rem',
     placeholder: 'Enter text here...',
     translate: 'no',
     defaultParagraphSeparator: 'p',
@@ -51,7 +51,12 @@ export class BlogAddComponent implements OnInit {
         class: "titleText",
         tag: "h1",
       },
-    ]
+    ],
+    //uploadUrl: 'v1/image',
+    // upload: (file: File) => {this.handleFileSelect(file)},
+    //uploadWithCredentials: false,
+    sanitize: true,
+
   };
 
   ngOnInit(): void {
