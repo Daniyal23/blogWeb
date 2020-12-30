@@ -14,8 +14,8 @@ import { BlogService } from 'src/app/services/blog.service';
 })
 export class BlogDetailsComponent implements OnInit {
   comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
-  constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute, private blogService: BlogService) { }
-  public blogs: Blog = new Blog();
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private blogService: BlogService) { }
+  public blogs?;
   public img: any;
   public imgsrcs: Array<any> = [];
 
@@ -68,21 +68,28 @@ export class BlogDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.getbyid())
-    /*var Blogs = localStorage.getItem('blog');
-    this.blogs = JSON.parse(Blogs);
-    this.img = (this.sanitizer.bypassSecurityTrustUrl(this.blogs.blogHeaderImage[0]));
+    this.getbyid();
 
-    for (let key in this.blogs.blogHeaderImage) {
-      this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
-      this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
 
+  }
+  ngAfterViewChecked() {
+    if (this.blogs) {
+      // console.log("if prop2", this.property, "sadasda ", this.checkingvar);
+      console.log(this.blogs);
+      // var Blogs = localStorage.getItem('blog');
+      // this.blogs = JSON.parse(Blogs);
+      // //this.img = (this.sanitizer.bypassSecurityTrustUrl(this.blogs.blogHeaderImage[0]));
+
+      for (let key in this.blogs.blogHeaderImage) {
+        console.log("here");
+        this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
+        this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
+
+      }
+      this.img = this.imgsrcs[this.imgsrcs.length - 1];
+      console.log(this.img);
+      this.htmlContent = this.blogs.text;
     }
-    this.img = this.imgsrcs[this.imgsrcs.length - 1];
-    console.log(this.img);
-    this.htmlContent = this.blogs.text;
-    */
-
   }
 
   nbrL() {
@@ -100,19 +107,23 @@ export class BlogDetailsComponent implements OnInit {
 
   }
 
-  getbyid(): Blog {
-
+  getbyid() {
     this.route.params.subscribe(param => {
-      this.blogService.getBlog(param['id'], this.blogs).then((res) => {
-        this.blogs = res
-        console.log(this.blogs, "iddddd");
-      }
-        //console.log(this.propertyService.getProperty(param['id']), " ;lj");
-      )
-    }
+      console.log(param['id'])
+    });
+    var a;
+    this.route.params.subscribe(async param => {
+      this.blogService.getBlog(param['id']).subscribe(data => {
+        console.log(data);
+        this.blogs = data;
+      })
+      //return a;
 
-    )
-    return this.blogs;
+
+      //console.log(this.propertyService.getProperty(param['id']), " ;lj");
+    })
   }
 
 }
+
+

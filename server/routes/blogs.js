@@ -87,7 +87,7 @@ router.get("/getBlogs/:id",
         session: false
     }),
     (req, res) => {
-        console.log(req.param.id)
+        //console.log(req.param.id)
         Blog.findOne({ '_id': (req.params.id) })
             .then(blog => res.json(blog))
             .catch(err =>
@@ -96,6 +96,7 @@ router.get("/getBlogs/:id",
                 })
             );
     });
+
 
 
 module.exports = router;

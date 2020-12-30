@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Blog} from 'src/app/models/blog';
+import { Blog } from 'src/app/models/blog';
 import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-blog-card',
@@ -7,9 +7,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./blog-card.component.css']
 })
 export class BlogCardComponent implements OnInit {
-  @Input() blog:Blog;
+  @Input() blog: Blog;
   public img: any;
-  
+  public texttoshow: string;
+
   constructor(private sanitizer: DomSanitizer,) { }
   public imgsrcs: Array<any> = [];
   ngOnInit(): void {
@@ -21,6 +22,7 @@ export class BlogCardComponent implements OnInit {
     }
     this.img = this.imgsrcs[this.imgsrcs.length - 1];
     console.log(this.img);
+    this.texttoshow = this.blog.text.slice(0, 50);
     //this.htmlContent = this.blog.text;
 
   }
