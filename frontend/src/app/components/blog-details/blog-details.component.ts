@@ -29,7 +29,7 @@ export class BlogDetailsComponent implements OnInit {
     enableToolbar: false,
     showToolbar: false,
     height: 'auto',
-    minHeight: 'auto',
+    minHeight: '',
     maxHeight: 'auto',
     placeholder: 'Enter text here...',
     translate: 'no',
