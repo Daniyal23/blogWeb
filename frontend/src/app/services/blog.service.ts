@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Blog } from '../models/blog';
 import { HttpClient } from '@angular/common/http';
-import axios from 'axios'
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +42,6 @@ export class BlogService {
 
 
   }
-};
+
+  // }
+}

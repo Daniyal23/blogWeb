@@ -25,8 +25,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommentComponent } from './components/comment/comment.component';
-
 import { BlogListComponent } from './components/blog-list/blog-list.component';
+import { BlogCardComponent } from './components/blog-card/blog-card.component';
 
 @NgModule({
   declarations: [
@@ -38,8 +38,8 @@ import { BlogListComponent } from './components/blog-list/blog-list.component';
     HomeComponent,
     LoginComponent,
     CommentComponent,
-
-    BlogListComponent
+    BlogListComponent,
+    BlogCardComponent
   ],
   imports: [
     BrowserModule,

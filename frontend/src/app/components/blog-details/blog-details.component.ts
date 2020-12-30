@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comments } from 'src/app/models/comments'
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { fakeAsync } from '@angular/core/testing';
-import { BlogService } from 'src/app/services/blog.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { BlogService } from 'src/app/services/blog.service';
 @Component({
   selector: 'app-blog-details',
   templateUrl: './blog-details.component.html',
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BlogDetailsComponent implements OnInit {
   comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private blogService: BlogService) { }
+  constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute, private blogService: BlogService) { }
   public blogs: Blog = new Blog();
   public img: any;
   public imgsrcs: Array<any> = [];
@@ -68,7 +68,8 @@ export class BlogDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    var Blogs = localStorage.getItem('blog');
+    console.log(this.getbyid())
+    /*var Blogs = localStorage.getItem('blog');
     this.blogs = JSON.parse(Blogs);
     this.img = (this.sanitizer.bypassSecurityTrustUrl(this.blogs.blogHeaderImage[0]));
 
@@ -80,8 +81,8 @@ export class BlogDetailsComponent implements OnInit {
     this.img = this.imgsrcs[this.imgsrcs.length - 1];
     console.log(this.img);
     this.htmlContent = this.blogs.text;
+    */
 
-    console.log(this.getbyid());
   }
 
   nbrL() {
@@ -96,7 +97,6 @@ export class BlogDetailsComponent implements OnInit {
 
 
     }
-
 
   }
 
@@ -114,6 +114,5 @@ export class BlogDetailsComponent implements OnInit {
     )
     return this.blogs;
   }
-
 
 }

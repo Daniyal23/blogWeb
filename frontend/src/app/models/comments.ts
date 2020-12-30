@@ -1,16 +1,16 @@
 import { User } from "./users";
 
 export class Comment {
-    // id!:number;
+    id!:number;
     commentorId: string;
     title: string;
     content: string;
-    //likes:number;
-    //dislikes:number;
-    //interactionIdList:number;
-    //reportsCounter:number;
-    //datePublished:Date;
-    //dateUpdated:Date;
+    likes:number;
+    dislikes:number;
+    interactionIdList:number;
+    reportsCounter:number;
+    datePublished:Date;
+    dateUpdated:Date;
 }
 
 export const Comments = [

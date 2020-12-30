@@ -40,7 +40,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'blog/detail',
+    path: 'blog/detail/:id',
     component: BlogDetailsComponent,
     canActivate: [AuthGuard],
     children: [
@@ -53,7 +53,6 @@ const routes: Routes = [
     children: [
     ]
   },
-
   {
     path: 'login',
     component: LoginComponent,
@@ -64,8 +63,8 @@ const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-
-
+  
+  
 
 
 ];

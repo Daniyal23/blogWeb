@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { BlogService } from 'src/app/services/blog.service';
 
+
 @Component({
   selector: 'app-blog-list',
   templateUrl: './blog-list.component.html',
