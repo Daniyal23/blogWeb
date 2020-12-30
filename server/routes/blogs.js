@@ -28,7 +28,7 @@ router.post(
                     id: req.body.id,
                     creatorId: req.body.creatorId,
                     title: req.body.title,
-                    blogHeaderImag: req.body.blogHeaderImag,
+                    blogHeaderImage: req.body.blogHeaderImage,
                     text: req.body.text,
                     images: req.body.images,
                     creatorName: req.body.creatorName,
@@ -63,16 +63,22 @@ router.get("/getAllBlogs",
         session: false
     }),
     (req, res) => {
+        console.log("in list all");
         Blog.find()
             .then(blogs => {
                 if (!blogs) {
+                    console.log("error");
                     return res.status(404).json(errors);
                 }
+                console.log("done");
                 res.json(blogs);
             })
-            .catch(err => res.status(404).json({
-                dealer: 'There are no blogs'
-            }));
+            .catch(err => res.status(404).json(
+                console.log(err),
+                {
+
+                    dealer: 'There are no blogs'
+                }));
 
     });
 

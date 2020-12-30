@@ -11,8 +11,9 @@ const passport = require("passport");
 connectDB();
 
 //Init Middleware
-app.use(express.json({ extended: false }));
-
+//app.use(express.json({ extended: false }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 //add other middleware
 app.use(cors());
 app.use(bodyParser.json());
