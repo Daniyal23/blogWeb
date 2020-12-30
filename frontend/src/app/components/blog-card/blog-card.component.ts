@@ -1,0 +1,28 @@
+import { Component, Input, OnInit } from '@angular/core';
+import {Blog} from 'src/app/models/blog';
+import { DomSanitizer } from '@angular/platform-browser';
+@Component({
+  selector: 'app-blog-card',
+  templateUrl: './blog-card.component.html',
+  styleUrls: ['./blog-card.component.css']
+})
+export class BlogCardComponent implements OnInit {
+  @Input() blog:Blog;
+  public img: any;
+  
+  constructor(private sanitizer: DomSanitizer,) { }
+  public imgsrcs: Array<any> = [];
+  ngOnInit(): void {
+    //this.img = (this.sanitizer.bypassSecurityTrustUrl(this.blog.blogHeaderImage[0]));
+    for (let key in this.blog.blogHeaderImage) {
+      this.blog.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
+      this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
+
+    }
+    this.img = this.imgsrcs[this.imgsrcs.length - 1];
+    console.log(this.img);
+    //this.htmlContent = this.blog.text;
+
+  }
+
+}
