@@ -100,8 +100,8 @@ export class BlogDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getbyid();
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
-    console.log(this.userdetials);
-    console.log(this.userdetials.id);
+    //console.log(this.userdetials);
+    //console.log(this.userdetials.id);
 
 
 
@@ -109,15 +109,15 @@ export class BlogDetailsComponent implements OnInit {
   ngAfterViewChecked() {
     if (this.blogs && this.done == 0) {
 
-      console.log(this.blogs);
+      //console.log(this.blogs);
       for (let key in this.blogs.blogHeaderImage) {
-        console.log("here");
+        //console.log("here");
         this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
         this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
 
       }
       this.img = this.imgsrcs[this.imgsrcs.length - 1];
-      console.log(this.img);
+      //console.log(this.img);
       this.htmlContent = this.blogs.text;
       this.done = 1;
 
@@ -127,17 +127,17 @@ export class BlogDetailsComponent implements OnInit {
       if (this.blogs.interactionIdList) {
         if (this.blogs.interactionIdList.length == 0) {
           this.blogs.interactionIdList = [];
-          console.log("interaction list rein")
+          //console.log("interaction list rein")
         }
         else {
-          console.log("in eleeee");
+          //console.log("in eleeee");
           var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id);
           if (a) {
             this.interact = a;
           }
 
           if (this.interact) {
-            console.log("interact from db", this.interact);
+            //console.log("interact from db", this.interact);
             if (this.interact.InteractionType == "Like") {
               this.liked = 1;
             }
@@ -155,7 +155,7 @@ export class BlogDetailsComponent implements OnInit {
     }
 
     if (this.newcommentid != "" && this.newcomment == 0) {
-      console.log(this.newcommentid, "hello");
+      //console.log(this.newcommentid, "hello");
       if (!this.blogs.commentsIdList) {
         this.blogs.commentsIdList = [];
       }
@@ -167,7 +167,7 @@ export class BlogDetailsComponent implements OnInit {
 
   nbrLike() {
     this.changeLike = 0;
-    console.log("in like");
+    //console.log("in like");
     if (this.disliked == 1 && this.liked == 0) {
       this.disliked = 0;
       this.blogs.numDislikes = this.blogs.numDislikes - 1;
@@ -194,7 +194,7 @@ export class BlogDetailsComponent implements OnInit {
 
   }
   nbrDislike() {
-    console.log("in dislike");
+    //console.log("in dislike");
     if (this.disliked == 0 && this.liked == 0) {
       this.blogs.numDislikes = this.blogs.numDislikes + 1;
       this.disliked = 1;
@@ -220,27 +220,27 @@ export class BlogDetailsComponent implements OnInit {
 
   interactingadd(inp) {
     if (this.interact.InteractionType != "") {
-      console.log("interaction func if");
+      //console.log("interaction func if");
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
       this.blogs.interactionIdList.push(this.interact);
       this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
     else {
-      console.log("interaction func else");
+      //console.log("interaction func else");
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
-      console.log("interaction func else2");
+      //console.log("interaction func else2");
 
       this.blogs.interactionIdList.push(this.interact);
       this.blogService.updateBlog(this.blogs._id, this.blogs);
-      console.log(this.blogs.interactionIdList);
+      //console.log(this.blogs.interactionIdList);
     }
   }
 
   interactingupdate(inp) {
     if (this.interact.InteractionType != "") {
-      console.log("interaction func if");
+      //console.log("interaction func if");
       //this.interact.timestamp = new Date();
       //this.interact.InteractionType = inp;
       // var aa = this.blogs.interactionIdList.indexOf(a => a == this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id));
@@ -248,7 +248,7 @@ export class BlogDetailsComponent implements OnInit {
       //console.log("obj2", this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id))
       var aa = this.findingindex();
 
-      console.log(aa, "updating");
+      //console.log(aa, "updating");
       if (aa >= 0) {
         this.blogs.interactionIdList[aa].InteractionType = inp;
         this.blogs.interactionIdList[aa].timestamp = new Date();
@@ -256,7 +256,7 @@ export class BlogDetailsComponent implements OnInit {
       }
     }
     else {
-      console.log("interaction func else");
+      //console.log("interaction func else");
       //this.interact.timestamp = new Date();
       //this.interact.InteractionType = inp;
       var a = this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id);
@@ -274,12 +274,12 @@ export class BlogDetailsComponent implements OnInit {
 
   getbyid() {
     this.route.params.subscribe(param => {
-      console.log(param['id'])
+      //console.log(param['id'])
     });
     var a;
     this.route.params.subscribe(async param => {
       this.blogService.getBlog(param['id']).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.blogs = data;
       })
       //return a;
@@ -289,12 +289,12 @@ export class BlogDetailsComponent implements OnInit {
     })
   }
   commentAdd() {
-    console.log(this.commentContent, "this is what you types");
+    //console.log(this.commentContent, "this is what you types");
     this.commentMake();
     this.comment.content = this.commentContent;
     this.comment.datePublished = new Date();
 
-    console.log(this.comment);
+    //console.log(this.comment);
     var a;
     this.commentService.addComments(this.comment).subscribe(res => { console.log(res), this.newcommentid = res.toString() });
     this.newcomment = 0;
@@ -317,16 +317,15 @@ export class BlogDetailsComponent implements OnInit {
       for (let Key in this.blogs.commentsIdList) {
 
         this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => {
-          console.log(data);
+          //console.log(data);
           //this.commentz = data;
           this.commentlist.push(data);
         })
-        console.log("this is the life");
-        console.log(Key, "this is key");
+
       }
     }
     else {
-      console.log("no comments found")
+      //console.log("no comments found")
     }
   }
 

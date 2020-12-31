@@ -18,7 +18,7 @@ export class BlogListComponent implements OnInit {
     console.log("in bloglist");
     this.blogService.getAllBlogs().subscribe(data => {
       this.blogs = data;
-      console.log(data);
+      // console.log(data);
     });
 
   }

@@ -22,7 +22,7 @@ router.post(
     }),
     async (req, res) => {
         try {
-            console.log('add interaction');
+            //console.log('add interaction');
             const newInteraction = new Interaction(
                 {
 
@@ -51,18 +51,18 @@ router.get("/getAllBlogs",
         session: false
     }),
     (req, res) => {
-        console.log("in list all");
+        //console.log("in list all");
         Blog.find()
             .then(blogs => {
                 if (!blogs) {
-                    console.log("error");
+                    //console.log("error");
                     return res.status(404).json(errors);
                 }
-                console.log("done");
+                //console.log("done");
                 res.json(blogs);
             })
             .catch(err => res.status(404).json(
-                console.log(err),
+                //console.log(err),
                 {
 
                     dealer: 'There are no blogs'

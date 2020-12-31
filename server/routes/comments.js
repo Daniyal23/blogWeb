@@ -41,7 +41,7 @@ router.post(
             await newComment.save()
                 .then(comments => res.json(comments._id))
         } catch (err) {
-            console.log(err, "tis is error")
+            //console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
 
@@ -54,18 +54,18 @@ router.get("/getAllComments",
         session: false
     }),
     (req, res) => {
-        console.log("in list all");
+        //console.log("in list all");
         Comments.find()
             .then(comments => {
                 if (!comments) {
-                    console.log("error");
+                    // console.log("error");
                     return res.status(404).json(errors);
                 }
-                console.log("done");
+                // console.log("done");
                 res.json(comments);
             })
             .catch(err => res.status(404).json(
-                console.log(err),
+                //console.log(err),
                 {
 
                     dealer: 'There are no comments'

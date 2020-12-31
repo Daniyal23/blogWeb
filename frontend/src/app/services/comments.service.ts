@@ -20,7 +20,7 @@ export class CommentsService {
 
   public getheader() {
     var a = localStorage.getItem("id_token");
-    console.log(a);
+    //console.log(a);
 
     return a;
   }
