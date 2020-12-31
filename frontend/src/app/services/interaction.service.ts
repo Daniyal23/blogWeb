@@ -30,6 +30,26 @@ export class InteractionService {
       .subscribe(res => console.log(res));
 
   }
+
+  public getInteractionbyid(id: number) {
+    //console.log(id, "from service");
+    return this.http.get(`${this.uri}/getInteractions/${id}`, { headers: { 'Authorization': this.getheader() } })
+      .pipe(
+        map((res: Response) => {
+          return res || {}
+        }),
+
+
+      )
+
+  }
+
+  public updateBlog(id, obj: Interaction) {
+    this
+      .http
+      .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
+      .subscribe(res => console.log('Done'));
+  }
   /*
   public getAllBlogs() {
 
@@ -39,7 +59,7 @@ export class InteractionService {
   }
 
 
-  public getBlog(id: number) {
+  public getInteractionbyid(id: number) {
     //console.log(id, "from service");
     return this.http.get(`${this.uri}/getBlogs/${id}`, { headers: { 'Authorization': this.getheader() } })
       .pipe(

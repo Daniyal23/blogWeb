@@ -97,6 +97,46 @@ router.get("/getBlogs/:id",
             );
     });
 
+router.post("/update/:id", passport.authenticate("jwt", {
+    session: false
+}),
+    async (req, res) => {
+        try {
+            Blog.findById(req.params.id)
+                .then(blog => {
+
+                    blog.id = req.body.id,
+                        blog.creatorId = req.body.creatorId,
+                        blog.title = req.body.title,
+                        blog.blogHeaderImage = req.body.blogHeaderImage,
+                        blog.text = req.body.text,
+                        blog.images = req.body.images,
+                        blog.creatorName = req.body.creatorName,
+                        blog.dateSubmitted = req.body.dateSubmitted,
+                        blog.datePublished = req.body.datePublished,
+                        blog.dateUpdated = req.body.dateUpdated,
+                        blog.isApproved = req.body.isApproved,
+                        blog.numLikes = req.body.numLikes,
+                        blog.numDislikes = req.body.numDislikes,
+                        blog.reportsCounter = req.body.reportsCounter,
+                        blog.interactionIdList = req.body.interactionIdList,
+                        blog.commentsIdList = req.body.commentsIdList,
+                        blog.numOfReads = req.body.numOfReads,
+                        blog.status = req.body.status,
+
+                        blog
+                            .save()
+                            .then(blog => {
+                                res.json('Update complete')
+                            })
+                })
+        }
+        catch (err) {
+            res.status(500).send('Server error');
+        }
+
+    })
+
 
 
 module.exports = router;

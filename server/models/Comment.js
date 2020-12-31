@@ -4,16 +4,14 @@ const Schema = mongoose.Schema;
 //Create Schema
 const CommentSchema = new Schema({
 
-    id: {
-        type: String,
-        required: true
-    },
+
     title: {
         type: String,
         required: true
     },
-    commentorID: {
-        type:String,
+    commentorId: {
+        type: String,
+        required: true
     },
     content: {
         type: String,
@@ -24,7 +22,7 @@ const CommentSchema = new Schema({
     },
     dislikes: {
         type: Number,
-        required: true
+        //required: true
     },
     datePublished: {
         type: Date,
@@ -34,16 +32,16 @@ const CommentSchema = new Schema({
         type: Date,
         //required: true
     },
-    interactionIdList: {
-        type: Number,
+    interactionList: {
+        type: Schema.Types.Mixed,
         //required: true
     },
     reportsCounter: {
         type: Number,
         //required: true
     },
-    
+
 
 });
 
-module.exports = Comment = mongoose.model('comments', CommentSchema);
+module.exports = Comments = mongoose.model('comments', CommentSchema);

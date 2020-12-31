@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const users = require("./routes/users");
 const blogs = require("./routes/blogs");
 const interactions = require("./routes/interactions");
+const comments = require("./routes/comments");
 
 const passport = require("passport");
 
@@ -33,6 +34,7 @@ require('./config/passport')(passport);
 app.use("/users", users);
 app.use("/blogs", blogs);
 app.use("/interactions", interactions);
+app.use("/comments", comments);
 
 
 

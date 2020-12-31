@@ -1,6 +1,10 @@
 <ul>
     <li><a href="/home">Home</a></li>
     <li><a href="/blog">Blogs</a></li>
+    <li>
+        <mat-button (click)="logout()">logout</mat-button>
+    </li>
+
     <img width="50" alt="Angular Logo" style="float: right;"
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
@@ -55,13 +59,14 @@
     <div class="col-md-8 offset-2">
         <mat-card style="background-color: chartreuse;">
             <mat-card-header>
-                <textarea name="comment" form="usrform" cols="50">Enter text here...</textarea>
+                <textarea name="comment" [(ngModel)]="commentContent" form="usrform"
+                    cols="50">Enter text here...</textarea>
             </mat-card-header>
             <mat-card-actions>
-                <button mat-button>Submit</button>
+                <button mat-button (click)="commentAdd()">Submit</button>
 
             </mat-card-actions>
         </mat-card>
     </div>
 </div>
-<app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+<app-comment *ngFor="let comment of commentlist" [comment]="comment"></app-comment>

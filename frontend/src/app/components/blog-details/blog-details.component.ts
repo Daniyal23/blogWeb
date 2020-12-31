@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
-import { Comments } from 'src/app/models/comments'
+import { Comment } from 'src/app/models/comments'
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -11,25 +11,33 @@ import { InteractionService } from 'src/app/services/interaction.service';
 
 import { Interaction } from 'src/app/models/interaction';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CommentsService } from 'src/app/services/comments.service';
 @Component({
   selector: 'app-blog-details',
   templateUrl: './blog-details.component.html',
   styleUrls: ['./blog-details.component.css']
 })
 export class BlogDetailsComponent implements OnInit {
-  comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
+  //comments = Comments;// Passing the data here (Comments is an arrayy of comments) pass data in this var to display
   constructor(private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private blogService: BlogService,
     private interactionService: InteractionService,
     private AuthService: AuthenticationService,
+    private commentService: CommentsService,
 
   ) { }
   public blogs?;
   public img: any;
   public imgsrcs: Array<any> = [];
   public interact: Interaction = new Interaction();
+  public comment: Comment = new Comment();
 
+  public commentlist: any = [];
+
+  public newcommentid = "";
+  public newcomment = 1;
+  commentContent = '';
   bckColor = 'white'
   name = 'Angular 6';
   htmlContent = '';
@@ -41,6 +49,10 @@ export class BlogDetailsComponent implements OnInit {
 
   public changeLike = 0;
   public changedisLike = 0;
+
+  public interactionlistindex = 0;
+
+
 
 
   config: AngularEditorConfig = {
@@ -112,64 +124,153 @@ export class BlogDetailsComponent implements OnInit {
       this.interact.blogId = this.blogs._id;
       this.interact.userId = this.userdetials.id;
       this.interact.InteractionType = "";
+      if (this.blogs.interactionIdList) {
+        if (this.blogs.interactionIdList.length == 0) {
+          this.blogs.interactionIdList = [];
+          console.log("interaction list rein")
+        }
+        else {
+          console.log("in eleeee");
+          var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id);
+          if (a) {
+            this.interact = a;
+          }
+
+          if (this.interact) {
+            console.log("interact from db", this.interact);
+            if (this.interact.InteractionType == "Like") {
+              this.liked = 1;
+            }
+            else if (this.interact.InteractionType == "Dislike") {
+              this.disliked = 1;
+            }
+          }
+        }
+      }
+      else {
+        this.blogs.interactionIdList = [];
+      }
+
+      this.getCommentbyid();
+    }
+
+    if (this.newcommentid != "" && this.newcomment == 0) {
+      console.log(this.newcommentid, "hello");
+      if (!this.blogs.commentsIdList) {
+        this.blogs.commentsIdList = [];
+      }
+      this.blogs.commentsIdList.push(this.newcommentid);
+      this.newcomment = 1;
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
   }
 
   nbrLike() {
     this.changeLike = 0;
     console.log("in like");
-    if (this.liked == 0) {
+    if (this.disliked == 1 && this.liked == 0) {
+      this.disliked = 0;
+      this.blogs.numDislikes = this.blogs.numDislikes - 1;
       this.blogs.numLikes = this.blogs.numLikes + 1;
       this.liked = 1;
-      if (this.disliked == 1) {
-        this.disliked = 0;
-        this.blogs.numDislikes = this.blogs.numDislikes - 1;
-      }
-      this.interacting("Like");
+
+      this.interactingupdate("Like");
+    }
+    else if (this.liked == 0 && this.disliked == 0) {
+      this.blogs.numLikes = this.blogs.numLikes + 1;
+      this.liked = 1;
+
+      this.interactingadd("Like");
     }
     else {
       this.bckColor = 'white';
       this.blogs.numLikes = this.blogs.numLikes - 1;
       this.liked = 0;
       this.changeLike = 1;
+
+      this.blogs.interactionIdList.splice(this.blogs.interactionIdList.indexOf(a => a.userid == this.userdetials.id));
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
 
   }
   nbrDislike() {
     console.log("in dislike");
-    if (this.disliked == 0) {
+    if (this.disliked == 0 && this.liked == 0) {
       this.blogs.numDislikes = this.blogs.numDislikes + 1;
-      //this.bckColor = 'green';
       this.disliked = 1;
-
-      if (this.liked == 1) {
-        this.liked = 0;
-        this.blogs.numLikes = this.blogs.numLikes - 1;
-      }
-      this.interacting("Like");
+      this.interactingadd("Dislike");
     }
+    else if (this.liked == 1 && this.disliked == 0) {
+      this.liked = 0;
+      this.blogs.numLikes = this.blogs.numLikes - 1;
+      this.blogs.numDislikes = this.blogs.numDislikes + 1;
+      this.disliked = 1;
+      this.interactingupdate("Dislike");
+    }
+
     else {
       //this.bckColor = 'white';
       this.blogs.numDislikes = this.blogs.numDislikes - 1;
       this.disliked = 0;
 
-
+      this.blogs.interactionIdList.splice(this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id));
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
   }
 
-  interacting(inp) {
+  interactingadd(inp) {
     if (this.interact.InteractionType != "") {
       console.log("interaction func if");
+      this.interact.timestamp = new Date();
+      this.interact.InteractionType = inp;
+      this.blogs.interactionIdList.push(this.interact);
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
     else {
       console.log("interaction func else");
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
-      this.interactionService.addInteraction(this.interact);
+      console.log("interaction func else2");
+
+      this.blogs.interactionIdList.push(this.interact);
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      console.log(this.blogs.interactionIdList);
     }
-
-
   }
+
+  interactingupdate(inp) {
+    if (this.interact.InteractionType != "") {
+      console.log("interaction func if");
+      //this.interact.timestamp = new Date();
+      //this.interact.InteractionType = inp;
+      // var aa = this.blogs.interactionIdList.indexOf(a => a == this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id));
+      //console.log("obj", this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id))
+      //console.log("obj2", this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id))
+      var aa = this.findingindex();
+
+      console.log(aa, "updating");
+      if (aa >= 0) {
+        this.blogs.interactionIdList[aa].InteractionType = inp;
+        this.blogs.interactionIdList[aa].timestamp = new Date();
+        this.blogService.updateBlog(this.blogs._id, this.blogs);
+      }
+    }
+    else {
+      console.log("interaction func else");
+      //this.interact.timestamp = new Date();
+      //this.interact.InteractionType = inp;
+      var a = this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id);
+      this.blogs.interactionIdList[a].InteractionType = inp;
+      this.blogs.interactionIdList[a].timestamp = new Date();
+      this.blogService.updateBlog(this.blogs._id, this.blogs);
+
+
+      //this.blogs.interactionIdList[this.blogs.interactionIdList.length - 1].InteractionType = inp;
+      //this.blogService.updateBlog(this.blogs._id, this.blogs);
+    }
+  }
+
+
 
   getbyid() {
     this.route.params.subscribe(param => {
@@ -187,7 +288,60 @@ export class BlogDetailsComponent implements OnInit {
       //console.log(this.propertyService.getProperty(param['id']), " ;lj");
     })
   }
+  commentAdd() {
+    console.log(this.commentContent, "this is what you types");
+    this.commentMake();
+    this.comment.content = this.commentContent;
+    this.comment.datePublished = new Date();
 
+    console.log(this.comment);
+    var a;
+    this.commentService.addComments(this.comment).subscribe(res => { console.log(res), this.newcommentid = res.toString() });
+    this.newcomment = 0;
+
+    this.commentlist.push(this.comment);
+
+  }
+
+  commentMake() {
+    this.comment.commentorId = this.userdetials.id;
+    this.comment.dislikes = 0;
+    this.comment.likes = 0;
+    this.comment.reportsCounter = 0;
+    this.comment.title = "Comment";
+
+  }
+
+  getCommentbyid() {
+    if (this.blogs.commentsIdList) {
+      for (let Key in this.blogs.commentsIdList) {
+
+        this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => {
+          console.log(data);
+          //this.commentz = data;
+          this.commentlist.push(data);
+        })
+        console.log("this is the life");
+        console.log(Key, "this is key");
+      }
+    }
+    else {
+      console.log("no comments found")
+    }
+  }
+
+  findingindex(): number {
+    for (var i = 0; i < this.blogs.interactionIdList.length; i++) {
+      if (this.blogs.interactionIdList[i].userId == this.userdetials.id) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  logout() {
+    this.AuthService.logout();
+  }
 }
 
 

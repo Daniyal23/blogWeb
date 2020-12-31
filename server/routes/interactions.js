@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 const passport = require("passport");
 
-const Blog = require("../models/Interaction");
+const Interaction = require("../models/Interaction");
 
 router.get("/test", (req, res) =>
     res.json({

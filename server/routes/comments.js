@@ -6,8 +6,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 const passport = require("passport");
 
-const Commennt = require("../models/Comments");
-const comments = require("../models/Comments");
+const comments = require("../models/Comment");
 
 router.get("/test", (req, res) =>
     res.json({
@@ -23,7 +22,7 @@ router.post(
     }),
     async (req, res) => {
         try {
-            const newComment = new Comment(
+            const newComment = new Comments(
                 {
 
                     id: req.body.id,
@@ -32,7 +31,7 @@ router.post(
                     content: req.body.content,
                     likes: req.body.likes,
                     dislikes: req.body.dislikes,
-                    interactionIdList: req.body.interactionIdList,
+                    interactionList: req.body.interactionList,
                     reportsCounter: req.body.reportsCounter,
                     datePublished: req.body.datePublished,
                     dateUpdated: req.body.dateUpdated,
@@ -40,8 +39,9 @@ router.post(
                 }
             );
             await newComment.save()
-                .then(comments => res.json(comments))
+                .then(comments => res.json(comments._id))
         } catch (err) {
+            console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
 
@@ -55,7 +55,7 @@ router.get("/getAllComments",
     }),
     (req, res) => {
         console.log("in list all");
-        Comment.find()
+        Comments.find()
             .then(comments => {
                 if (!comments) {
                     console.log("error");
@@ -79,11 +79,11 @@ router.get("/getComments/:id",
     }),
     (req, res) => {
         //console.log(req.param.id)
-        Comment.findOne({ '_id': (req.params.id) })
-            .then(blog => res.json(blog))
+        Comments.findOne({ '_id': (req.params.id) })
+            .then(comnt => res.json(comnt))
             .catch(err =>
                 res.status(404).json({
-                    noblogfound: "no comment found with that id"
+                    nocommentfound: "no comment found with that id"
                 })
             );
     });
