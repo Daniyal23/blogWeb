@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: 'blog',
     component: BlogListComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
     ]
   },
@@ -63,8 +63,8 @@ const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-  
-  
+
+
 
 
 ];

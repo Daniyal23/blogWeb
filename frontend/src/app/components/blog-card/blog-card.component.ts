@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { htmlToText } from 'html-to-text';
 @Component({
   selector: 'app-blog-card',
   templateUrl: './blog-card.component.html',
@@ -29,8 +30,14 @@ export class BlogCardComponent implements OnInit {
     this.date = this.blog.dateSubmitted.toString();
     this.date = (this.date.split("T")[0]);
 
-
+    this.texttoshow = this.htmlconverter(this.texttoshow);
   }
 
 
+  htmlconverter(html) {
+    const text = htmlToText(html, {
+      wordwrap: 130
+    });
+    return text;
+  }
 }

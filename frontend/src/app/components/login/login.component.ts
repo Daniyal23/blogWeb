@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/users';
-import {CommentComponent} from 'src/app/components/comment/comment.component'
+import { CommentComponent } from 'src/app/components/comment/comment.component'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   public users: User;
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
   }
 
 

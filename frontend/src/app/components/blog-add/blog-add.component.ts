@@ -5,6 +5,7 @@ import { BlogService } from 'src/app/services/blog.service';
 
 import { Blog } from 'src/app/models/blog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-blog-add',
@@ -17,6 +18,7 @@ export class BlogAddComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private AuthService: AuthenticationService,
     private blogService: BlogService,
+    private snackBar: MatSnackBar,
   ) { }
   name = 'Angular 6';
   htmlContent = '';
@@ -26,6 +28,7 @@ export class BlogAddComponent implements OnInit {
   public base64textString = '';
   public imgsrcs: Array<any> = ["/assets/noimage.png"];
   public imgcheck: number = 0;
+
 
 
   config: AngularEditorConfig = {
@@ -67,6 +70,7 @@ export class BlogAddComponent implements OnInit {
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     console.log(this.userdetials);
     console.log(this.userdetials.username);
+
   }
 
 
@@ -133,8 +137,17 @@ export class BlogAddComponent implements OnInit {
       console.log(this.blogobj);
       localStorage.setItem('blog', JSON.stringify(this.blogobj));
       this.blogService.addBlog(this.blogobj);
+
+      this.snackBar.open("Blog Successfully Added", null, {
+        duration: 2000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
     }
   }
-
+  logout() {
+    this.AuthService.logout();
+  }
 }
 

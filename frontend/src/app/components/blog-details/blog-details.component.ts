@@ -98,7 +98,7 @@ export class BlogDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getbyid();
+    this.getblogbyid();
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     //console.log(this.userdetials);
     //console.log(this.userdetials.id);
@@ -167,7 +167,7 @@ export class BlogDetailsComponent implements OnInit {
 
   nbrLike() {
     this.changeLike = 0;
-    //console.log("in like");
+
     if (this.disliked == 1 && this.liked == 0) {
       this.disliked = 0;
       this.blogs.numDislikes = this.blogs.numDislikes - 1;
@@ -183,7 +183,7 @@ export class BlogDetailsComponent implements OnInit {
       this.interactingadd("Like");
     }
     else {
-      this.bckColor = 'white';
+
       this.blogs.numLikes = this.blogs.numLikes - 1;
       this.liked = 0;
       this.changeLike = 1;
@@ -194,7 +194,6 @@ export class BlogDetailsComponent implements OnInit {
 
   }
   nbrDislike() {
-    //console.log("in dislike");
     if (this.disliked == 0 && this.liked == 0) {
       this.blogs.numDislikes = this.blogs.numDislikes + 1;
       this.disliked = 1;
@@ -209,7 +208,6 @@ export class BlogDetailsComponent implements OnInit {
     }
 
     else {
-      //this.bckColor = 'white';
       this.blogs.numDislikes = this.blogs.numDislikes - 1;
       this.disliked = 0;
 
@@ -220,7 +218,6 @@ export class BlogDetailsComponent implements OnInit {
 
   interactingadd(inp) {
     if (this.interact.InteractionType != "") {
-      //console.log("interaction func if");
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
       this.blogs.interactionIdList.push(this.interact);
@@ -240,15 +237,7 @@ export class BlogDetailsComponent implements OnInit {
 
   interactingupdate(inp) {
     if (this.interact.InteractionType != "") {
-      //console.log("interaction func if");
-      //this.interact.timestamp = new Date();
-      //this.interact.InteractionType = inp;
-      // var aa = this.blogs.interactionIdList.indexOf(a => a == this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id));
-      //console.log("obj", this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id))
-      //console.log("obj2", this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id))
       var aa = this.findingindex();
-
-      //console.log(aa, "updating");
       if (aa >= 0) {
         this.blogs.interactionIdList[aa].InteractionType = inp;
         this.blogs.interactionIdList[aa].timestamp = new Date();
@@ -256,23 +245,17 @@ export class BlogDetailsComponent implements OnInit {
       }
     }
     else {
-      //console.log("interaction func else");
-      //this.interact.timestamp = new Date();
-      //this.interact.InteractionType = inp;
       var a = this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id);
       this.blogs.interactionIdList[a].InteractionType = inp;
       this.blogs.interactionIdList[a].timestamp = new Date();
       this.blogService.updateBlog(this.blogs._id, this.blogs);
 
-
-      //this.blogs.interactionIdList[this.blogs.interactionIdList.length - 1].InteractionType = inp;
-      //this.blogService.updateBlog(this.blogs._id, this.blogs);
     }
   }
 
 
 
-  getbyid() {
+  getblogbyid() {
     this.route.params.subscribe(param => {
       //console.log(param['id'])
     });
@@ -282,21 +265,15 @@ export class BlogDetailsComponent implements OnInit {
         //console.log(data);
         this.blogs = data;
       })
-      //return a;
-
-
-      //console.log(this.propertyService.getProperty(param['id']), " ;lj");
     })
   }
   commentAdd() {
-    //console.log(this.commentContent, "this is what you types");
     this.commentMake();
     this.comment.content = this.commentContent;
     this.comment.datePublished = new Date();
 
-    //console.log(this.comment);
     var a;
-    this.commentService.addComments(this.comment).subscribe(res => { console.log(res), this.newcommentid = res.toString() });
+    this.commentService.addComments(this.comment).subscribe(res => { this.newcommentid = res.toString() });
     this.newcomment = 0;
 
     this.commentlist.push(this.comment);
@@ -315,13 +292,7 @@ export class BlogDetailsComponent implements OnInit {
   getCommentbyid() {
     if (this.blogs.commentsIdList) {
       for (let Key in this.blogs.commentsIdList) {
-
-        this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => {
-          //console.log(data);
-          //this.commentz = data;
-          this.commentlist.push(data);
-        })
-
+        this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => { this.commentlist.push(data); })
       }
     }
     else {
