@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Blog } from '../models/blog';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
+import { Interaction } from '../models/interaction';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BlogService {
+export class InteractionService {
 
-  uri = 'http://localhost:3000/blogs';
+
+  uri = 'http://localhost:3000/interactions';
 
   constructor(
     private http: HttpClient,
@@ -23,12 +24,13 @@ export class BlogService {
     return a;
   }
 
-  public addBlog(blog: Blog): void {
+  public addInteraction(interact: Interaction): void {
 
-    this.http.post(`${this.uri}/add`, blog, { headers: { 'Authorization': this.getheader() } })
-      .subscribe(res => console.log('Done'));
+    this.http.post(`${this.uri}/add`, interact, { headers: { 'Authorization': this.getheader() } })
+      .subscribe(res => console.log(res));
 
   }
+  /*
   public getAllBlogs() {
 
     return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`, { headers: { 'Authorization': this.getheader() } })
@@ -56,5 +58,5 @@ export class BlogService {
       .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
   }
-
+*/
 }

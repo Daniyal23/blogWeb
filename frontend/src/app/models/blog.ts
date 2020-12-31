@@ -15,7 +15,7 @@ export class Blog {
     numLikes: number;
     numDislikes: number;
     reportsCounter: number;
-    interactionIdList: Interaction;
+    interactionIdList: any = {};
     commentsIdList: any = {};
     numOfReads: number;
     status: string; //(pending, active, edit required)

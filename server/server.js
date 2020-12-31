@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const users = require("./routes/users");
 const blogs = require("./routes/blogs");
+const interactions = require("./routes/interactions");
+
 const passport = require("passport");
 
 //Connect Database
@@ -30,6 +32,7 @@ require('./config/passport')(passport);
 // app.use('/api/auth', require('./routes/auth'));
 app.use("/users", users);
 app.use("/blogs", blogs);
+app.use("/interactions", interactions);
 
 
 

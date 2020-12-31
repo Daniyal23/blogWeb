@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Blog } from '../models/blog';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
+import { Comment } from '../models/comments';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BlogService {
+export class CommentsService {
 
-  uri = 'http://localhost:3000/blogs';
+
+
+  uri = 'http://localhost:3000/comments';
 
   constructor(
     private http: HttpClient,
@@ -23,12 +25,33 @@ export class BlogService {
     return a;
   }
 
-  public addBlog(blog: Blog): void {
+  public addComments(comment: Comment): void {
 
-    this.http.post(`${this.uri}/add`, blog, { headers: { 'Authorization': this.getheader() } })
-      .subscribe(res => console.log('Done'));
+    this.http.post(`${this.uri}/add`, comment, { headers: { 'Authorization': this.getheader() } })
+      .subscribe(res => console.log(res));
 
   }
+
+  public getCommentbyid(id: number) {
+    //console.log(id, "from service");
+    return this.http.get(`${this.uri}/getComments/${id}`, { headers: { 'Authorization': this.getheader() } })
+      .pipe(
+        map((res: Response) => {
+          return res || {}
+        }),
+
+
+      )
+
+  }
+
+  public updateBlog(id, obj: Interaction) {
+    this
+      .http
+      .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
+      .subscribe(res => console.log('Done'));
+  }
+  /*
   public getAllBlogs() {
 
     return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`, { headers: { 'Authorization': this.getheader() } })
@@ -37,7 +60,7 @@ export class BlogService {
   }
 
 
-  public getBlog(id: number) {
+  public getInteractionbyid(id: number) {
     //console.log(id, "from service");
     return this.http.get(`${this.uri}/getBlogs/${id}`, { headers: { 'Authorization': this.getheader() } })
       .pipe(
@@ -56,5 +79,5 @@ export class BlogService {
       .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
   }
-
+*/
 }

@@ -26,9 +26,13 @@
             </mat-card-footer>
             <mat-card-actions>
                 <div class="col-md-6">
-                    <button mat-button (click)="nbrL()" class="men">LIKE</button>
-                    <button mat-button (click)="nbrL()" class="men">Dislike</button>
-                    <button mat-button (click)="nbrL()" class="men">SHARE</button>
+                    <button *ngIf="liked==0" mat-button (click)="nbrLike()" class="men">Like</button>
+                    <button *ngIf="liked==1" mat-button (click)="nbrLike()" class="men1">Liked</button>
+
+                    <button *ngIf="disliked==0" mat-button (click)="nbrDislike()" class="men">Dislike</button>
+                    <button *ngIf="disliked==1" mat-button (click)="nbrDislike()" class="men1">Disliked</button>
+
+                    <!--button mat-button (click)="nbrL()" class="men">SHARE</button-->
                 </div>
 
                 <div class="col-md-6">
@@ -44,11 +48,11 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6 offset-3">
+    <div class="col-md-8 offset-2">
         <h2 style="text-align: center;"> Enter a Comment</h2>
     </div>
 
-    <div class="col-md-4 offset-4">
+    <div class="col-md-8 offset-2">
         <mat-card style="background-color: chartreuse;">
             <mat-card-header>
                 <textarea name="comment" form="usrform" cols="50">Enter text here...</textarea>

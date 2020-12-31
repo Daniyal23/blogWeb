@@ -10,6 +10,7 @@ export class BlogCardComponent implements OnInit {
   @Input() blog: Blog;
   public img: any;
   public texttoshow: string;
+  public date: string;
 
   constructor(private sanitizer: DomSanitizer,) { }
   public imgsrcs: Array<any> = [];
@@ -24,7 +25,12 @@ export class BlogCardComponent implements OnInit {
     console.log(this.img);
     this.texttoshow = this.blog.text.slice(0, 50);
     //this.htmlContent = this.blog.text;
+    console.log(this.blog.dateSubmitted);
+    this.date = this.blog.dateSubmitted.toString();
+    this.date = (this.date.split("T")[0]);
+
 
   }
+
 
 }

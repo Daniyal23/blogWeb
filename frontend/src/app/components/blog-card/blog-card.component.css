@@ -26,3 +26,8 @@
 .mat-card-actions{
   margin-top: 5px;
 }
+
+.rt{
+  text-align: right;
+  direction: rtl;
+}

@@ -4,9 +4,9 @@ import { Blog } from './blog';
 export class Interaction {
     id!: number;
     InteractionType: string; //(like, dislike, report)
-    userId: User;
+    userId: string;
     timestamp: Date;
-    blogId: Blog;
+    blogId: string;
     // commentId: (0 if blog interaction) **resolve this
 
 }
