@@ -19,11 +19,24 @@
                     <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
                     <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
                 </mat-card-header-->
-                <div>
 
-                </div>
 
                 <img class="img" mat-card-image [src]="img" alt="Photo" style="max-width:fit-content;">
+                <div>
+                    <mat-card>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p>hello</p>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <p>hello</p>
+
+                            </div>
+
+                        </div>
+                    </mat-card>
+                </div>
                 <mat-card-content>
                     <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
 
