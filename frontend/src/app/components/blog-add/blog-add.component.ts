@@ -117,7 +117,22 @@ export class BlogAddComponent implements OnInit {
   }
 
   Publish() {
+    if(this.imgsrcs[0]=="/assets/noimage.png"){
+      this.snackBar.open("Header Image is required", null, {
+        duration: 2000,
+        panelClass: ['danger-snackbar'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+      return;
+    }
     if (this.htmlContent == '') {
+      this.snackBar.open("Content is required", null, {
+        duration: 2000,
+        panelClass: ['danger-snackbar'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
       return;
     }
     else {

@@ -12,6 +12,7 @@ import { BlogService } from 'src/app/services/blog.service';
 export class BlogListComponent implements OnInit {
   public blogs: Blog[] = [];
   public loggedin = 0;
+  public check:number=0;
   constructor(
     private blogService: BlogService,
     private AuthService: AuthenticationService
@@ -23,6 +24,9 @@ export class BlogListComponent implements OnInit {
       this.blogs = data;
       // console.log(data);
     });
+    if(this.blogs.length>0){
+      this.check=1;
+    }
     if (this.AuthService.parseJwt(localStorage.getItem("currentUser"))) {
       this.loggedin = 1;
     }
@@ -30,6 +34,9 @@ export class BlogListComponent implements OnInit {
 
     }
 
+  }
+  ngAfterViewChecked(){
+    
   }
 
   logout() {

@@ -4,7 +4,7 @@ export class Comment {
     id!: number;
     commentorId: string;
     commentorUserName: string;
-    title: string;
+    Avatar: string;
     content: string;
     likes: number;
     dislikes: number;

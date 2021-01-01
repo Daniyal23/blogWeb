@@ -74,9 +74,9 @@ router.post("/login", (req, res) => {
 
                         const payload = {
                             id: item.id,
-                            username: item.UserName
+                            username: item.UserName,
                             //name: user.name,
-                            //avatar: user.avatar
+                            avatar: item.Avatar
                             //perm: user.perm
                         }; // Create Jwt payload
 

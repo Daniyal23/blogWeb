@@ -27,7 +27,7 @@ router.post(
 
                     id: req.body.id,
                     commentorId: req.body.commentorId,
-                    title: req.body.title,
+                    Avatar: req.body.Avatar,
                     content: req.body.content,
                     likes: req.body.likes,
                     dislikes: req.body.dislikes,
@@ -42,7 +42,7 @@ router.post(
             await newComment.save()
                 .then(comments => res.json(comments._id))
         } catch (err) {
-            //console.log(err, "tis is error")
+            console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
 

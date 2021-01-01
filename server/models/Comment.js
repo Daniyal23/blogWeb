@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
 
 
-    title: {
+    Avatar: {
         type: String,
-        required: true
+        //required: true
     },
     commentorId: {
         type: String,

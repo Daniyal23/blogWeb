@@ -58,3 +58,16 @@
 .c-f > .btn {
   border-radius: 30px;
 }
+.card {
+  max-width: 100%;
+  direction: rtl;
+  margin-top: 20px;
+  border: 5px solid #111;
+  background-color: rgb(244, 255, 244);
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-image {
+  background-size: cover;
+}

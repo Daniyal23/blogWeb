@@ -48,7 +48,7 @@ export class BlogDetailsComponent implements OnInit {
   public userID;
   public liked = 0;
   public disliked = 0;
-
+  public date:string="";
   public changeLike = 0;
   public changedisLike = 0;
 
@@ -122,7 +122,7 @@ export class BlogDetailsComponent implements OnInit {
       //console.log(this.img);
       this.htmlContent = this.blogs.text;
       this.done = 1;
-
+      this.dateset();
       this.interact.blogId = this.blogs._id;
       this.interact.userId = this.userdetials.id;
       this.interact.InteractionType = "";
@@ -169,7 +169,7 @@ export class BlogDetailsComponent implements OnInit {
       this.commentlist.push({
         '_id':this.newcommentid,
         'commentorId':this.comment.commentorId,
-        'title':this.comment.title,
+        'Avatar':this.comment.Avatar,
         'datePublished':this.comment.datePublished,
         'commentorUserName':this.comment.commentorUserName,
         'likes':this.comment.likes,
@@ -319,7 +319,8 @@ export class BlogDetailsComponent implements OnInit {
     this.comment.dislikes = 0;
     this.comment.likes = 0;
     this.comment.reportsCounter = 0;
-    this.comment.title = "Comment";
+    console.log(this.userdetials.avatar,"this is avatar");
+    this.comment.Avatar = this.userdetials.avatar;
 
   }
 
@@ -346,6 +347,14 @@ export class BlogDetailsComponent implements OnInit {
   logout() {
     this.AuthService.logout();
   }
-}
+  dateset() {
+    this.date = this.blogs.dateSubmitted.toString();
+    this.date = (this.date.split("T")[0]);
+    var a = this.date.split("-");
+    this.date = "";
+    this.date = a[2] + "-" + a[1] + "-" + a[0];
+    console.log(this.date,"date");
+  }
+ }
 
 
