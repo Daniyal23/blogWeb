@@ -22,6 +22,10 @@ li a {
 li a:hover {
   background-color: #111;
 }
+.rt{
+  text-align: right;
+  direction: rtl;
+}
 .avatar {
   vertical-align: middle;
   width: 22%;

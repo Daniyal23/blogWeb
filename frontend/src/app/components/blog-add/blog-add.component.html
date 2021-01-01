@@ -13,10 +13,11 @@
         <div class="img_div col-md-8 offset-4">
 
             <div *ngFor="let imgsrc of imgsrcs" class="img_div">
-
-                <img [src]="imgsrc" alt="" height="150px" class="img_ele">
+                <div class="fill">
+                    <img [src]="imgsrc" alt="" height="200px" class="img_ele">
+                </div>
                 <div class="img_overlay">
-                    <div class="c">
+                    <div *ngIf="imgcheck==1" class="c">
                         <h1 class="text" (click)="removeImage(imgsrc)">remove</h1>
                     </div>
 

@@ -31,7 +31,7 @@ export class BlogService {
   }
   public getAllBlogs() {
 
-    return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`)
 
 
   }

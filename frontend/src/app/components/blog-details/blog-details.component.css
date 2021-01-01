@@ -1,6 +1,7 @@
 .card {
   max-width: 100%;
   direction: rtl;
+  margin-top: 20px;
 }
 
 .header-image {
@@ -42,7 +43,7 @@ li a:hover {
 }
 
 .img {
-  height: 50px;
+  height: 250px;
 }
 .textarea {
   height: 100px;

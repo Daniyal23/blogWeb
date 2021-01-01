@@ -26,6 +26,9 @@ export class BlogListComponent implements OnInit {
     if (this.AuthService.parseJwt(localStorage.getItem("currentUser"))) {
       this.loggedin = 1;
     }
+    else {
+
+    }
 
   }
 

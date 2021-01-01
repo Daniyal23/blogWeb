@@ -9,13 +9,16 @@
 .content {
   padding: 10px;
   word-wrap: break-word;
+  
 }
 
 .content > mat-card {
   width: 200px;
 }
 .mat-card{
-  height:300px;
+  height:270px;
+  border-radius: 20px;
+  background-color:rgb(165, 211, 165) ;
 }
 .mat-card-image{
   height: 100px;
@@ -30,4 +33,10 @@
 .rt{
   text-align: right;
   direction: rtl;
+}
+.mat-card-content{
+  background-color: white;
+  border-radius: 1px;
+  border:darkslategray;
+  border-style:double;
 }

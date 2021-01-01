@@ -23,16 +23,18 @@ export class BlogCardComponent implements OnInit {
 
     }
     this.img = this.imgsrcs[this.imgsrcs.length - 1];
-    //console.log(this.img);
     this.texttoshow = this.blog.text.slice(0, 50);
-    //this.htmlContent = this.blog.text;
-    //console.log(this.blog.dateSubmitted);
-    this.date = this.blog.dateSubmitted.toString();
-    this.date = (this.date.split("T")[0]);
-
+    this.dateset();
     this.texttoshow = this.htmlconverter(this.texttoshow);
   }
 
+  dateset() {
+    this.date = this.blog.dateSubmitted.toString();
+    this.date = (this.date.split("T")[0]);
+    var a = this.date.split("-");
+    this.date = "";
+    this.date = a[2] + "-" + a[1] + "-" + a[0];
+  }
 
   htmlconverter(html) {
     const text = htmlToText(html, {
