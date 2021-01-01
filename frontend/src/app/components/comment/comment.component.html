@@ -1,31 +1,28 @@
 
+<mat-card class="card">
+	<mat-card-header>
+		<div mat-card-avatar class="header-image"></div>
+		<mat-card-title class="rtl">{{comment.commentorUserName}}</mat-card-title>
+		<mat-card-subtitle class="rtl">{{comment.datePublished}}</mat-card-subtitle>
+	</mat-card-header>
+	<div>
+
+	</div>
+
+	<mat-card-content style="direction: rtl;">
+		<p style="direction: rtl;text-align: right;">{{comment.content}}	</p>
+	</mat-card-content>
+	<mat-card-footer class="rtl">
+		<small>Likes : {{comment.likes}}   Dislikes : {{comment.dislikes}}</small>
+	</mat-card-footer>
+	<mat-card-actions>
+
+		<!--button  mat-button  class="men">Like</button>
+		<button  mat-button  class="men1">Dislike</button>
+		<button mat-button (click)="nbrL()" class="men">SHARE</button-->
 
 
-<div class="comment-box">
-	 <div class="heading">
-		<img src="./shiba2.jpg" alt="emy">
-		
-	 </div>
-   			
-		<div class="content">
-			<div class="h-in">
-			
-	    	<div class="cont">
-	    		<strong><a class="pull-left">{{comment.commentorUserName}} </a></strong>
-	    	<small class="pull-right">{{comment.datePublished}}</small>
-	    	<br>
-	        </div  >
-			<p>{{comment.content}}	</p>
-			</div>
-			<div class="c-f">
-				
-				
-				
-                <small>Likes : {{comment.likes}}   Dislikes : {{comment.dislikes}}</small>
-                
-			</div>
-	
-		</div>
-</div>
 
-	
+
+	</mat-card-actions>
+</mat-card>

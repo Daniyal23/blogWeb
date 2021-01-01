@@ -10,8 +10,8 @@
 
 </ul>
 <div *ngIf="blogs">
-    <div class="row">
-        <div class="col-md-8 offset-2">
+    <div class="row" style="border:2px solid black;">
+        <div class="border col-md-8 offset-2" style="border:2px solid black;">
             <mat-card class="card">
                 <!--mat-card-header>
                     <div mat-card-avatar class="header-image"></div>
@@ -23,7 +23,22 @@
 
                 </div>
 
-                <img class="img" mat-card-image [src]="img" alt="Photo" style="max-width:fit-content;">
+                <img class="img" mat-card-image [src]="img" alt="Photo">
+                <div>
+                    <mat-card>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p>By: {{blogs.creatorName}}</p>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <p>Date: {{date}}</p>
+
+                            </div>
+
+                        </div>
+                    </mat-card>
+                </div>
                 <mat-card-content>
                     <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
 
@@ -51,22 +66,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 offset-2 ">
+        <div class="col-md-8 offset-2 " style="border:2px solid black;">
             <h2 style="text-align: center;"> Enter a Comment</h2>
-        </div>
-
-        <div class="col-md-5 offset-3 " style="background-color: lightgray;border-radius: 100px;">
-            <div class="abc">
+        
+                <div class="col-md-6 offset-2">
                 <textarea name="comment" [(ngModel)]="commentContent" form="usrform" cols="80"
                     class="textarea">Enter text here...</textarea>
-                <button mat-button (click)="commentAdd()">Submit</button>
-
+                <button mat-raised-button color="primary" (click)="commentAdd()" >Send</button>
             </div>
-        </div>
-    </div>
-    <br>
-    <div class="col-md-8 offset-2">
-        <div *ngFor="let comment of commentlist" style="border-radius: 300px;background-color: lightslategrey;">
+          <div class="col-md-10 offset-1">  
+        <div *ngFor="let comment of commentlist" >
             <app-comment [comment]="comment">
 
             </app-comment>
@@ -74,5 +83,6 @@
             <button mat-raised-button color="primary">Dislike</button>
             <button *ngIf="comment.commentorId==userID" mat-raised-button color="warn"
                 (click)="commentDelete(comment._id,comment)">Delete</button>
-        </div>
+        </div></div>
     </div>
+</div>

@@ -48,7 +48,7 @@ export class BlogDetailsComponent implements OnInit {
   public userID;
   public liked = 0;
   public disliked = 0;
-
+  public date:string="";
   public changeLike = 0;
   public changedisLike = 0;
 
@@ -122,7 +122,7 @@ export class BlogDetailsComponent implements OnInit {
       //console.log(this.img);
       this.htmlContent = this.blogs.text;
       this.done = 1;
-
+      this.dateset();
       this.interact.blogId = this.blogs._id;
       this.interact.userId = this.userdetials.id;
       this.interact.InteractionType = "";
@@ -345,6 +345,14 @@ export class BlogDetailsComponent implements OnInit {
 
   logout() {
     this.AuthService.logout();
+  }
+  dateset() {
+    this.date = this.blogs.dateSubmitted.toString();
+    this.date = (this.date.split("T")[0]);
+    var a = this.date.split("-");
+    this.date = "";
+    this.date = a[2] + "-" + a[1] + "-" + a[0];
+    console.log(this.date,"date");
   }
 }
 
