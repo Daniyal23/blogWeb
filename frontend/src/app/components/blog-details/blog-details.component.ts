@@ -12,6 +12,8 @@ import { InteractionService } from 'src/app/services/interaction.service';
 import { Interaction } from 'src/app/models/interaction';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommentsService } from 'src/app/services/comments.service';
+import { ThrowStmt } from '@angular/compiler';
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-blog-details',
   templateUrl: './blog-details.component.html',
@@ -43,7 +45,7 @@ export class BlogDetailsComponent implements OnInit {
   htmlContent = '';
   userdetials: any;
   public done = 0;
-
+  public userID;
   public liked = 0;
   public disliked = 0;
 
@@ -103,7 +105,7 @@ export class BlogDetailsComponent implements OnInit {
     //console.log(this.userdetials);
     //console.log(this.userdetials.id);
 
-
+    this.userID = this.userdetials.id;
 
   }
   ngAfterViewChecked() {
@@ -162,6 +164,19 @@ export class BlogDetailsComponent implements OnInit {
       this.blogs.commentsIdList.push(this.newcommentid);
       this.newcomment = 1;
       this.blogService.updateBlog(this.blogs._id, this.blogs);
+      console.log(this.comment,"here is if");
+      console.log(this.commentlist,"herer is before push");
+      this.commentlist.push({
+        '_id':this.newcommentid,
+        'commentorId':this.comment.commentorId,
+        'title':this.comment.title,
+        'datePublished':this.comment.datePublished,
+        'commentorUserName':this.comment.commentorUserName,
+        'likes':this.comment.likes,
+        'dislikes':this.comment.dislikes,
+        'content':this.comment.content
+      });
+      console.log(this.commentlist,"herer is after push");
     }
   }
 
@@ -273,17 +288,34 @@ export class BlogDetailsComponent implements OnInit {
     this.comment.datePublished = new Date();
 
     var a;
-    this.newcommentid = "";
+    console.log(this.comment,"here");
+    this.newcommentid = "";    
     this.commentService.addComments(this.comment).subscribe(res => { this.newcommentid = res.toString() });
-
     this.newcomment = 0;
+    this.commentContent="";
 
-    this.commentlist.push(this.comment);
+    
 
   }
-
+  commentDelete(inp,inp2){
+    if(inp2.commentorId==this.userID){
+    this.commentService.deleteComment(inp).subscribe(res => {console.log(res)});
+    //console.log(this.blogs.commentsIdList,"comments list");
+    //console.log(this.blogs.commentsIdList.indexOf( inp));
+    this.blogs.commentsIdList.splice(this.blogs.commentsIdList.indexOf( inp),1);
+    //console.log(this.blogs.commentsIdList,"comments list after splice");
+    this.blogService.updateBlog(this.blogs._id,this.blogs);
+    //console.log(this.commentlist.indexOf(this.commentlist.find(a=>a._id==inp)),"ye cheee");
+    //console.log(this.commentlist.indexOf(a=> a._id==inp),"comment list");
+    //console.log(this.commentlist,"before splice");
+    this.commentlist.splice(this.commentlist.indexOf(this.commentlist.find(a=>a._id==inp)),1);
+    //console.log(this.commentlist,"after splice");
+    console.log(inp,"this is inp" );
+  }
+}
   commentMake() {
     this.comment.commentorId = this.userdetials.id;
+    this.comment.commentorUserName = this.userdetials.username;
     this.comment.dislikes = 0;
     this.comment.likes = 0;
     this.comment.reportsCounter = 0;

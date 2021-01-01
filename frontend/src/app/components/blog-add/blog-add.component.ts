@@ -6,6 +6,7 @@ import { BlogService } from 'src/app/services/blog.service';
 import { Blog } from 'src/app/models/blog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-add',
@@ -19,6 +20,7 @@ export class BlogAddComponent implements OnInit {
     private AuthService: AuthenticationService,
     private blogService: BlogService,
     private snackBar: MatSnackBar,
+    private router: Router,
   ) { }
   name = 'Angular 6';
   htmlContent = '';
@@ -144,6 +146,7 @@ export class BlogAddComponent implements OnInit {
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      this.router.navigate(['/blog']);
     }
   }
   logout() {

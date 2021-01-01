@@ -44,3 +44,15 @@ li a:hover {
 .img {
   height: 50px;
 }
+.textarea {
+  height: 100px;
+}
+.abc {
+  margin: 100px;
+  border: 1px solid #ddd;
+  width: 400px;
+  position: relative;
+  background: #fff;
+  border-radius: 0px 10px 10px 10px;
+  display: inline-flex;
+}

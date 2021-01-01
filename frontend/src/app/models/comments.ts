@@ -3,6 +3,7 @@ import { User } from "./users";
 export class Comment {
     id!: number;
     commentorId: string;
+    commentorUserName: string;
     title: string;
     content: string;
     likes: number;

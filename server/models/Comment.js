@@ -40,6 +40,9 @@ const CommentSchema = new Schema({
         type: Number,
         //required: true
     },
+    commentorUserName:{
+        type: String,
+    },
 
 
 });

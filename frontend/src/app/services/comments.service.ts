@@ -61,4 +61,11 @@ export class CommentsService {
 
 
 */
+
+public deleteComment(id) {
+  return this
+    .http
+    .delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
 }
+}
+

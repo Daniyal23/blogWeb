@@ -59,9 +59,9 @@ router.post(
 
 );
 router.get("/getAllBlogs",
-    // passport.authenticate("jwt", {
-    //     session: false
-    // }),
+    passport.authenticate("jwt", {
+        session: false
+    }),
     (req, res) => {
         //console.log("in list all");
         Blog.find()
