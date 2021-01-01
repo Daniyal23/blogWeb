@@ -9,64 +9,63 @@
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
 </ul>
-<div *ngIf="blogs" class="row">
-    <div class="col-md-8 offset-2">
-        <mat-card class="card">
-            <mat-card-header>
-                <div mat-card-avatar class="header-image"></div>
-                <mat-card-title class="rtl">{{blogs.creatorName}}</mat-card-title>
-                <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
-                <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image [src]="img" alt="Photo" style="max-width:fit-content; max-height: 450px;">
-            <mat-card-content>
-                <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
-
-            </mat-card-content>
-            <mat-card-footer class="rtl">
-                <h3 class="rtl"> Likes : {{blogs.numLikes}} Dislikes : {{blogs.numDislikes}} Reports :
-                    {{blogs.reportsCounter}}</h3>
-
-            </mat-card-footer>
-            <mat-card-actions>
-                <div class="col-md-6">
-                    <button *ngIf="liked==0" mat-button (click)="nbrLike()" class="men">Like</button>
-                    <button *ngIf="liked==1" mat-button (click)="nbrLike()" class="men1">Liked</button>
-
-                    <button *ngIf="disliked==0" mat-button (click)="nbrDislike()" class="men">Dislike</button>
-                    <button *ngIf="disliked==1" mat-button (click)="nbrDislike()" class="men1">Disliked</button>
-
-                    <!--button mat-button (click)="nbrL()" class="men">SHARE</button-->
-                </div>
-
-                <div class="col-md-6">
-                    <h3 class="rtl"> {{blogs.reportsCounter}}
-                        {{blogs.numDislikes}}
-                        {{blogs.numLikes}}</h3>
-                </div>
-
-
-
-            </mat-card-actions>
-        </mat-card>
+<div *ngIf="blogs">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <mat-card class="card">
+                <mat-card-header>
+                    <div mat-card-avatar class="header-image"></div>
+                    <mat-card-title class="rtl">{{blogs.creatorName}}</mat-card-title>
+                    <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
+                    <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="img" alt="Photo" style="max-width:fit-content;">
+                <mat-card-content>
+                    <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+    
+                </mat-card-content>
+                <mat-card-footer class="rtl">
+                    <h3 class="rtl"> Likes : {{blogs.numLikes}} Dislikes : {{blogs.numDislikes}} Reports :
+                        {{blogs.reportsCounter}}</h3>
+    
+                </mat-card-footer>
+                <mat-card-actions>
+                    
+                        <button *ngIf="liked==0" mat-button (click)="nbrLike()" class="men">Like</button>
+                        <button *ngIf="liked==1" mat-button (click)="nbrLike()" class="men1">Liked</button>
+    
+                        <button *ngIf="disliked==0" mat-button (click)="nbrDislike()" class="men">Dislike</button>
+                        <button *ngIf="disliked==1" mat-button (click)="nbrDislike()" class="men1">Disliked</button>
+    
+                        <!--button mat-button (click)="nbrL()" class="men">SHARE</button-->
+                    
+    
+    
+    
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <h2 style="text-align: center;"> Enter a Comment</h2>
+    <div class="row">
+        <div class="col-md-8 offset-2 " >
+            <h2 style="text-align: center;"> Enter a Comment</h2>
+        </div>
+    
+        <div class="col-md-5 offset-3 " style="background-color: lightgray;border-radius: 100px;">
+            <div class="abc">
+                    <textarea name="comment" [(ngModel)]="commentContent" form="usrform" cols="80" class="textarea">Enter text here...</textarea>
+                                <button mat-button (click)="commentAdd()">Submit</button>
+    
+                            </div>
+        </div>
     </div>
-
-    <div class="col-md-8 offset-2">
-        <mat-card style="background-color: chartreuse;">
-            <mat-card-header>
-                <textarea name="comment" [(ngModel)]="commentContent" form="usrform"
-                    cols="50">Enter text here...</textarea>
-            </mat-card-header>
-            <mat-card-actions>
-                <button mat-button (click)="commentAdd()">Submit</button>
-
-            </mat-card-actions>
-        </mat-card>
-    </div>
-</div>
-<app-comment *ngFor="let comment of commentlist" [comment]="comment"></app-comment>
+    <br>
+<div class="col-md-8 offset-2" >
+    <div *ngFor="let comment of commentlist" style="border-radius: 300px;background-color: lightslategrey;">
+<app-comment [comment]="comment" >
+    
+</app-comment>
+<button  mat-raised-button color="primary"  >Like</button>
+<button  mat-raised-button color="primary"  >Dislike</button>
+<button *ngIf="comment.commentorId==userID" mat-raised-button color="warn"  (click)="commentDelete(comment._id,comment)">Delete</button>
+</div></div>

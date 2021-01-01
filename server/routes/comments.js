@@ -35,6 +35,7 @@ router.post(
                     reportsCounter: req.body.reportsCounter,
                     datePublished: req.body.datePublished,
                     dateUpdated: req.body.dateUpdated,
+                    commentorUserName: req.body. commentorUserName,
 
                 }
             );
@@ -88,6 +89,21 @@ router.get("/getComments/:id",
             );
     });
 
-
+    router.delete("/delete/:id", passport.authenticate("jwt", {
+        session: false
+    }),
+        (req, res) => {
+            Comments.findOneAndDelete({ '_id': req.params.id })
+                .then(dealer => {
+                    res.json("Deleted Successfully");
+                    //return res.json({ error: "username already exists" });
+                })
+                .catch(err =>
+                    res.json({
+                        nocommentfound: "no Comment found with that id"
+                        //id: req.params.id
+                    })
+                );
+        });
 
 module.exports = router;
