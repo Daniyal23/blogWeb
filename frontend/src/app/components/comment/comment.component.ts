@@ -8,9 +8,17 @@ import { Comment} from 'src/app/models/comments';
 export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   constructor() { }
-  
+  public date:string="";
   ngOnInit(): void {
-  
+   this.dateset();
+  }
+  dateset() {
+    this.date = this.comment.datePublished.toString();
+    this.date = (this.date.split("T")[0]);
+    var a = this.date.split("-");
+    this.date = "";
+    this.date = a[2] + "-" + a[1] + "-" + a[0];
+    console.log(this.date,"date");
   }
 
 }

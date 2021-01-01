@@ -34,6 +34,7 @@ li a:hover {
 }
 .rtl {
   direction: rtl;
+  text-align: right;
 }
 .men {
   background-color: bckcolor;
@@ -47,4 +48,47 @@ li a:hover {
 }
 .textarea {
   height: 100px;
+  margin-top: 30px;
+  margin-left: 10px;
+  max-width: 95%;
+}
+.material-icons {
+  font-size: xx-large;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0px auto;
+  margin-top: 50px;
+}
+
+.comment {
+  float: left;
+  width: 100%;
+  height: auto;
+}
+
+.commenter {
+  float: left;
+}
+
+.commenter img {
+  width: 35px;
+  height: 35px;
+}
+
+.comment-text-area {
+  float: left;
+  width: 100%;
+  height: auto;
+}
+
+.textinput {
+  float: left;
+  width: 100%;
+  min-height: 75px;
+  outline: none;
+  resize: none;
+  border: 1px solid grey;
+  margin-top: 10px;
 }

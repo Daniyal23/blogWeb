@@ -169,7 +169,7 @@ export class BlogDetailsComponent implements OnInit {
       this.commentlist.push({
         '_id':this.newcommentid,
         'commentorId':this.comment.commentorId,
-        'title':this.comment.title,
+        'Avatar':this.comment.Avatar,
         'datePublished':this.comment.datePublished,
         'commentorUserName':this.comment.commentorUserName,
         'likes':this.comment.likes,
@@ -319,7 +319,8 @@ export class BlogDetailsComponent implements OnInit {
     this.comment.dislikes = 0;
     this.comment.likes = 0;
     this.comment.reportsCounter = 0;
-    this.comment.title = "Comment";
+    console.log(this.userdetials.avatar,"this is avatar");
+    this.comment.Avatar = this.userdetials.avatar;
 
   }
 
@@ -354,6 +355,6 @@ export class BlogDetailsComponent implements OnInit {
     this.date = a[2] + "-" + a[1] + "-" + a[0];
     console.log(this.date,"date");
   }
-}
+ }
 
 

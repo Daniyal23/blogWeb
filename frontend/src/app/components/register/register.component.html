@@ -24,7 +24,7 @@
                         <div class="fadeIn second">
                             <mat-form-field class="form-group" appearance="">
                                 <input matInput type="text" formControlName="username" name="username"
-                                    placeholder="اسم المستخدم" class="form-control" required minlength="3" required>
+                                    placeholder="اسم المستخدم" class="form-control" required minlength="3" style="direction: rtl;text-align: right;" required>
                                 <span class="text-danger"
                                     *ngIf="(registerFormControl.username.touched || submitted) && registerFormControl.username.errors?.required">
                                     اسم المستخدم مطلوب
@@ -93,34 +93,49 @@
                                     Country is required
                                 </span>
                             </div>
-                            <div class="form-group offset-2" appearance="fill">
-                                <div>
-                                    <img type="image" style="margin-left: 15px;" src="./assets/avatar1.jpg" alt="non"
-                                        class="avatar" (click)="imageSelect('./assets/avatar1.jpg',1)">
-                                    <img type="image" src="./assets/avatar2.jpg" alt="non" class="avatar"
-                                        (click)="imageSelect('./assets/avatar2.jpg',2)">
-                                    <img type="image" src="./assets/avatar3.jpg" alt="non" class="avatar"
-                                        (click)="imageSelect('./assets/avatar3.jpg',3)">
-                                    <img type="image" src="./assets/avatar4.jpg" alt="non" class="avatar"
-                                        (click)="imageSelect('./assets/avatar4.jpg',4)">
+                            <div class="form-group" appearance="fill">
+                                <div >
+                                    <img type="image" *ngIf="selected==1" style="margin-left: 15px;" src="./assets/avatar1.jpg" alt="non"
+                                        class="img" (click)="imageSelect('./assets/avatar1.jpg',1)" style="margin-left: 15px; border:3px solid gray; color: blueviolet;">
+                                        <img type="image" *ngIf="selected!=1" style="margin-left: 15px;" src="./assets/avatar1.jpg" alt="non"
+                                         class="img" (click)="imageSelect('./assets/avatar1.jpg',1)" style="margin-left: 15px; border:  gray; color: blueviolet;">
+                                    <img type="image" *ngIf="selected==2" src="./assets/avatar2.jpg" alt="non" class="img"
+                                        (click)="imageSelect('./assets/avatar2.jpg',2)" style="margin-left: 15px; border:3px solid gray; color: blueviolet;">
+                                        <img type="image" *ngIf="selected!=2" src="./assets/avatar2.jpg" alt="non" class="img"
+                                        (click)="imageSelect('./assets/avatar2.jpg',2)" style="margin-left: 15px; border: gray; color: blueviolet;">
+                                     <img type="image" *ngIf="selected==3" src="./assets/avatar3.jpg" alt="non" class="img"
+                                   (click)="imageSelect('./assets/avatar3.jpg',3)" style="margin-left: 15px; border:3px solid gray; color: blueviolet;">
+                                        <img type="image" *ngIf="selected!=3" src="./assets/avatar3.jpg" alt="non" class="img"
+                                        (click)="imageSelect('./assets/avatar3.jpg',3)" style="margin-left: 15px; border: gray; color: blueviolet;">
+                                    <img type="image" *ngIf="selected==4" src="./assets/avatar4.jpg" alt="non" class="img"
+                                        (click)="imageSelect('./assets/avatar4.jpg',4)" style="margin-left: 15px; border:3px solid gray; color: blueviolet;">
+                                        <img type="image" *ngIf="selected!=4" src="./assets/avatar4.jpg" alt="non" class="img"
+                                        (click)="imageSelect('./assets/avatar4.jpg',4)" style="margin-left: 15px; border: gray; color: blueviolet;">
                                     <!--input type="image" src="./assets/avatar5.jpg" alt="Submit" class="avatar"-->
                                 </div>
                                 <div>
-                                    <div *ngIf="selected==6;else other_content">
-                                        <img type="image" style="margin-left: 15px; border: gray;"
-                                            src="./assets/avatar6.jpg" alt="non" class="avatar"
+                                    
+                                        <img *ngIf="selected==6" type="image" style="margin-left: 15px; border:3px solid gray; color: blueviolet;"
+                                            src="./assets/avatar6.jpg" alt="non" class="img"
                                             (click)="imageSelect('./assets/avatar6.jpg',6)">
-                                    </div>
-                                    <ng-template #other_content><img type="image" style="margin-left: 15px;"
-                                            src="./assets/avatar6.jpg" alt="non" class="avatar"
+                                    
+                    
+                                            <img *ngIf="selected!=6" type="image" style="margin-left: 15px; border: gray; color: blueviolet;"
+                                            src="./assets/avatar6.jpg" alt="non" class="img"
                                             (click)="imageSelect('./assets/avatar6.jpg',6)">
-                                    </ng-template>
+                                    
 
-                                    <img type="image" src="./assets/avatar7.jpg" alt="non" class="avatar"
+                                    <img type="image" *ngIf="selected==7" src="./assets/avatar7.jpg" alt="non" class="img" style="margin-left: 15px; border:3px solid gray; color: blueviolet;"
                                         (click)="imageSelect('./assets/avatar7.jpg',7)">
-                                    <img type="image" src="./assets/avatar8.jpg" alt="non" class="avatar"
+                                        <img type="image" *ngIf="selected!=7" src="./assets/avatar7.jpg" alt="non" class="img" style="margin-left: 15px; border: gray; color: blueviolet;"
+                                        (click)="imageSelect('./assets/avatar7.jpg',7)">
+                                         <img type="image" *ngIf="selected==8" src="./assets/avatar8.jpg" alt="non" class="img" style="margin-left: 15px; border:3px solid gray; color: blueviolet;"
                                         (click)="imageSelect('./assets/avatar8.jpg',8)">
-                                    <img type="image" src="./assets/avatar9.jpg" alt="non" class="avatar"
+                                        <img type="image" *ngIf="selected!=8" src="./assets/avatar8.jpg" alt="non" class="img" style="margin-left: 15px; border: gray; color: blueviolet;"
+                                        (click)="imageSelect('./assets/avatar8.jpg',8)">
+                                    <img type="image" *ngIf="selected==9" src="./assets/avatar9.jpg" alt="non" class="img" style="margin-left: 15px; border:3px solid gray; color: blueviolet;"
+                                        (click)="imageSelect('./assets/avatar9.jpg',9)">
+                                        <img type="image" *ngIf="selected!=9" src="./assets/avatar9.jpg" alt="non" class="img" style="margin-left: 15px; border: gray; color: blueviolet;"
                                         (click)="imageSelect('./assets/avatar9.jpg',9)">
                                     <!--input type="image" src="./assets/avatar10.jpg" alt="Submit" class="avatar"-->
 

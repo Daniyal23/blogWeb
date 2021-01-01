@@ -69,6 +69,5 @@
 }
 
 .header-image {
-  background-image: url("/frontend//src/assets/avatar6.jpg");
   background-size: cover;
 }

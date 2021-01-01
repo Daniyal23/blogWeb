@@ -1,9 +1,11 @@
 
 <mat-card class="card">
 	<mat-card-header>
-		<div mat-card-avatar class="header-image"></div>
+		
+			<img class="header-image" mat-card-avatar src="{{comment.Avatar}}">
+		
 		<mat-card-title class="rtl">{{comment.commentorUserName}}</mat-card-title>
-		<mat-card-subtitle class="rtl">{{comment.datePublished}}</mat-card-subtitle>
+		<mat-card-subtitle class="rtl">{{date}}</mat-card-subtitle>
 	</mat-card-header>
 	<div>
 
