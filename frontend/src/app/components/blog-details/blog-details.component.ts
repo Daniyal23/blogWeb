@@ -273,7 +273,9 @@ export class BlogDetailsComponent implements OnInit {
     this.comment.datePublished = new Date();
 
     var a;
+    this.newcommentid = "";
     this.commentService.addComments(this.comment).subscribe(res => { this.newcommentid = res.toString() });
+
     this.newcomment = 0;
 
     this.commentlist.push(this.comment);
