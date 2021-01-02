@@ -113,6 +113,25 @@ router.post("/login", (req, res) => {
         });
 
 });
+
+router.get("/getAllUsers",
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    (req, res) => {
+        User.find()
+            .then(users => {
+                if (!users) {
+                    return res.status(404).json(errors);
+                }
+                res.json(users);
+            })
+            //return res.json({ error: "Password incorrect" });
+            .catch(err => res.json({
+                user: 'There are no users'
+            }));
+
+    });
 /*
 //@route    GET api/users/current
 //@desc     Return Current user

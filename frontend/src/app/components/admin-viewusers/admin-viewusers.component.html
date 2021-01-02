@@ -2,18 +2,12 @@
     <li><a href="/home">Home</a></li>
     <li><a href="/blog/add">Blog Add</a></li>
     <li><a href="/blog">Blogs</a></li>
-    <li *ngIf="loggedin==1">
-        <a (click)="logout()">logout</a>
-    </li>
-    <li *ngIf="loggedin==0">
-        <a href="/login">login</a>
-    </li>
 
     <img width="50" alt="Angular Logo" style="float: right;"
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
 </ul>
-
+<div *ngFor="let user of userInfolist">
 <div class="col-md-8 offset-2" style="border:5px solid black; margin-top: 10px;">
 <div class="container">
     <div class="row">
@@ -22,11 +16,13 @@
     <div class="row">
       <div class="col-md-3" style="height:200px;">
          <br><br>
-            <fieldset>         
-                <input type="checkbox" name="1" value="Cats">Mod      
-                <input type="checkbox" name="2" value="Dogs">Blogger     
-                <input type="checkbox" name="3" value="Birds">Regular      
-            </fieldset>      
+              
+            <input type="radio" id="mod" name="mod" value="mod" >
+            <label for="mod">Mod</label><br>
+            <input type="radio" id="blogger" name="blogger" value="blogger" (change)="statusUp('Blogger',user.userName)">
+             <label for="blogger">Blogger</label><br>
+             <input type="radio" id="regular" name="regular" value="regular" (change)="statusUp('Regular',user.userName)">
+             <label for="rergular">Regular</label>
         
 
 
@@ -36,15 +32,16 @@
         <button  mat-raised-button color="warn" >Delete</button>
     </div>
       <div class="col-md-3" style="height:200px;"> 
-        <p class="rtl">No of Blogs:	</p>
-        <p class="rtl">No of Comments:	</p>
-        <p class="rtl">No of Likes:	</p>
-        <p class="rtl">No of Dislikes:	</p>
-        <p class="rtl">No of Reports:	</p>
-        <p class="rtl">Status: 	</p>
+        <p class="rtl">No of Blogs: {{user.noBlogs}}	</p>
+        <p class="rtl">No of Comments:{{user.noComments}}	</p>
+        <p class="rtl">No of Likes:{{user.noLikes}}	</p>
+        <p class="rtl">No of Dislikes:{{user.noDislikes}}	</p>
+        <p class="rtl">No of Reports:{{user.noReports}}	</p>
+        <p class="rtl">Status: {{user.status}}	</p>
     </div>
-      <div class="col-md-3 rtl" style="height:200px;">Username </div>
+      <div class="col-md-3 rtl" style="height:200px;">{{user.userName}} </div>
     </div>
   </div>
 
+</div>
 </div>

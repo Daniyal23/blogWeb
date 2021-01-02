@@ -69,7 +69,7 @@ router.get("/getAllComments",
                 //console.log(err),
                 {
 
-                    dealer: 'There are no comments'
+                    comment: 'There are no comments'
                 }));
 
     });
