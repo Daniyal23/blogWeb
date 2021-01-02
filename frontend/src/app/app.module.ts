@@ -27,6 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CommentComponent } from './components/comment/comment.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogCardComponent } from './components/blog-card/blog-card.component';
+import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { BlogCardComponent } from './components/blog-card/blog-card.component';
     LoginComponent,
     CommentComponent,
     BlogListComponent,
-    BlogCardComponent
+    BlogCardComponent,
+    AdminViewusersComponent
   ],
   imports: [
     BrowserModule,

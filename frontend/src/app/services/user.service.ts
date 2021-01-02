@@ -11,18 +11,22 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  // getAll() {
-  //   return this.http.get<User[]>(`${config.apiUrl}/users`);
-  // }
 
-  register(user: User) {
-    return this.http.post(`${this.uri}/signup`, user)
+  public getheader() {
+    var a = localStorage.getItem("id_token");
+    //console.log(a);
 
+    return a;
   }
 
-  // delete(id: number) {
-  //   return this.http.delete(`${config.apiUrl}/users/${id}`);
-  // }
+  getAllUsers() {
+    return this.http.get<User[]>(`${this.uri}/getAllUsers`, { headers: { 'Authorization': this.getheader() } });
+  }
+
+
+  deleteUsers(id: number) {
+    return this.http.delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
+  }
 
 
 }

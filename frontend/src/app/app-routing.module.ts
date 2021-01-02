@@ -8,6 +8,7 @@ import { GuestGuard } from './guards/guest.guard';
 import { BlogAddComponent } from './components/blog-add/blog-add.component';
 import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
+import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
 
 
 const routes: Routes = [
@@ -63,7 +64,13 @@ const routes: Routes = [
     component: RegisterComponent,
     canActivate: [GuestGuard]
   },
-
+  {
+    path: 'admin/listusers',
+    component: AdminViewusersComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
 
 
 
