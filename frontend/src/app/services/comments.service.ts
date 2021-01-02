@@ -51,16 +51,16 @@ export class CommentsService {
       .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
   }
-  /*
-  public getAllBlogs() {
+  
+  public getAllComments() {
 
-    return this.http.get<Blog[]>(`${this.uri}/getAllBlogs`, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get<Comment[]>(`${this.uri}/getAllComments`, { headers: { 'Authorization': this.getheader() } })
 
 
   }
 
 
-*/
+
 
 public deleteComment(id) {
   return this
