@@ -31,6 +31,7 @@ import { AdminViewusersComponent } from './components/admin-viewusers/admin-view
 import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-viewblogs.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
+import { AdminUserapproveComponent } from './components/admin-userapprove/admin-userapprove.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { AdminBlogeditComponent } from './components/admin-blogedit/admin-bloged
     BlogCardComponent,
     AdminViewusersComponent,
     AdminViewblogsComponent,
-    AdminBlogeditComponent
+    AdminBlogeditComponent,
+    AdminUserapproveComponent
   ],
   imports: [
     BrowserModule,

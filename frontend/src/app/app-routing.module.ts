@@ -11,6 +11,7 @@ import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
 import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-viewblogs.component';
 import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
+import { AdminUserapproveComponent } from './components/admin-userapprove/admin-userapprove.component';
 
 
 const routes: Routes = [
@@ -87,7 +88,13 @@ const routes: Routes = [
     children: [
     ]
   },
-
+  {
+    path: 'admin/approveusers',
+    component: AdminUserapproveComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
 
 ];
 

@@ -17,7 +17,8 @@ class userInfo {
   userName: string;
   role: string;
   noComments: number = 0;
-  yo: number = 0;
+  accountType: string;
+  _id:number=0;
 }
 
 class forcheckbox {
@@ -57,7 +58,10 @@ export class AdminViewusersComponent implements OnInit {
   public yoy1: false;
 
 
-
+  public moderator:number=0;
+  public blogger:number=0;
+  public regular:number=0;
+  
   public check = 0;
   ngOnInit(): void {
     this.getusers();
@@ -78,6 +82,7 @@ export class AdminViewusersComponent implements OnInit {
     if (this.blogs.length > 0) {
       //console.log(this.blogs,"blogs");
     }
+
   }
 
   getusers() {
@@ -113,16 +118,12 @@ export class AdminViewusersComponent implements OnInit {
     for (var i = 0; i < this.user.length; i++) {
       this.userInfolist[i] = new userInfo();
       this.userInfolist[i].userName = this.user[i].UserName;
-      this.userInfolist[i].role = "User";
+      this.userInfolist[i].status=this.user[i].status;
+      this.userInfolist[i].accountType=this.user[i].accountType;
+      this.userInfolist[i]._id=this.user[i]._id;
 
       //      this.userInfolist[i].status = "mod"
-      if (i == 0) {
-        this.fillcheckboxlist(i, "mod");
-      }
-      else {
-        this.fillcheckboxlist(i, "regular");
-
-      }
+     
       this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
       // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
 
@@ -133,10 +134,12 @@ export class AdminViewusersComponent implements OnInit {
           this.userInfolist[i].noReports += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Report").length;
         }
       })
-
+      this.fillcheckboxlist(i,this.user[i].accountType);
       this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
+      
 
     }
+
     // console.log(this.userInfolist, "user infos");
   }
   statusUp(inp, inp2) {
@@ -148,18 +151,30 @@ export class AdminViewusersComponent implements OnInit {
 
   fillcheckboxlist(index, name) {
 
-    if (name == "mod") {
-      this.userInfolist[index].yo = 0;
+    if (name == "moderator") {
+      this.moderator=1;
+      this.blogger=0;
+      this.regular=0;
     }
     else if (name == "blogger") {
-      this.userInfolist[index].yo = 1;
-
+      this.blogger=1;
+      this.regular=0;
+      this.moderator=0;
     }
     else {
-      this.userInfolist[index].yo = 2;
+      this.regular=1;
+      this.blogger=0;
+      this.regular=0;
 
     }
 
+  }
+  updateAccount(inp,inp2){
+    console.log(inp,inp2,"here");
+    this.user[ this.user.findIndex(a=> a._id==inp)].accountType=inp2;
+    this.userService.updateUser(this.user[ this.user.findIndex(a=> a._id==inp)]._id,this.user[ this.user.findIndex(a=> a._id==inp)]);
+    this.userInfolist[this.userInfolist.findIndex(a=> a._id==inp)].accountType=inp2;
+    
   }
   //   onSelectionChange(entry) {
   //     this.selectedEntry = entry;

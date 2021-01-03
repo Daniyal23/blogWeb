@@ -18,15 +18,13 @@
         <div class="col-md-3" style="height:200px;">
           <br><br>
 
-          <input type="radio" [(ngModel)]="user.yo" [value]="0">
-          <label for="mod">Moderator</label><br>
-
-          <input type="radio" [(ngModel)]="user.yo" [value]="1">
-          <label for="mod">Blogger</label><br>
-
-          <input type="radio" [(ngModel)]="user.yo" [value]="2">
-          <label for="mod">Regular</label><br>
-
+          <button mat-stroked-button *ngIf="user.accountType!='blogger'" (click)="updateAccount(user._id,'blogger')">Blogger</button>
+          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='blogger'">Blogger</button>
+          <button mat-stroked-button *ngIf="user.accountType!='regular'" (click)="updateAccount(user._id,'regular')">Regular</button>
+          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='regular'">Regular</button>
+          <button mat-stroked-button *ngIf="user.accountType!='moderator'" (click)="updateAccount(user._id,'moderator')">Moderator</button>
+          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='moderator'">Moderator</button>
+          
 
         </div>
         <div class="col-md-3" style="height: 200px;">
