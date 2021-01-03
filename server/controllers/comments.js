@@ -25,6 +25,9 @@ module.exports = {
             );
             await newComment.save()
                 .then(comments => res.json(comments._id))
+                .catch(err => res.json('Validation error')
+                    //console.log(err),
+                );
         } catch (err) {
             console.log(err, "tis is error")
             res.status(500).send('Server error');
@@ -75,7 +78,7 @@ module.exports = {
     deleteComment: async (req, res) => {
         try {
             Comments.findOneAndDelete({ '_id': req.params.id })
-                .then(dealer => {
+                .then(comment => {
                     res.json("Deleted Successfully");
                     //return res.json({ error: "username already exists" });
                 })

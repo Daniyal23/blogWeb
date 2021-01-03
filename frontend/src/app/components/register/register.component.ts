@@ -123,6 +123,14 @@ export class RegisterComponent implements OnInit {
 
         console.log(JSON.stringify(res));
         if (res == "email already exists") {
+          this.snackBar.open('Email already exists', "", {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        else if (res == "Username already exists") {
           this.snackBar.open('Username already exists', "", {
             duration: 2000,
             panelClass: ['error-snackbar'],

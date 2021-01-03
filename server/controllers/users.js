@@ -4,6 +4,8 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
+const { Result, check } = require("express-validator");
+const { response } = require("express");
 
 
 
@@ -24,10 +26,17 @@ module.exports = {
     signup: async (req, res) => {
         try {
             let { UserName, Email, Password, Country, Avatar } = req.body;
+            let FoundUser = {};
             const user = await User.findOne({
                 UserName,
             });
-            if (user) return res.json('email already exists');
+            if (user) return res.json('Username already exists');
+
+            let users = await User.find();
+            const checkmail = await Promise.all(users.map(user => bcrypt.compare(Email, user.Email)));
+            checkmail.map((response, index) => { if (response) FoundUser = users[index] });
+            if (FoundUser._id) return res.json('email already exists');
+
             const salt = await bcrypt.genSalt(10);
             Email = await bcrypt.hash(Email, salt);
             Password = await bcrypt.hash(Password, salt);

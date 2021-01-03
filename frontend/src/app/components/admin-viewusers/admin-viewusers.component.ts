@@ -6,6 +6,7 @@ import { BlogService } from 'src/app/services/blog.service';
 import { CommentsService } from 'src/app/services/comments.service';
 import { UserService } from 'src/app/services/user.service';
 import { Comment } from 'src/app/models/comments'
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 class userInfo {
   noLikes: number = 0;
@@ -44,7 +45,8 @@ export class AdminViewusersComponent implements OnInit {
   constructor(
     public userService: UserService,
     public blogService: BlogService,
-    public commentService: CommentsService
+    public commentService: CommentsService,
+    private AuthService: AuthenticationService
   ) { }
   public userInfolist: Array<userInfo> = [];
   public forcheckBox: Array<forcheckbox> = [];

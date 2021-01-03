@@ -28,13 +28,15 @@ export class CommentsService {
   public addComments(comment: Comment) {
 
     var a;
-    return this.http.post(`${this.uri}/add`, comment, { headers: { 'Authorization': this.getheader() } })
+    return this.http.post(`${this.uri}/addComments`, comment);
+    //, { headers: { 'Authorization': this.getheader() } })
 
   }
 
   public getCommentbyid(id: string) {
     //console.log(id, "from service");
-    return this.http.get(`${this.uri}/getCommentsById/${id}`, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get(`${this.uri}/getCommentsById/${id}`)
+      //, { headers: { 'Authorization': this.getheader() } })
       .pipe(
         map((res: Response) => {
           return res || {}

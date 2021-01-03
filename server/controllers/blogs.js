@@ -1,19 +1,6 @@
 const express = require("express");
-//const router = express.Router();
-//const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const keys = require("../config/keys");
-// const passport = require("passport");
-
 const Blog = require("../models/Blog");
-//const asyncHandler = require('express-async-handler');
-
-// router.get("/test", (req, res) =>
-//     res.json({
-//         msg: "blog Works"
-//     })
-// );
 
 module.exports = {
     addBlog: (async (req, res) => {
@@ -131,6 +118,24 @@ module.exports = {
             res.status(500).send('Server error');
         }
 
-    }
+    },
+    deleteBlog: async (req, res) => {
+        try {
+            Blog.findOneAndDelete({ '_id': req.params.id })
+                .then(blog => {
+                    res.json("Deleted Successfully");
+                    //return res.json({ error: "username already exists" });
+                })
+                .catch(err =>
+                    res.json({
+                        noblogfound: "no blog found with that id"
+                        //id: req.params.id
+                    })
+                );
+        } catch (err) {
+            console.log(err, "ttis is error")
+            res.status(500).send('Server error');
+        }
+    },
 
 }
