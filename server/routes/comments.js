@@ -1,109 +1,13 @@
 const express = require("express");
 const router = express.Router();
-//const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
-const passport = require("passport");
+const Comments = require('../controllers/comments');
 
-const comments = require("../models/Comment");
-
-router.get("/test", (req, res) =>
-    res.json({
-        msg: "comments Works"
-    })
-);
-
-router.post(
-    "/add",
-    passport.authenticate("jwt", {
-        session: false
-
-    }),
-    async (req, res) => {
-        try {
-            const newComment = new Comments(
-                {
-
-                    id: req.body.id,
-                    commentorId: req.body.commentorId,
-                    Avatar: req.body.Avatar,
-                    content: req.body.content,
-                    likes: req.body.likes,
-                    dislikes: req.body.dislikes,
-                    interactionList: req.body.interactionList,
-                    reportsCounter: req.body.reportsCounter,
-                    datePublished: req.body.datePublished,
-                    dateUpdated: req.body.dateUpdated,
-                    commentorUserName: req.body. commentorUserName,
-
-                }
-            );
-            await newComment.save()
-                .then(comments => res.json(comments._id))
-        } catch (err) {
-            console.log(err, "tis is error")
-            res.status(500).send('Server error');
-        }
-
-    }
+router.get('/getAllComments', Comments.getAllComments);
+router.post('/addComments', Comments.addComments);
+router.get('/getCommentsById/:id', Comments.getCommentsById);
+router.delete('/deleteComment/:id', Comments.deleteComment);
 
 
-);
-router.get("/getAllComments",
-    passport.authenticate("jwt", {
-        session: false
-    }),
-    (req, res) => {
-        //console.log("in list all");
-        Comments.find()
-            .then(comments => {
-                if (!comments) {
-                    // console.log("error");
-                    return res.status(404).json(errors);
-                }
-                // console.log("done");
-                res.json(comments);
-            })
-            .catch(err => res.status(404).json(
-                //console.log(err),
-                {
 
-                    comment: 'There are no comments'
-                }));
-
-    });
-
-router.get("/getComments/:id",
-    passport.authenticate("jwt", {
-        session: false
-    }),
-    (req, res) => {
-        //console.log(req.param.id)
-        Comments.findOne({ '_id': (req.params.id) })
-            .then(comnt => res.json(comnt))
-            .catch(err =>
-                res.status(404).json({
-                    nocommentfound: "no comment found with that id"
-                })
-            );
-    });
-
-    router.delete("/delete/:id", passport.authenticate("jwt", {
-        session: false
-    }),
-        (req, res) => {
-            Comments.findOneAndDelete({ '_id': req.params.id })
-                .then(dealer => {
-                    res.json("Deleted Successfully");
-                    //return res.json({ error: "username already exists" });
-                })
-                .catch(err =>
-                    res.json({
-                        nocommentfound: "no Comment found with that id"
-                        //id: req.params.id
-                    })
-                );
-        });
 
 module.exports = router;

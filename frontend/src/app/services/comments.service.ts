@@ -34,7 +34,7 @@ export class CommentsService {
 
   public getCommentbyid(id: string) {
     //console.log(id, "from service");
-    return this.http.get(`${this.uri}/getComments/${id}`, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get(`${this.uri}/getCommentsById/${id}`, { headers: { 'Authorization': this.getheader() } })
       .pipe(
         map((res: Response) => {
           return res || {}

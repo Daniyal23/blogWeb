@@ -39,7 +39,7 @@ export class BlogService {
 
   public getBlog(id: number) {
     //console.log(id, "from service");
-    return this.http.get(`${this.uri}/getBlogs/${id}`, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get(`${this.uri}/getBlogsById/${id}`)
       .pipe(
         map((res: Response) => {
           return res || {}

@@ -5,10 +5,14 @@ const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const users = require("./routes/users");
 const blogs = require("./routes/blogs");
-const interactions = require("./routes/interactions");
+//const interactions = require("./routes/interactions");
 const comments = require("./routes/comments");
 const passport = require("passport");
 const dotenv = require('dotenv');
+//const blog = require('./routes/blogs')
+//import blog from '
+
+
 dotenv.config();
 //Connect Database
 connectDB();
@@ -26,16 +30,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
 // //Passport Config
-require('./config/passport')(passport);
+require('./middleware/auth')(passport);
 
 
 // Routes
 // app.use('/api/auth', require('./routes/auth'));
 app.use("/users", users);
-app.use("/blogs", blogs);
-app.use("/interactions", interactions);
+//app.use("/blogs", blogs);
+//app.use("/interactions", interactions);
 app.use("/comments", comments);
-
+app.use('/blogs', blogs)
 
 
 const PORT = process.env.PORT;
