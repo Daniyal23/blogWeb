@@ -94,7 +94,7 @@ router.get("/getComments/:id",
     }),
         (req, res) => {
             Comments.findOneAndDelete({ '_id': req.params.id })
-                .then(dealer => {
+                .then(comment => {
                     res.json("Deleted Successfully");
                     //return res.json({ error: "username already exists" });
                 })

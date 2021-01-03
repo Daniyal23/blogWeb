@@ -9,6 +9,8 @@ import { BlogAddComponent } from './components/blog-add/blog-add.component';
 import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
+import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-viewblogs.component';
+import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
 
 
 const routes: Routes = [
@@ -71,7 +73,20 @@ const routes: Routes = [
     children: [
     ]
   },
-
+  {
+    path: 'admin/listblogs',
+    component: AdminViewblogsComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
+  {
+    path: 'admin/editblog/:id',
+    component: AdminBlogeditComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
 
 
 ];

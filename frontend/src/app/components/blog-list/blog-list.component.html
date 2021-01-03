@@ -18,7 +18,7 @@
 <div class="container">
     <div class="row">
         <div *ngFor="let blog of blogs">
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="blog.status=='show'">
                 <app-blog-card [blog]="blog" routerLink="detail/{{blog._id}}"></app-blog-card>
             </div>
         </div>

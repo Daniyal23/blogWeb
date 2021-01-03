@@ -56,5 +56,10 @@ export class BlogService {
       .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
   }
+  public deleteBlog(id) {
+  return this
+    .http
+    .delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
+}
 
 }

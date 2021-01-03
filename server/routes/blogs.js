@@ -136,6 +136,22 @@ router.post("/update/:id", passport.authenticate("jwt", {
         }
 
     })
+    router.delete("/delete/:id", passport.authenticate("jwt", {
+        session: false
+    }),
+        (req, res) => {
+            Blog.findOneAndDelete({ '_id': req.params.id })
+                .then(blog => {
+                    res.json("Deleted Successfully");
+                    //return res.json({ error: "username already exists" });
+                })
+                .catch(err =>
+                    res.json({
+                        noblogfound: "no blog found with that id"
+                        //id: req.params.id
+                    })
+                );
+        });
 
 
 

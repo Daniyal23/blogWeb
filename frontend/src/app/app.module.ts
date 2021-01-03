@@ -28,6 +28,10 @@ import { CommentComponent } from './components/comment/comment.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogCardComponent } from './components/blog-card/blog-card.component';
 import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
+import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-viewblogs.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +45,9 @@ import { AdminViewusersComponent } from './components/admin-viewusers/admin-view
     CommentComponent,
     BlogListComponent,
     BlogCardComponent,
-    AdminViewusersComponent
+    AdminViewusersComponent,
+    AdminViewblogsComponent,
+    AdminBlogeditComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,7 @@ import { AdminViewusersComponent } from './components/admin-viewusers/admin-view
     MatCardModule,
     MatTabsModule,
     FormsModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
