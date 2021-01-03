@@ -16,8 +16,13 @@ class userInfo {
   userName: string;
   role: string;
   noComments: number = 0;
+  yo: number = 0;
 }
 
+class forcheckbox {
+  text: string;
+  selected: number;
+}
 @Component({
   selector: 'app-admin-viewusers',
   templateUrl: './admin-viewusers.component.html',
@@ -34,13 +39,24 @@ export class AdminViewusersComponent implements OnInit {
   public user: any[] = [];
   public blogs: Blog[] = [];
   public comments: Comment[] = [];
+
+  public usertype: any;
   constructor(
     public userService: UserService,
     public blogService: BlogService,
     public commentService: CommentsService
   ) { }
   public userInfolist: Array<userInfo> = [];
+  public forcheckBox: Array<forcheckbox> = [];
+  public forcheck: forcheckbox = new forcheckbox();
+  public forcheck1: forcheckbox = new forcheckbox();
+  public forcheck2: forcheckbox = new forcheckbox();
+  public yoy: true;
+  public yoy1: false;
 
+
+
+  public check = 0;
   ngOnInit(): void {
     this.getusers();
     this.getblogs();
@@ -49,9 +65,10 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.user.length > 0 && this.blogs.length > 0) {
+    if (this.user.length > 0 && this.blogs.length > 0 && this.check == 0) {
       this.populate();
-      console.log(this.user, " users");
+      this.check = 1;
+      //console.log(this.user, " users");
     }
     if (this.comments.length > 0) {
       // console.log(this.comments, "commentns");
@@ -66,9 +83,9 @@ export class AdminViewusersComponent implements OnInit {
       this.user = data;
 
     })
-    console.log("hello");
+    //  console.log("hello");
     this.user.forEach(value => {
-      console.log(value, 'daasd')
+      //   console.log(value, 'daasd')
     })
   }
   getblogs() {
@@ -95,7 +112,15 @@ export class AdminViewusersComponent implements OnInit {
       this.userInfolist[i] = new userInfo();
       this.userInfolist[i].userName = this.user[i].UserName;
       this.userInfolist[i].role = "User";
-      this.userInfolist[i].status = "undefined"
+
+      //      this.userInfolist[i].status = "mod"
+      if (i == 0) {
+        this.fillcheckboxlist(i, "mod");
+      }
+      else {
+        this.fillcheckboxlist(i, "regular");
+
+      }
       this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
       // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
 
@@ -110,7 +135,7 @@ export class AdminViewusersComponent implements OnInit {
       this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
 
     }
-    console.log(this.userInfolist, "user infos");
+    // console.log(this.userInfolist, "user infos");
   }
   statusUp(inp, inp2) {
     console.log(inp, inp2);
@@ -118,5 +143,24 @@ export class AdminViewusersComponent implements OnInit {
     //this.user[this.user.findIndex(a=> a.userName==inp2)].status=inp
 
   }
+
+  fillcheckboxlist(index, name) {
+
+    if (name == "mod") {
+      this.userInfolist[index].yo = 0;
+    }
+    else if (name == "blogger") {
+      this.userInfolist[index].yo = 1;
+
+    }
+    else {
+      this.userInfolist[index].yo = 2;
+
+    }
+
+  }
+  //   onSelectionChange(entry) {
+  //     this.selectedEntry = entry;
+  // }
 }
 

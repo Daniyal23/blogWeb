@@ -7,9 +7,9 @@ const users = require("./routes/users");
 const blogs = require("./routes/blogs");
 const interactions = require("./routes/interactions");
 const comments = require("./routes/comments");
-
 const passport = require("passport");
-
+const dotenv = require('dotenv');
+dotenv.config();
 //Connect Database
 connectDB();
 
@@ -38,6 +38,6 @@ app.use("/comments", comments);
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`Server Started on Port ${PORT}`));

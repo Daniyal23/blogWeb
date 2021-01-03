@@ -17,13 +17,14 @@
         <div class="col-md-3" style="height:200px;">
           <br><br>
 
-          <input type="radio" id="mod" name="mod" value="mod">
-          <label for="mod">Mod</label><br>
-          <input type="radio" id="blogger" name="blogger" value="blogger" (change)="statusUp('Blogger',user.userName)">
-          <label for="blogger">Blogger</label><br>
-          <input type="radio" id="regular" name="regular" value="regular" (change)="statusUp('Regular',user.userName)">
-          <label for="rergular">Regular</label>
+          <input type="radio" [(ngModel)]="user.yo" [value]="0">
+          <label for="mod">Moderator</label><br>
 
+          <input type="radio" [(ngModel)]="user.yo" [value]="1">
+          <label for="mod">Blogger</label><br>
+
+          <input type="radio" [(ngModel)]="user.yo" [value]="2">
+          <label for="mod">Regular</label><br>
 
 
         </div>
