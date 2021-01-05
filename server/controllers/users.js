@@ -45,7 +45,7 @@ module.exports = {
                 Email,
                 Password,
                 Country,
-                Avatar,
+                Avatar
             });
             await newUser.save(function (error, obj) {
                 if (error) res.send(error);
@@ -184,32 +184,34 @@ module.exports = {
 
     updateUser: async (req, res) => {
         try {
+            console.log("in update")
             User.findById(req.params.id)
                 .then(user => {
-                    user.username = req.body.username;
-                    user.perm = req.body.permissions;
-                    user.password = req.body.password
+                    user.UserName = req.body.UserName;
+                    user.Password = req.body.Password;
+                    user.Avatar=req.body.Avatar;
+                    user.status=req.body.status;
+                    user.Country=req.body.Country;
+                    user.accountType=req.body.accountType;
+                    user.Email=req.body.Email;
 
-                    bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(user.password, salt, (err, hash) => {
-                            if (err) throw err;
-                            user.password = hash;
-                            user
+                   
+                    user
                                 .save()
                                 .then(user => {
                                     res.json('Update complete')
+                                })
                                         .catch(err =>
                                             res.status(404).json({
                                                 nouserfound: "no user found with that id"
                                             })
                                         );
-                                });
+                                
 
 
-
-                        })
-                    });
+                       
                 })
+                
         } catch (err) {
             res.status(500).send('Server error');
         }

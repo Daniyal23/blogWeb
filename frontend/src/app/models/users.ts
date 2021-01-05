@@ -6,5 +6,7 @@ export class User {
     Email: string;
     Country: string;
     Avatar: string;
+    accountType:string;
+    status:string;
 
 }

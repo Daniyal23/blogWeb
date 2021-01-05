@@ -27,6 +27,16 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    accountType: {
+        type: String,
+        default:"regular"
+    },
+    status: {
+        type: String,
+        default:"notapproved"
+        
+        
+    },
 
 });
 

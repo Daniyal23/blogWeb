@@ -27,6 +27,14 @@ export class UserService {
   deleteUsers(id: number) {
     return this.http.delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
   }
+  public updateUser(id, obj: User) {
+    this
+      .http
+      .post(`${this.uri}/updateUser/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
+      .subscribe(res => console.log(res));
+  }
+
+
 
 
 }
