@@ -32,6 +32,12 @@ import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-view
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
 import { AdminUserapproveComponent } from './components/admin-userapprove/admin-userapprove.component';
+import { CommentEditComponent, DialogOverviewExampleDialog } from './components/comment-edit/comment-edit.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditprofileComponent } from './components/editprofile/editprofile.component';
+import { AdminAllcommentsComponent } from './components/admin-allcomments/admin-allcomments.component';
+import { MyblogsComponent } from './components/myblogs/myblogs.component';
 
 
 @NgModule({
@@ -49,7 +55,14 @@ import { AdminUserapproveComponent } from './components/admin-userapprove/admin-
     AdminViewusersComponent,
     AdminViewblogsComponent,
     AdminBlogeditComponent,
-    AdminUserapproveComponent
+    AdminUserapproveComponent,
+    CommentEditComponent,
+    DialogOverviewExampleDialog,
+    NavbarComponent,
+    EditprofileComponent,
+    AdminAllcommentsComponent,
+    MyblogsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -70,10 +83,13 @@ import { AdminUserapproveComponent } from './components/admin-userapprove/admin-
     MatInputModule,
     MatFormFieldModule,
     MatGridListModule,
-    AngularEditorModule
+    AngularEditorModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [CommentEditComponent, DialogOverviewExampleDialog]
+
 })
 export class AppModule { }

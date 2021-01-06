@@ -1,0 +1,35 @@
+<div class="rtl" *ngIf="displaylist.length<=0" style="margin-top: 40vh;">
+    <h1 style="text-align: center;"> There are No Comments . </h1>
+</div>
+<div *ngFor="let comment of displaylist">
+    <div class="col-md-8 offset-2" style="border:5px solid black; margin-top: 10px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="height:40px;"> </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" style="height:200px;">
+                    <button mat-raised-button color="primary" (click)="editcomment(comment.comment._id)"
+                        (click)="openDialog(comment.comment)">Edit</button>
+
+                    <br> <br>
+                    <button mat-raised-button color="warn" (click)="deletecomment(comment)">Delete</button>
+
+                    <br><br>
+
+                </div>
+                <div class="col-md-4 rtl" style="height: 200px;">
+                    <p class="rtl">comment : {{comment.comment.content}} </p>
+
+                </div>
+                <div class="col-md-4 rtl" style="height:200px;">
+                    <p class="rtl">blog title :{{comment.blog.title}} </p>
+                    <p class="rtl">date published :{{comment.date}} </p>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

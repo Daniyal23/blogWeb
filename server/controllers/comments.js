@@ -93,4 +93,43 @@ module.exports = {
             res.status(500).send('Server error');
         }
     },
+    updateComment: async (req, res) => {
+        try {
+            console.log("in update")
+            Comments.findById(req.params.id)
+                .then(user => {
+
+
+                    user.id = req.body.id,
+                        user.commentorId = req.body.commentorId,
+                        user.Avatar = req.body.Avatar,
+                        user.content = req.body.content,
+                        user.likes = req.body.likes,
+                        user.dislikes = req.body.dislikes,
+                        user.interactionList = req.body.interactionList,
+                        user.reportsCounter = req.body.reportsCounter,
+                        user.datePublished = req.body.datePublished,
+                        user.dateUpdated = req.body.dateUpdated,
+                        user.commentorUserName = req.body.commentorUserName,
+
+                        user
+                            .save()
+                            .then(user => {
+                                res.json('Update complete')
+                            })
+                            .catch(err =>
+                                res.status(404).json({
+                                    nouserfound: "no comment found with that id"
+                                })
+                            );
+
+
+
+
+                })
+
+        } catch (err) {
+            res.status(500).send('Server error');
+        }
+    }
 }

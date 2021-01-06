@@ -51,11 +51,11 @@ export class BlogService {
   }
 
   public updateBlog(id, obj: Blog) {
-    this
+    return this
       .http
-      .post(`${this.uri}/updateBlog/${id}`, obj)
-      //, { headers: { 'Authorization': this.getheader() } })
-      .subscribe(res => console.log('Done'));
+      .post(`${this.uri}/updateBlog/${id}`, obj);
+    //, { headers: { 'Authorization': this.getheader() } })
+
   }
   public deleteBlog(id) {
     return this

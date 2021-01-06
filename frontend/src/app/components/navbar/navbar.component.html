@@ -1,0 +1,78 @@
+<div *ngIf="loggedin==1">
+    <ul>
+        <div *ngIf="userdetails">
+            <li>
+                <img width="50" alt="Angular Logo" [src]="userdetails.avatar">
+            </li>
+            <li>
+                <a style="cursor: default;pointer-events: none;">{{userdetails.username}}</a>
+            </li>
+
+        </div>
+        <div class="offset-5">
+            <li><a href="/home">Home</a>
+            </li>
+            <li><a href="/blog/add">Blog Add</a></li>
+            <li><a href="/blog">Blogs</a></li>
+            <li *ngIf="loggedin==1">
+                <a (click)="logout()" style="cursor: pointer;">logout</a>
+            </li>
+            <li *ngIf="loggedin==0">
+                <a href="/login">login</a>
+            </li>
+        </div>
+        <div *ngIf="loggedin==1 && accounttype!=''">
+            <br><br><br>
+            <div *ngIf="accounttype=='regular'" class="offset-5">
+                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/commentedit">My Comments</a></li>
+
+            </div>
+            <div *ngIf="accounttype=='blogger'" class="offset-5">
+                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/commentedit">My Comments</a></li>
+                <li><a href="/home">My Blogs</a></li>
+
+            </div>
+            <div *ngIf="accounttype=='moderator'" class="offset-5">
+                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/commentedit">My Comments</a></li>
+                <li><a href="/home">My Blogs</a></li>
+                <li><a href="/home">All Comments</a></li>
+
+            </div>
+            <div *ngIf="accounttype=='admin'" class="offset-5">
+                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/commentedit">My Comments</a></li>
+                <li><a href="/home">My Blogs</a></li>
+                <li><a href="/home">All Comments</a></li>
+
+            </div>
+
+
+        </div>
+        <img width="50" alt="Angular Logo" style="float: right;"
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+
+    </ul>
+</div>
+<!-- <li><a href="/home">List Users</a></li>
+                <li><a href="/home">Comments</a></li>
+                <li><a href="/home">Blogs</a></li>
+                <li><a href="/home">My Comments</a></li>-->
+
+<div *ngIf="loggedin==0">
+    <ul>
+        <li><a href="/home">Home</a>
+        </li>
+        <li><a href="/blog/add">Blog Add</a></li>
+        <li><a href="/blog">Blogs</a></li>
+
+        <li>
+            <a href="/login">login</a>
+        </li>
+        <img width="50" alt="Angular Logo" style="float: right;"
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+
+    </ul>
+</div>

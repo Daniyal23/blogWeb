@@ -1,4 +1,4 @@
-<ul>
+<!--ul>
   <li><a href="/home">Home</a></li>
   <li><a href="/blog/add">Blog Add</a></li>
   <li><a href="/blog">Blogs</a></li>
@@ -6,7 +6,7 @@
   <img width="50" alt="Angular Logo" style="float: right;"
     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
-</ul>
+</ul-->
 
 <div *ngFor="let user of userInfolist">
   <div class="col-md-8 offset-2" style="border:5px solid black; margin-top: 10px;">
@@ -18,13 +18,19 @@
         <div class="col-md-3" style="height:200px;">
           <br><br>
 
-          <button mat-stroked-button *ngIf="user.accountType!='blogger'" (click)="updateAccount(user._id,'blogger')">Blogger</button>
-          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='blogger'">Blogger</button>
-          <button mat-stroked-button *ngIf="user.accountType!='regular'" (click)="updateAccount(user._id,'regular')">Regular</button>
-          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='regular'">Regular</button>
-          <button mat-stroked-button *ngIf="user.accountType!='moderator'" (click)="updateAccount(user._id,'moderator')">Moderator</button>
-          <button mat-raised-button style="background-color: #5cb85c;" *ngIf="user.accountType=='moderator'">Moderator</button>
-          
+          <button mat-stroked-button *ngIf="user.accountType!='blogger'"
+            (click)="updateAccount(user._id,'blogger')">Blogger</button>
+          <button mat-raised-button style="background-color: #5cb85c;"
+            *ngIf="user.accountType=='blogger'">Blogger</button>
+          <button mat-stroked-button *ngIf="user.accountType!='regular'"
+            (click)="updateAccount(user._id,'regular')">Regular</button>
+          <button mat-raised-button style="background-color: #5cb85c;"
+            *ngIf="user.accountType=='regular'">Regular</button>
+          <button mat-stroked-button *ngIf="user.accountType!='moderator'"
+            (click)="updateAccount(user._id,'moderator')">Moderator</button>
+          <button mat-raised-button style="background-color: #5cb85c;"
+            *ngIf="user.accountType=='moderator'">Moderator</button>
+
 
         </div>
         <div class="col-md-3" style="height: 200px;">

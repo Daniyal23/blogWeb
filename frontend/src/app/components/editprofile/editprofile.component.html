@@ -1,61 +1,19 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!--ul>
-    <li><a href="/home">Home</a></li>
-    <li><a href="">Blogs</a></li>
-    <li><a href="/login">Login</a></li>
-
-    <img width="50" alt="Angular Logo" style="float: right;"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-
-</ul-->
 <div>
     <div class="row">
-        <div class="wrapper fadeInDown col-md-4 offset-4">
-
-
+        <div class="wrapper fadeInDown col-md-6 offset-3">
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="container">
                     <div class="fadeIn first">
-                        <h1 style="text-align: center;">Register</h1>
-                        <p style="text-align: center;">Please fill in this form to create an account.</p>
+                        <h1 style="text-align: center;">Edit Account</h1>
                         <hr>
                     </div>
                     <div class="rt">
                         <div class="fadeIn second">
-                            <mat-form-field class="form-group" appearance="">
-                                <input matInput type="text" formControlName="username" name="username"
-                                    placeholder="اسم المستخدم" class="form-control" required minlength="3"
-                                    style="direction: rtl;text-align: right;" required>
-                                <span class="text-danger"
-                                    *ngIf="(registerFormControl.username.touched || submitted) && registerFormControl.username.errors?.required">
-                                    اسم المستخدم مطلوب
-                                </span>
-                                <span class="text-danger"
-                                    *ngIf="registerFormControl.username.touched && registerFormControl.username.errors?.minlength">
-                                    UserName should contain more than 3 letters
-                                </span>
-                            </mat-form-field>
-
-                            <mat-form-field class="form-group" appearance="">
-                                <input matInput type="email" formControlName="email" name="email" placeholder="Email"
-                                    class="form-control" required type="email" required>
-                                <span class="text-danger"
-                                    *ngIf="(registerFormControl.email.touched || submitted) && registerFormControl.email.errors?.required">
-                                    Email is required
-                                </span>
-                                <span class="text-danger"
-                                    *ngIf="registerFormControl.email.touched && registerFormControl.email.errors?.email">
-                                    Enter a valid email address
-                                </span>
-                            </mat-form-field>
 
                             <mat-form-field class="form-group" appearance="">
                                 <input matInput type="password" formControlName="password" id="password"
-                                    placeholder="Password" class="form-control" required minlength="8" required>
-                                <span class="text-danger"
-                                    *ngIf="(registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required">
-                                    Password is required
-                                </span>
+                                    placeholder="Password" class="form-control" minlength="8">
+
                                 <span class="text-danger"
                                     *ngIf="registerFormControl.password.touched && registerFormControl.password.errors?.minlength">
                                     Password should contain more than 8 letters
@@ -64,12 +22,9 @@
 
                             <mat-form-field class="form-group" appearance="">
                                 <input matInput type="password" formControlName="repeatPassword" id="repeatPassword"
-                                    placeholder="Repeate Password" class="form-control" required minlength="8"
-                                    [errorStateMatcher]="matcher" required>
-                                <span class="text-danger"
-                                    *ngIf="(registerFormControl.repeatPassword.touched || submitted) && registerFormControl.repeatPassword.errors?.required">
-                                    Repeate Password is required
-                                </span>
+                                    placeholder="Repeate Password" class="form-control" minlength="8"
+                                    [errorStateMatcher]="matcher">
+
                                 <span
                                     *ngIf="(registerFormControl.repeatPassword.touched || submitted) && registerFormControl.repeatPassword.hasError('notSame')">
                                     Passwords do not match
@@ -80,20 +35,7 @@
 
                         </div>
                         <div class="fadeIn third">
-                            <div class="form-group offset-2">
-                                <select id="country" formControlName="country" style="direction: rtl;"
-                                    class="form-control">
-                                    <option value="select" selected disabled>Country</option>
-                                    <option value="pak">Pakistan</option>
-                                    <option value="uk">United Kingdom</option>
-                                    <option value="usa">United States</option>
-                                    <option value="saudi">Saudia Arabia</option>
-                                </select>
-                                <span class="text-danger"
-                                    *ngIf="(registerFormControl.country.touched || submitted) && registerFormControl.country.errors?.required">
-                                    Country is required
-                                </span>
-                            </div>
+
                             <div class="form-group" appearance="fill">
                                 <div>
                                     <img type="image" *ngIf="selected==1" style="margin-left: 15px;"
@@ -167,30 +109,14 @@
                                 </div>
                             </div>
 
-                            <label for="vehicle1" style="margin-left: 30%; text-align: center;"> I agree to the Terms
-                                and Conditions
-                                <input type="checkbox" id="terms" name="terms" value="terms" style="margin-left: 10px;"
-                                    (click)="Checkbox()" required>
-                            </label>
-
-                            <div *ngIf="errorCheckbox==true">
-                                <span class="text-danger">
-                                    Please tick the checkbox
-                                </span>
-                            </div>
-                            <div class="offset-3">
-                                <re-captcha (resolved)="resolved($event)" (error)="onError($event)" errorMode="handled"
-                                    siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
-                            </div>
                             <br>
                         </div>
                         <div class="form-group offset-2">
-                            <button mat-raised-button class="registerbtn" type="submit">Register</button>
+                            <button mat-raised-button class="registerbtn" type="submit">Update</button>
 
                         </div>
                     </div>
                 </div>
-
             </form>
 
         </div>

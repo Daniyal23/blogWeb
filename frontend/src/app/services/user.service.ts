@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/users'
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,33 @@ export class UserService {
       .http
       .post(`${this.uri}/updateUser/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log(res));
+  }
+
+  getUserAccountType(id: number) {
+    return this.http.get(`${this.uri}/getUserAccountType/${id}`)
+      .pipe(
+        map((res: Response) => {
+          return res || {}
+        }),
+
+
+      )
+
+  }
+
+
+  public getUsersById(id: string) {
+    //console.log(id, "from service");
+    return this.http.get(`${this.uri}/getUsersById/${id}`)
+      //, { headers: { 'Authorization': this.getheader() } })
+      .pipe(
+        map((res: Response) => {
+          return res || {}
+        }),
+
+
+      )
+
   }
 
 

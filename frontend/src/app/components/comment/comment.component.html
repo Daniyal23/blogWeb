@@ -1,27 +1,31 @@
-
 <mat-card class="card">
+
 	<mat-card-header>
-		
-			<img class="header-image" mat-card-avatar src="{{comment.Avatar}}">
-		
+		<button *ngIf="edit==0 && showedit==1" mat-button style="float: left;text-align: left; direction: ltr; "
+			(click)="onedit()">Edit</button>
+		<button *ngIf="edit==1 && showedit==1" mat-button style="float: left;text-align: left; direction: ltr; "
+			(click)="onedit()">Publish</button>
+
+		<img class="header-image" mat-card-avatar src="{{comment.Avatar}}">
+
 		<mat-card-title class="rtl">{{comment.commentorUserName}}</mat-card-title>
 		<mat-card-subtitle class="rtl">{{date}}</mat-card-subtitle>
+
 	</mat-card-header>
 	<div>
 
 	</div>
 
 	<mat-card-content style="direction: rtl;">
-		<p style="direction: rtl;text-align: right;">{{comment.content}}	</p>
+		<p *ngIf="edit==0" style="direction: rtl;text-align: right;">{{comment.content}} </p>
+		<textarea *ngIf="edit==1" style="direction: rtl;text-align: right;"
+			[(ngModel)]="htmlcontent">{{comment.content}} </textarea>
 	</mat-card-content>
+
 	<mat-card-footer class="rtl">
-		<small>Likes : {{comment.likes}}   Dislikes : {{comment.dislikes}}</small>
+		<small>Likes : {{comment.likes}} Dislikes : {{comment.dislikes}}</small>
 	</mat-card-footer>
 	<mat-card-actions>
-
-		<!--button  mat-button  class="men">Like</button>
-		<button  mat-button  class="men1">Dislike</button>
-		<button mat-button (click)="nbrL()" class="men">SHARE</button-->
 
 
 

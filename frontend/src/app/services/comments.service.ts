@@ -48,10 +48,10 @@ export class CommentsService {
   }
 
   public updateComment(id, obj: Comment) {
-    this
+    return this
       .http
-      .post(`${this.uri}/update/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
-      .subscribe(res => console.log('Done'));
+      .post(`${this.uri}/updateComment/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
+
   }
 
   public getAllComments() {
@@ -67,7 +67,7 @@ export class CommentsService {
   public deleteComment(id) {
     return this
       .http
-      .delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
+      .delete(`${this.uri}/deleteComment/${id}`, { headers: { 'Authorization': this.getheader() } });
   }
 }
 

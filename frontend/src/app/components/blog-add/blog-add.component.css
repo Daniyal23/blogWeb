@@ -74,3 +74,7 @@ li a:hover {
 .img_div:hover .img_overlay {
   opacity: 1;
 }
+.rtl{
+  text-align: right;
+  direction: rtl;
+}

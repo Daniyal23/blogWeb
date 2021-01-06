@@ -44,8 +44,9 @@ export class AuthenticationService {
 
   setLocalStorage(responseObj) {
     localStorage.setItem('currentUser', JSON.stringify(responseObj));
-
-    const expiresAt = moment().add(responseObj.expiresIn);
+    var a = this.parseJwt(localStorage.getItem('currentUser'));
+    console.log(a, "expire");
+    const expiresAt = moment().add(a.exp);
     localStorage.setItem('id_token', responseObj.token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
@@ -75,15 +76,31 @@ export class AuthenticationService {
     //await this.afAuth.auth.signOut().then(response => {
 
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('user');
+    localStorage.removeItem('expires_at');
+    localStorage.removeItem('id_token');
 
     this.currentUserSubject.next(null);
-    this.router.navigate(['login']);
+    this.router.navigate(['blog']);
     console.log('logged out');
   };
 
+  async clearlocal() {
+    // remove user from local storage to log user out
+    //await this.afAuth.auth.signOut().then(response => {
+
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('expires_at');
+    localStorage.removeItem('id_token');
+
+    this.currentUserSubject.next(null);
+
+  };
+
+
+
 
   public isLoggedIn() {
+    console.log(moment());
     return moment().isBefore(this.getExpiration());
   }
 
@@ -94,9 +111,13 @@ export class AuthenticationService {
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration);
+    console.log(expiresAt, "at");
     return moment(expiresAt);
   }
 
+  getuserdetails() {
+    return this.parseJwt(localStorage.getItem("currentUser"));
+  }
   parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

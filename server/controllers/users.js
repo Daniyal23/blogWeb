@@ -167,7 +167,7 @@ module.exports = {
     },
 
 
-    getUserById: async (req, res) => {
+    getUsersById: async (req, res) => {
         try {
             console.log(req.param.id)
             User.findOne({ '_id': (req.params.id) })
@@ -182,6 +182,22 @@ module.exports = {
         }
     },
 
+    getUserAccountType: async (req, res) => {
+        try {
+            console.log(req.param.id)
+            User.findOne({ '_id': (req.params.id) })
+                .then(user => res.json(user.accountType))
+                .catch(err =>
+                    res.status(404).json({
+                        nouserfound: "no user found with that id"
+                    })
+                );
+        } catch (err) {
+            res.status(500).send('Server error');
+        }
+    },
+
+
     updateUser: async (req, res) => {
         try {
             console.log("in update")
@@ -189,29 +205,29 @@ module.exports = {
                 .then(user => {
                     user.UserName = req.body.UserName;
                     user.Password = req.body.Password;
-                    user.Avatar=req.body.Avatar;
-                    user.status=req.body.status;
-                    user.Country=req.body.Country;
-                    user.accountType=req.body.accountType;
-                    user.Email=req.body.Email;
+                    user.Avatar = req.body.Avatar;
+                    user.status = req.body.status;
+                    user.Country = req.body.Country;
+                    user.accountType = req.body.accountType;
+                    user.Email = req.body.Email;
 
-                   
+
                     user
-                                .save()
-                                .then(user => {
-                                    res.json('Update complete')
-                                })
-                                        .catch(err =>
-                                            res.status(404).json({
-                                                nouserfound: "no user found with that id"
-                                            })
-                                        );
-                                
+                        .save()
+                        .then(user => {
+                            res.json('Update complete')
+                        })
+                        .catch(err =>
+                            res.status(404).json({
+                                nouserfound: "no user found with that id"
+                            })
+                        );
 
 
-                       
+
+
                 })
-                
+
         } catch (err) {
             res.status(500).send('Server error');
         }

@@ -7,9 +7,9 @@ router.post('/signup', users.signup);
 router.post('/login', users.login);
 router.get('/getAllUsers', users.getAllUsers);
 router.delete('/deleteUsers/:id', users.deleteUsers);
-router.get('/getUserById/:id', users.getUserById);
+router.get('/getUsersById/:id', users.getUsersById);
 router.post('/updateUser/:id', users.updateUser);
-
+router.get('/getUserAccountType/:id', users.getUserAccountType);
 
 
 module.exports = router;

@@ -175,7 +175,9 @@ export class BlogDetailsComponent implements OnInit {
       } else {
         this.blogs.commentsIdList.push(this.newcommentid);
         this.newcomment = 1;
-        this.blogService.updateBlog(this.blogs._id, this.blogs);
+        this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+          console.log(data);
+        });
         console.log(this.comment, "here is if");
         console.log(this.commentlist, "herer is before push");
         this.commentlist.push({
