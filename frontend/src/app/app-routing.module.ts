@@ -14,6 +14,8 @@ import { AdminBlogeditComponent } from './components/admin-blogedit/admin-bloged
 import { AdminUserapproveComponent } from './components/admin-userapprove/admin-userapprove.component';
 import { CommentEditComponent } from './components/comment-edit/comment-edit.component';
 import { EditprofileComponent } from './components/editprofile/editprofile.component';
+import { AdminAllcommentsComponent } from './components/admin-allcomments/admin-allcomments.component';
+import { MyblogsComponent } from './components/myblogs/myblogs.component';
 
 
 const routes: Routes = [
@@ -107,6 +109,20 @@ const routes: Routes = [
   {
     path: 'editprofile',
     component: EditprofileComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
+  {
+    path: 'admin/allcomments',
+    component: AdminAllcommentsComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
+  {
+    path: 'myblogs',
+    component: MyblogsComponent,
     canActivate: [AuthGuard],
     children: [
     ]

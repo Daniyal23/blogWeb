@@ -60,7 +60,7 @@ export class BlogService {
   public deleteBlog(id) {
     return this
       .http
-      .delete(`${this.uri}/delete/${id}`)
+      .delete(`${this.uri}/deleteBlog/${id}`)
     //, { headers: { 'Authorization': this.getheader() } });
   }
 

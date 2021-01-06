@@ -31,21 +31,25 @@
             <div *ngIf="accounttype=='blogger'" class="offset-5">
                 <li><a href="/editprofile">Edit Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
-                <li><a href="/home">My Blogs</a></li>
+                <li><a href="/myblogs">My Blogs</a></li>
 
             </div>
             <div *ngIf="accounttype=='moderator'" class="offset-5">
                 <li><a href="/editprofile">Edit Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
-                <li><a href="/home">My Blogs</a></li>
-                <li><a href="/home">All Comments</a></li>
+                <li><a href="/myblogs">My Blogs</a></li>
+                <li><a href="/admin/allcomments">Comments</a></li>
 
             </div>
             <div *ngIf="accounttype=='admin'" class="offset-5">
                 <li><a href="/editprofile">Edit Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
-                <li><a href="/home">My Blogs</a></li>
-                <li><a href="/home">All Comments</a></li>
+                <li><a href="/myblogs">My Blogs</a></li>
+                <li><a href="/admin/allcomments">Comments</a></li>
+                <li><a href="/admin/listusers">Users</a></li>
+                <li><a href="/admin/listblogs">Blogs</a></li>
+
+
 
             </div>
 

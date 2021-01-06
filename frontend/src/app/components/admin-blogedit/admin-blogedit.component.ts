@@ -22,13 +22,13 @@ export class AdminBlogeditComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private snackBar: MatSnackBar,
     private router: Router,
-    
-   
+
+
   ) { }
-  public htmlContent='' ;
+  public htmlContent = '';
   public test: any;
   userdetials: any;
-  public blogs:any;
+  public blogs: any;
   public base64textString = '';
   public imgsrcs: Array<any> = ["/assets/noimage.png"];
   public imgcheck: number = 0;
@@ -62,36 +62,38 @@ export class AdminBlogeditComponent implements OnInit {
         tag: "h1",
       },
     ],
- //uploadUrl: 'v1/image',
+    //uploadUrl: 'v1/image',
     // upload: (file: File) => {this.handleFileSelect(file)},
     //uploadWithCredentials: false,
     sanitize: true,
 
   };
-  public check=0;
+  public check = 0;
+  public returnUrl: string;
 
   ngOnInit(): void {
     this.getblogbyid();
-    
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
+
   }
-  ngAfterViewChecked(){
-    if(this.blogs && this.check==0){
-    this.htmlContent=this.blogs.text;
-    this.check=1;
-    for (let key in this.blogs.blogHeaderImage) {
-      //console.log("here");
-      this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
-      this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
-      
-    }
-    this.img = this.imgsrcs[this.imgsrcs.length - 1];
-    this.imgsrcs=[];
-    this.imgsrcs.push(this.img);
+  ngAfterViewChecked() {
+    if (this.blogs && this.check == 0) {
+      this.htmlContent = this.blogs.text;
+      this.check = 1;
+      for (let key in this.blogs.blogHeaderImage) {
+        //console.log("here");
+        this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
+        this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
+
+      }
+      this.img = this.imgsrcs[this.imgsrcs.length - 1];
+      this.imgsrcs = [];
+      this.imgsrcs.push(this.img);
     }
     this.cdr.detectChanges();
-    
+
   }
-  
+
   getblogbyid() {
     this.route.params.subscribe(param => {
       //console.log(param['id'])
@@ -101,7 +103,7 @@ export class AdminBlogeditComponent implements OnInit {
       this.blogService.getBlog(param['id']).subscribe(data => {
         //console.log(data);
         this.blogs = data;
-        this.test=data;
+        this.test = data;
         console.log(this.test);
       })
     })
@@ -147,7 +149,7 @@ export class AdminBlogeditComponent implements OnInit {
   }
 
   Publish() {
-    if(this.imgsrcs[0]=="/assets/noimage.png"){
+    if (this.imgsrcs[0] == "/assets/noimage.png") {
       this.snackBar.open("Header Image is required", null, {
         duration: 2000,
         panelClass: ['danger-snackbar'],
@@ -168,15 +170,17 @@ export class AdminBlogeditComponent implements OnInit {
     else {
       //this.blogobj.blogHeaderImage = this.imgsrcs;
       this.blogs.dateUpdated = new Date();
-      this.blogs.status = "hidden";
+      this.blogs.status = "edit";
       this.blogs.text = this.htmlContent;
       this.blogs.title = "blog";
-      this.blogs.isApproved=false;
-      
+      this.blogs.isApproved = false;
+
 
       console.log(this.blogs);
       localStorage.setItem('blog', JSON.stringify(this.blogs));
-      this.blogService.updateBlog(this.test._id,this.blogs);
+      this.blogService.updateBlog(this.test._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });
 
       this.snackBar.open("Blog Successfully Added", null, {
         duration: 2000,
@@ -184,8 +188,9 @@ export class AdminBlogeditComponent implements OnInit {
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
-      this.router.navigate(['/blog']);
+
+      setTimeout(() => { this.router.navigate([this.returnUrl]); }, 2000)
     }
   }
-  
+
 }

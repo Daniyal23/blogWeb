@@ -36,7 +36,7 @@ import { CommentEditComponent, DialogOverviewExampleDialog } from './components/
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditprofileComponent } from './components/editprofile/editprofile.component';
-import { AdminAllcommentsComponent } from './components/admin-allcomments/admin-allcomments.component';
+import { AdminAllcommentsComponent, DialogOverviewExampleDialogforAllComments } from './components/admin-allcomments/admin-allcomments.component';
 import { MyblogsComponent } from './components/myblogs/myblogs.component';
 
 
@@ -58,6 +58,7 @@ import { MyblogsComponent } from './components/myblogs/myblogs.component';
     AdminUserapproveComponent,
     CommentEditComponent,
     DialogOverviewExampleDialog,
+    DialogOverviewExampleDialogforAllComments,
     NavbarComponent,
     EditprofileComponent,
     AdminAllcommentsComponent,
@@ -89,7 +90,7 @@ import { MyblogsComponent } from './components/myblogs/myblogs.component';
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [CommentEditComponent, DialogOverviewExampleDialog]
+  entryComponents: [CommentEditComponent, DialogOverviewExampleDialog, DialogOverviewExampleDialogforAllComments]
 
 })
 export class AppModule { }
