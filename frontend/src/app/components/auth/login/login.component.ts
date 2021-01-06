@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/users';
-import { CommentComponent } from 'src/app/components/comment/comment.component'
+import { CommentComponent } from 'src/app/components/shared/comment/comment.component'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

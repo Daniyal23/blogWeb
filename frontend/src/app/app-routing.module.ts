@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
-import { BlogAddComponent } from './components/blog-add/blog-add.component';
-import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
-import { BlogListComponent } from './components/blog-list/blog-list.component';
-import { AdminViewusersComponent } from './components/admin-viewusers/admin-viewusers.component';
-import { AdminViewblogsComponent } from './components/admin-viewblogs/admin-viewblogs.component';
-import { AdminBlogeditComponent } from './components/admin-blogedit/admin-blogedit.component';
-import { AdminUserapproveComponent } from './components/admin-userapprove/admin-userapprove.component';
-import { CommentEditComponent } from './components/comment-edit/comment-edit.component';
-import { EditprofileComponent } from './components/editprofile/editprofile.component';
-import { AdminAllcommentsComponent } from './components/admin-allcomments/admin-allcomments.component';
-import { MyblogsComponent } from './components/myblogs/myblogs.component';
+import { BlogAddComponent } from './components/blog/blog-add/blog-add.component';
+import { BlogDetailsComponent } from './components/blog/blog-details/blog-details.component';
+import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
+import { AdminViewusersComponent } from './components/admin/admin-viewusers/admin-viewusers.component';
+import { AdminViewblogsComponent } from './components/admin/admin-viewblogs/admin-viewblogs.component';
+import { AdminBlogeditComponent } from './components/admin/admin-blogedit/admin-blogedit.component';
+import { AdminUserapproveComponent } from './components/admin/admin-userapprove/admin-userapprove.component';
+import { CommentEditComponent } from './components/Comments/comment-edit/comment-edit.component';
+import { EditprofileComponent } from './components/auth/editprofile/editprofile.component';
+import { AdminAllcommentsComponent } from './components/admin/admin-allcomments/admin-allcomments.component';
+import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
 
 
 const routes: Routes = [
