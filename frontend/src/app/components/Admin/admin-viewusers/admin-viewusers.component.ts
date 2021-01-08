@@ -180,7 +180,9 @@ export class AdminViewusersComponent implements OnInit {
   updateAccount(inp, inp2) {
     console.log(inp, inp2, "here");
     this.user[this.user.findIndex(a => a._id == inp)].accountType = inp2;
-    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]);
+    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
+      console.log(data);
+    });
     this.userInfolist[this.userInfolist.findIndex(a => a._id == inp)].accountType = inp2;
 
   }
