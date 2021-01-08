@@ -50,13 +50,19 @@
                         {{blogs.reportsCounter}}</h3>
                 </mat-card-footer>
                 <mat-card-actions>
+                    <i class="material-icons" *ngIf="report==0" mat-button (click)="nbrreport()">report_problem</i>
+                    <i class="material-icons" *ngIf="report==1" mat-button style="color: red;">report_problem</i>
+
                     <i class="material-icons" *ngIf="disliked==0" mat-button (click)="nbrDislike()">thumb_down_alt</i>
                     <i class="material-icons" *ngIf="disliked==1" mat-button (click)="nbrDislike()"
-                        style="color:blue ;">thumb_down_alt</i>
+                        style="color:red ;">thumb_down_alt</i>
+
 
                     <i class="material-icons" *ngIf="liked==0" mat-button (click)="nbrLike()">thumb_up_alt</i>
                     <i class="material-icons" *ngIf="liked==1" mat-button (click)="nbrLike()"
                         style="color: blue;">thumb_up_alt</i>
+
+
 
                     <!--button mat-button (click)="nbrL()" class="men">SHARE</button-->
 
@@ -88,7 +94,9 @@
                     </app-comment>
                     <i class="material-icons">thumb_up_alt</i>
                     <i class="material-icons">thumb_down_alt</i>
-                    <i class="material-icons" *ngIf="comment.commentorId==userID"
+                    <i class="material-icons">report_problem</i>
+
+                    <i class="material-icons" *ngIf="comment.commentorId==userID || boss==0"
                         (click)="commentDelete(comment._id,comment)">delete</i>
                 </div>
             </div>

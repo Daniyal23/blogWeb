@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { BlogService } from 'src/app/services/blog.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-myblogs',
@@ -18,9 +19,14 @@ export class MyblogsComponent implements OnInit {
     public blogService: BlogService,
     private AuthService: AuthenticationService,
     private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+
+    this.AuthService.checkaccessregular();
+
     this.getblogs();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
     console.log(this.returnUrl, "yo");
@@ -31,6 +37,7 @@ export class MyblogsComponent implements OnInit {
       this.blogs = this.blogs.filter(a => a.creatorId == this.AuthService.getuserdetails().id);
       this.check = 1;
     }
+    this.cdr.detectChanges();
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {

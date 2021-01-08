@@ -24,6 +24,7 @@ export class AdminBlogeditComponent implements OnInit {
     private router: Router,
 
 
+
   ) { }
   public htmlContent = '';
   public test: any;
@@ -72,6 +73,7 @@ export class AdminBlogeditComponent implements OnInit {
   public returnUrl: string;
 
   ngOnInit(): void {
+    this.AuthService.checkaccessregular();
     this.getblogbyid();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
 
@@ -104,7 +106,7 @@ export class AdminBlogeditComponent implements OnInit {
         //console.log(data);
         this.blogs = data;
         this.test = data;
-        console.log(this.test);
+        // console.log(this.test);
       })
     })
   }
@@ -135,13 +137,13 @@ export class AdminBlogeditComponent implements OnInit {
     }
     this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl("data:image/png;charset=utf-8;base64," + this.base64textString));
 
-    console.log(this.imgsrcs, "img");
-    console.log(this.blogs.blogHeaderImage, "header");
+    // console.log(this.imgsrcs, "img");
+    // console.log(this.blogs.blogHeaderImage, "header");
     this.imgcheck = 1;
   }
 
   removeImage() {
-    console.log("remove func");
+    // console.log("remove func");
     this.imgsrcs[0] = "/assets/noimage.png";
     this.imgcheck = 0;
 
@@ -176,13 +178,13 @@ export class AdminBlogeditComponent implements OnInit {
       this.blogs.isApproved = false;
 
 
-      console.log(this.blogs);
+      //console.log(this.blogs);
       localStorage.setItem('blog', JSON.stringify(this.blogs));
       this.blogService.updateBlog(this.test._id, this.blogs).subscribe(data => {
         console.log(data);
       });
 
-      this.snackBar.open("Blog Successfully Added", null, {
+      this.snackBar.open("Blog Edited Successfully", null, {
         duration: 2000,
         panelClass: ['success-snackbar'],
         horizontalPosition: 'right',

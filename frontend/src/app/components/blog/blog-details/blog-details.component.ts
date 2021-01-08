@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comment } from 'src/app/models/comments'
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { fakeAsync } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from 'src/app/services/blog.service';
 import { InteractionService } from 'src/app/services/interaction.service';
 
@@ -15,6 +15,8 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { ThrowStmt } from '@angular/compiler';
 import { NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+
 @Component({
   selector: 'app-blog-details',
   templateUrl: './blog-details.component.html',
@@ -29,6 +31,9 @@ export class BlogDetailsComponent implements OnInit {
     private AuthService: AuthenticationService,
     private commentService: CommentsService,
     private snackBar: MatSnackBar,
+    private authGuard: AuthGuard,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
 
   ) { }
   public blogs?;
@@ -55,8 +60,9 @@ export class BlogDetailsComponent implements OnInit {
   public changedisLike = 0;
 
   public interactionlistindex = 0;
+  public boss = 1;
 
-
+  public report = 0;
 
 
   config: AngularEditorConfig = {
@@ -108,10 +114,13 @@ export class BlogDetailsComponent implements OnInit {
     //console.log(this.userdetials.id);
 
     this.userID = this.userdetials.id;
-
+    if (this.AuthService.getuserdetails().accountType == "admin") {
+      this.boss = 0;
+    }
   }
   ngAfterViewChecked() {
     if (this.blogs && this.done == 0) {
+
 
       //console.log(this.blogs);
       for (let key in this.blogs.blogHeaderImage) {
@@ -135,9 +144,13 @@ export class BlogDetailsComponent implements OnInit {
         }
         else {
           //console.log("in eleeee");
-          var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id);
+          var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id && a.InteractionType == "report");
           if (a) {
-            this.interact = a;
+            this.report = 1;
+          }
+          var b = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id && a.InteractionType != "report");
+          if (b) {
+            this.interact = b;
           }
 
           if (this.interact) {
@@ -148,6 +161,7 @@ export class BlogDetailsComponent implements OnInit {
             else if (this.interact.InteractionType == "Dislike") {
               this.disliked = 1;
             }
+
           }
         }
       }
@@ -163,7 +177,7 @@ export class BlogDetailsComponent implements OnInit {
       if (!this.blogs.commentsIdList) {
         this.blogs.commentsIdList = [];
       }
-      console.log(this.newcommentid, "ja");
+      //console.log(this.newcommentid, "ja");
       if (this.newcommentid == "Validation error") {
         this.snackBar.open("Server Error. Please try again later", null, {
           duration: 2000,
@@ -178,8 +192,8 @@ export class BlogDetailsComponent implements OnInit {
         this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
           console.log(data);
         });
-        console.log(this.comment, "here is if");
-        console.log(this.commentlist, "herer is before push");
+        //console.log(this.comment, "here is if");
+        //console.log(this.commentlist, "herer is before push");
         this.commentlist.push({
           '_id': this.newcommentid,
           'commentorId': this.comment.commentorId,
@@ -190,7 +204,7 @@ export class BlogDetailsComponent implements OnInit {
           'dislikes': this.comment.dislikes,
           'content': this.comment.content
         });
-        console.log(this.commentlist, "herer is after push");
+        //console.log(this.commentlist, "herer is after push");
         this.snackBar.open("Comment Successfully Added", null, {
           duration: 2000,
           panelClass: ['success-snackbar'],
@@ -199,9 +213,14 @@ export class BlogDetailsComponent implements OnInit {
         });
       }
     }
+    this.cdr.detectChanges();
   }
 
+
   nbrLike() {
+    this.authcheck();
+
+    //////////////////////////////////
     this.changeLike = 0;
 
     if (this.disliked == 1 && this.liked == 0) {
@@ -225,7 +244,9 @@ export class BlogDetailsComponent implements OnInit {
       this.changeLike = 1;
 
       this.blogs.interactionIdList.splice(this.blogs.interactionIdList.indexOf(a => a.userid == this.userdetials.id));
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });;
     }
 
   }
@@ -248,8 +269,17 @@ export class BlogDetailsComponent implements OnInit {
       this.disliked = 0;
 
       this.blogs.interactionIdList.splice(this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id));
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });;
     }
+  }
+
+  nbrreport() {
+    this.report = 1;
+    this.blogs.reportsCounter += 1;
+
+    this.interactingadd("report")
   }
 
   interactingadd(inp) {
@@ -257,7 +287,9 @@ export class BlogDetailsComponent implements OnInit {
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
       this.blogs.interactionIdList.push(this.interact);
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });;
     }
     else {
       //console.log("interaction func else");
@@ -266,7 +298,9 @@ export class BlogDetailsComponent implements OnInit {
       //console.log("interaction func else2");
 
       this.blogs.interactionIdList.push(this.interact);
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });;
       //console.log(this.blogs.interactionIdList);
     }
   }
@@ -277,14 +311,18 @@ export class BlogDetailsComponent implements OnInit {
       if (aa >= 0) {
         this.blogs.interactionIdList[aa].InteractionType = inp;
         this.blogs.interactionIdList[aa].timestamp = new Date();
-        this.blogService.updateBlog(this.blogs._id, this.blogs);
+        this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+          console.log(data);
+        });;
       }
     }
     else {
       var a = this.blogs.interactionIdList.indexOf(a => a.userId == this.userdetials.id);
       this.blogs.interactionIdList[a].InteractionType = inp;
       this.blogs.interactionIdList[a].timestamp = new Date();
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });;
 
     }
   }
@@ -304,12 +342,14 @@ export class BlogDetailsComponent implements OnInit {
     })
   }
   commentAdd() {
+    this.authcheck();
+
     this.commentMake();
     this.comment.content = this.commentContent;
     this.comment.datePublished = new Date();
 
     var a;
-    console.log(this.comment, "here");
+    //console.log(this.comment, "here");
     this.newcommentid = "";
     this.commentService.addComments(this.comment).subscribe(res => { this.newcommentid = res.toString() });
     this.newcomment = 0;
@@ -322,19 +362,20 @@ export class BlogDetailsComponent implements OnInit {
 
   }
   commentDelete(inp, inp2) {
-    if (inp2.commentorId == this.userID) {
+    if (inp2.commentorId == this.userID || this.boss == 0) {
       this.commentService.deleteComment(inp).subscribe(res => { console.log(res) });
-      //console.log(this.blogs.commentsIdList,"comments list");
-      //console.log(this.blogs.commentsIdList.indexOf( inp));
       this.blogs.commentsIdList.splice(this.blogs.commentsIdList.indexOf(inp), 1);
-      //console.log(this.blogs.commentsIdList,"comments list after splice");
-      this.blogService.updateBlog(this.blogs._id, this.blogs);
-      //console.log(this.commentlist.indexOf(this.commentlist.find(a=>a._id==inp)),"ye cheee");
-      //console.log(this.commentlist.indexOf(a=> a._id==inp),"comment list");
-      //console.log(this.commentlist,"before splice");
+      this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+        console.log(data);
+      });
       this.commentlist.splice(this.commentlist.indexOf(this.commentlist.find(a => a._id == inp)), 1);
-      //console.log(this.commentlist,"after splice");
-      console.log(inp, "this is inp");
+      //console.log(inp, "this is inp");
+      this.snackBar.open("Comment Deleted Successfully", null, {
+        duration: 2000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
     }
   }
   commentMake() {
@@ -343,7 +384,7 @@ export class BlogDetailsComponent implements OnInit {
     this.comment.dislikes = 0;
     this.comment.likes = 0;
     this.comment.reportsCounter = 0;
-    console.log(this.userdetials.avatar, "this is avatar");
+    // console.log(this.userdetials.avatar, "this is avatar");
     this.comment.Avatar = this.userdetials.avatar;
 
   }
@@ -377,7 +418,19 @@ export class BlogDetailsComponent implements OnInit {
     var a = this.date.split("-");
     this.date = "";
     this.date = a[2] + "-" + a[1] + "-" + a[0];
-    console.log(this.date, "date");
+    //console.log(this.date, "date");
+  }
+  authcheck() {
+
+    //console.log(this.router.url)
+    const currentUser = this.AuthService.currentUserValue;
+    if (currentUser) {
+      return true;
+    }
+    this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
+
+
+    return false;
   }
 }
 

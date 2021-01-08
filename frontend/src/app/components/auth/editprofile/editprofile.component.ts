@@ -113,38 +113,7 @@ export class EditprofileComponent implements OnInit {
 
     setTimeout(() => { this.router.navigate(['/blog']); }, 2000)
 
-    //   this.AuthService.signup(this.user).subscribe(res => {
 
-    //     console.log(JSON.stringify(res));
-    //     if (res == "email already exists") {
-    //       this.snackBar.open('Email already exists', "", {
-    //         duration: 2000,
-    //         panelClass: ['error-snackbar'],
-    //         horizontalPosition: 'right',
-    //         verticalPosition: 'top'
-    //       });
-    //     }
-    //     else if (res == "Username already exists") {
-    //       this.snackBar.open('Username already exists', "", {
-    //         duration: 2000,
-    //         panelClass: ['error-snackbar'],
-    //         horizontalPosition: 'right',
-    //         verticalPosition: 'top'
-    //       });
-    //     }
-    //     else {
-    //       this.snackBar.open('Registration Successful', "", {
-    //         duration: 4000,
-    //         panelClass: ['success-snackbar'],
-    //         horizontalPosition: 'right',
-    //         verticalPosition: 'top'
-    //       });
-    //       //this.AuthService.signup2(this.user);
-    //       //this.router.navigate(['/login']);
-    //     }
-
-    //   });
-    // }
 
   }
 
@@ -154,10 +123,7 @@ export class EditprofileComponent implements OnInit {
       this.user = data;
 
     })
-    //  console.log("hello");
-    this.user.forEach(value => {
-      //   console.log(value, 'daasd')
-    })
+
   }
 
 }

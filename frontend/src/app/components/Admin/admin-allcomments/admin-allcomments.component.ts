@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comment } from 'src/app/models/comments';
 
@@ -64,6 +64,7 @@ export class AdminAllcommentsComponent implements OnInit {
     private blogService: BlogService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   openDialog(inp): void {
@@ -97,6 +98,8 @@ export class AdminAllcommentsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("hello");
+    this.AuthService.checkaccessregular();
+    this.AuthService.checkaccessblogger();
     this.userdetails = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     this.getcomments();
     this.getblogs();
@@ -119,6 +122,7 @@ export class AdminAllcommentsComponent implements OnInit {
       });
       this.dateset();
       console.log(this.displaylist, "yo");
+      this.cdr.detectChanges();
     }
     if (this.donecheck != "" && this.donecount == 0) {
       console.log("yoyoyoyoyo");

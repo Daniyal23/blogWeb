@@ -26,17 +26,17 @@ export class UserService {
 
 
   deleteUsers(id: number) {
-    return this.http.delete(`${this.uri}/delete/${id}`, { headers: { 'Authorization': this.getheader() } });
+    return this.http.delete(`${this.uri}/deleteUsers/${id}`, { headers: { 'Authorization': this.getheader() } });
   }
   public updateUser(id, obj: User) {
-    this
+    return this
       .http
       .post(`${this.uri}/updateUser/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
-      .subscribe(res => console.log(res));
+      ;
   }
 
   getUserAccountType(id: number) {
-    return this.http.get(`${this.uri}/getUserAccountType/${id}`)
+    return this.http.get(`${this.uri}/getUserAccountType/${id}`, { headers: { 'Authorization': this.getheader() } })
       .pipe(
         map((res: Response) => {
           return res || {}
@@ -50,8 +50,7 @@ export class UserService {
 
   public getUsersById(id: string) {
     //console.log(id, "from service");
-    return this.http.get(`${this.uri}/getUsersById/${id}`)
-      //, { headers: { 'Authorization': this.getheader() } })
+    return this.http.get(`${this.uri}/getUsersById/${id}`, { headers: { 'Authorization': this.getheader() } })
       .pipe(
         map((res: Response) => {
           return res || {}

@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 import { User } from '../models/users';
 import * as moment from "moment";
 //import { uriGlobal } from './conf';
@@ -15,7 +15,7 @@ import * as moment from "moment";
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
+  public user1: User = new User();
 
   //uri = uriGlobal + "users";
   uri = 'http://localhost:3000/users';
@@ -25,9 +25,13 @@ export class AuthenticationService {
     //console.log("in constructor start");
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.admin();
 
 
-
+  }
+  public admin() {
+    console.log("admin called");
+    return this.http.post(`${this.uri}/createAdmin`, this.user1);
   }
 
   public get currentUserValue(): User {
@@ -127,5 +131,66 @@ export class AuthenticationService {
 
     return JSON.parse(jsonPayload);
   };
+
+  checkaccessregular() {
+    var previousUrl;
+
+    if (this.getuserdetails().accountType == "regular") {
+
+      console.log("in false");
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd)
+        ).subscribe(e => {
+          console.log('prev:', e['url']);
+          previousUrl = e['url'];
+
+        });
+      this.router.navigateByUrl(previousUrl);
+    }
+    else {
+      console.log("aa ja");
+    }
+  }
+
+  checkaccessblogger() {
+    var previousUrl;
+
+    if (this.getuserdetails().accountType == "blogger") {
+
+      console.log("in false");
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd)
+        ).subscribe(e => {
+          console.log('prev:', e['url']);
+          previousUrl = e['url'];
+
+        });
+      this.router.navigateByUrl(previousUrl);
+    }
+    else {
+      console.log("aa ja");
+    }
+  }
+
+  checkaccessmoderator() {
+    var previousUrl;
+
+    if (this.getuserdetails().accountType == "moderator") {
+
+      console.log("in false");
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd)
+        ).subscribe(e => {
+          console.log('prev:', e['url']);
+          previousUrl = e['url'];
+
+        });
+      this.router.navigateByUrl(previousUrl);
+    }
+    else {
+      console.log("aa ja");
+    }
+  }
+
 }
 

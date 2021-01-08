@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private ngZone: NgZone,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private authService: AuthenticationService
   ) { }
 
@@ -31,14 +32,27 @@ export class LoginComponent implements OnInit {
   public checkingerror: number = 0;
   public tok: any;
   public users: User;
+  public gett: any = "";
+  public gettcheck = 0;
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
+    this.authService.admin().subscribe(data => {
+
+    });
+    this.userService.getAllUsers().subscribe(data => {
+      this.gett = data;
+    })
   }
 
 
   ngAfterViewChecked() {
+    if (this.gett.length <= 0 && this.gettcheck == 0) {
+      this.authService.admin();
+      this.gettcheck = 1;
+    }
     if (this.tok) {
+      //console.log(this.tok, "tok")
       if (this.tok.error === "Password incorrect" && this.checkingerror == 0) {
         // console.log("laa");
         this.errorss = [];
@@ -53,6 +67,37 @@ export class LoginComponent implements OnInit {
         });
 
       }
+      else if (this.tok.error === "account not approved" && this.checkingerror == 0) {
+        //console.log("error", this.tok.error)
+        // console.log("laa");
+        this.errorss = [];
+        //this.check = 0;
+        this.checkingerror = 1;
+        //this.snackBar.open("Invalid Username or password");
+        this.snackBar.open("Account Not Approved", null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
+      }
+      else if (this.tok.error === "Account not found" && this.checkingerror == 0) {
+        //console.log("error", this.tok.error)
+        // console.log("laa");
+        this.errorss = [];
+        //this.check = 0;
+        this.checkingerror = 1;
+        //this.snackBar.open("Invalid Username or password");
+        this.snackBar.open("Account Does Not Exist", null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
+      }
+
 
 
       else if (this.tok && this.check === 0 && this.tok.error != "Password incorrect") {
@@ -79,18 +124,20 @@ export class LoginComponent implements OnInit {
 
 
     }
+    this.cdr.detectChanges();
   }
 
   login() {
 
-    console.log("in login", this.password, this.email);
+    //console.log("in login", this.password, this.email);
     if (this.email == null || this.password == null) {
       return;
     }
-    console.log("in login1", this.password, this.email);
+    //console.log("in login1", this.password, this.email);
     this.errorss = null;
 
     this.checkingerror = 0;
+    this.tok = null;
     this.users = new User;
     this.users.Password = this.password;
     this.users.Email = this.email;
@@ -103,4 +150,5 @@ export class LoginComponent implements OnInit {
     );
 
   }
+
 }

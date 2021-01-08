@@ -28,8 +28,7 @@ export class CommentsService {
   public addComments(comment: Comment) {
 
     var a;
-    return this.http.post(`${this.uri}/addComments`, comment);
-    //, { headers: { 'Authorization': this.getheader() } })
+    return this.http.post(`${this.uri}/addComments`, comment, { headers: { 'Authorization': this.getheader() } })
 
   }
 

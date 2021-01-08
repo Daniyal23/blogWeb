@@ -17,6 +17,9 @@ export class AdminViewblogsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.AuthService.checkaccessblogger();
+    this.AuthService.checkaccessmoderator();
+    this.AuthService.checkaccessregular();
     this.getblogs();
   }
   getblogs() {
@@ -31,7 +34,9 @@ export class AdminViewblogsComponent implements OnInit {
   }
   approve(inp) {
     this.blogs[this.blogs.findIndex(a => a._id == inp)].isApproved = true;
-    this.blogService.updateBlog(inp, this.blogs.find(a => a._id == inp))
+    this.blogService.updateBlog(inp, this.blogs.find(a => a._id == inp)).subscribe(data => {
+      console.log(data);
+    })
   }
   delete(inp) {
     this.blogs.splice(this.blogs.findIndex(a => a._id == inp), 1);
@@ -42,7 +47,9 @@ export class AdminViewblogsComponent implements OnInit {
   statuss(inp) {
     if (this.blogs[this.blogs.findIndex(a => a._id == inp)].status != "show") {
       this.blogs[this.blogs.findIndex(a => a._id == inp)].status = "show";
-      this.blogService.updateBlog(inp, this.blogs.find(a => a._id == inp));
+      this.blogService.updateBlog(inp, this.blogs.find(a => a._id == inp)).subscribe(data => {
+        console.log(data);
+      });
 
     }
     else {

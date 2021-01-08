@@ -133,7 +133,7 @@ module.exports = {
                     })
                 );
         } catch (err) {
-            console.log(err, "ttis is error")
+            //console.log(err, "ttis is error")
             res.status(500).send('Server error');
         }
     },

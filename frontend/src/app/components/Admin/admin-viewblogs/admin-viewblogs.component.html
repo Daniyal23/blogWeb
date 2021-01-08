@@ -16,18 +16,38 @@
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
     <div class="row">
         <div *ngFor="let blog of blogs" style="border: 5px solid black;">
+            <div class="rtl">
+                <h4 *ngIf="blog.isApproved==false" style="background-color: red;">Approved:{{blog.isApproved}}
+                </h4>
+                <h4 *ngIf="blog.isApproved==true" style="background-color:green;">Approved:{{blog.isApproved}}
+                </h4>
+
+            </div>
+
             <div class="col-md-3">
 
 
-
-                <app-blog-card [blog]="blog"></app-blog-card>
+                <app-blog-card [blog]="blog" routerLink="/blog/detail/{{blog._id}}"></app-blog-card>
             </div>
-            <button *ngIf="blog.isApproved==false" mat-raised-button color="primary"
-                (click)="approve(blog._id)">Approve</button>
+            <button *ngIf=" blog.isApproved==false" mat-raised-button color="primary" (click)="approve(blog._id)">
+                Approve</button>
 
             <button mat-raised-button color="warn" (click)="delete(blog._id)">Delete</button>
-            <button mat-raised-button color="primary" (click)="statuss(blog._id)">Show/Hide</button>
+
+            <button *ngIf="blog.status=='hidden'" mat-raised-button color="primary"
+                (click)="statuss(blog._id)">Show</button>
+            <button *ngIf="blog.status=='show'" mat-raised-button color="primary"
+                (click)="statuss(blog._id)">Hide</button>
+            <button *ngIf="blog.status=='edit'" mat-raised-button color="primary"
+                (click)="statuss(blog._id)">Show</button>
+
             <button mat-raised-button color="primary" routerLink="/admin/editblog/{{blog._id}}">Edit</button>
+
+            <div class="rtl">
+                <h4 *ngIf="blog.status=='hidden'" style="background-color: red;">Status:{{blog.status}}</h4>
+                <h4 *ngIf="blog.status=='edit'" style="background-color: yellow;">Status:{{blog.status}}</h4>
+                <h4 *ngIf="blog.status=='show'" style="background-color:green;">Status:{{blog.status}}</h4>
+            </div>
         </div>
     </div>
 </div>

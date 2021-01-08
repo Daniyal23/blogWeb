@@ -36,6 +36,8 @@ export class RegisterComponent implements OnInit {
   match = false;
 
   user: User = new User();
+  user1: User = new User();
+
 
 
   constructor(
@@ -65,13 +67,13 @@ export class RegisterComponent implements OnInit {
   matchValidator(group: FormGroup) {
     let pass = group.controls.password.value;
     let confirmPass = group.controls.repeatPassword.value;
-    console.log(pass, confirmPass, "passwords");
+    //console.log(pass, confirmPass, "passwords");
     return pass === confirmPass ? null : { notSame: true }
   }
 
 
   imageSelect(v, a) {
-    console.log(v, a);
+    //console.log(v, a);
     this.selected = a;
     this.selectedImage = v;
     // this.registerForm.setValue({ image: v });
@@ -111,17 +113,17 @@ export class RegisterComponent implements OnInit {
 
     this.loading = true;
     if (this.selected != 0 && this.checkbox != 0) {
-      console.log(this.registerForm.controls["country"].value);
+      //console.log(this.registerForm.controls["country"].value);
       this.user.Avatar = this.selectedImage;
       this.user.Country = this.registerForm.controls["country"].value;
       this.user.Email = this.registerForm.controls["email"].value;
       this.user.Password = this.registerForm.controls["password"].value;
       this.user.UserName = this.registerForm.controls["username"].value;
 
-      console.log(this.user, "dwd");
+      // console.log(this.user, "dwd");
       this.AuthService.signup(this.user).subscribe(res => {
 
-        console.log(JSON.stringify(res));
+        //console.log(JSON.stringify(res));
         if (res == "email already exists") {
           this.snackBar.open('Email already exists', "", {
             duration: 2000,
@@ -154,10 +156,12 @@ export class RegisterComponent implements OnInit {
 
   }
   public resolved(captchaResponse: string): void {
-    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    // console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
   public onError(errorDetails: RecaptchaErrorParameters): void {
-    console.log(`reCAPTCHA error encountered; details:`, errorDetails);
+    // console.log(`reCAPTCHA error encountered; details:`, errorDetails);
   }
+
+
 }

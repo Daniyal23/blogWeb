@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'blog/detail/:id',
     component: BlogDetailsComponent,
-    canActivate: [AuthGuard],
+
     children: [
     ]
   },

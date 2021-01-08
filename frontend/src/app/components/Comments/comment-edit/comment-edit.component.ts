@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comment } from 'src/app/models/comments';
 
@@ -63,6 +63,7 @@ export class CommentEditComponent implements OnInit {
     private AuthService: AuthenticationService,
     private blogService: BlogService,
     public dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -73,7 +74,7 @@ export class CommentEditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
       this.comment = result;
       if (result == "") {
         this.snackBar.open("Comment Cannot be Empty", null, {
@@ -96,7 +97,7 @@ export class CommentEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("hello");
+    //console.log("hello");
     this.userdetails = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     this.getcomments();
     this.getblogs();
@@ -104,7 +105,7 @@ export class CommentEditComponent implements OnInit {
   ngAfterViewChecked() {
     if (this.comments.length > 0 && this.bloglist.length > 0 && this.check == 0) {
       this.check = 1;
-      console.log(this.comments.filter(a => a.commentorId == this.userdetails.id), "lol");
+      (this.comments.filter(a => a.commentorId == this.userdetails.id), "lol");
       this.bloglist.forEach(value => {
         if (value.commentsIdList != null) {
           value.commentsIdList.forEach(element => {
@@ -118,10 +119,10 @@ export class CommentEditComponent implements OnInit {
         }
       });
       this.dateset();
-      console.log(this.displaylist, "yo");
+      // console.log(this.displaylist, "yo");
     }
     if (this.donecheck != "" && this.donecount == 0) {
-      console.log("yoyoyoyoyo");
+      //console.log("yoyoyoyoyo");
       if (this.donecheck == "Update complete") {
         this.snackBar.open("Comment Edit Successful", null, {
           duration: 2000,
@@ -142,25 +143,27 @@ export class CommentEditComponent implements OnInit {
       }
     }
     if (this.commentcount == 0 && this.commentdata != "") {
-      this.snackBar.open("Comment Edit Successful", null, {
-        duration: 2000,
-        panelClass: ['success-snackbar'],
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
+      console.log(this.commentdata);
+      if (this.commentdata == "Deleted Successfully")
+        this.snackBar.open("Comment Deleted Successful", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
       this.commentcount = 1;
     }
-
+    this.cdr.detectChanges();
   }
   dateset() {
     for (var i = 0; i < this.displaylist.length; i++) {
-      console.log(this.displaylist[i].comment.datePublished.toString());
+      //console.log(this.displaylist[i].comment.datePublished.toString());
       this.date = this.displaylist[i].comment.datePublished.toString();
       this.date = (this.date.split("T")[0]);
       var a = this.date.split("-");
       this.date = "";
       this.date = a[2] + "-" + a[1] + "-" + a[0];
-      console.log(this.date, "date");
+      // console.log(this.date, "date");
       this.displaylist[i].date = this.date;
     }
   }
@@ -180,7 +183,7 @@ export class CommentEditComponent implements OnInit {
   }
 
   editcomment(inp) {
-    console.log(inp, "edit comment");
+    //console.log(inp, "edit comment");
 
   }
   deletecomment(inp) {

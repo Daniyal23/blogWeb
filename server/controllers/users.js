@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const { Result, check } = require("express-validator");
 const { response } = require("express");
-
+const passport = require("passport");
 
 
 dotenv.config();
@@ -22,39 +22,87 @@ router.get("/test", (req, res) =>
 //@desc     Register user route
 //@access   Public
 module.exports = {
+    createAdmin:
 
-    signup: async (req, res) => {
-        try {
-            let { UserName, Email, Password, Country, Avatar } = req.body;
-            let FoundUser = {};
-            const user = await User.findOne({
-                UserName,
-            });
-            if (user) return res.json('Username already exists');
+        async (req, res) => {
 
-            let users = await User.find();
-            const checkmail = await Promise.all(users.map(user => bcrypt.compare(Email, user.Email)));
-            checkmail.map((response, index) => { if (response) FoundUser = users[index] });
-            if (FoundUser._id) return res.json('email already exists');
+            try {
+                console.log("in create admin");
+                var UserName = "admin"
+                var Email = "admin@admin.com"
+                var Password = "12345678"
+                var Country = "pak"
+                var Avatar = "/assets/avatar1.jpg"
+                var accountType = "admin"
+                var status = "approved"
 
-            const salt = await bcrypt.genSalt(10);
-            Email = await bcrypt.hash(Email, salt);
-            Password = await bcrypt.hash(Password, salt);
-            const newUser = new User({
-                UserName,
-                Email,
-                Password,
-                Country,
-                Avatar
-            });
-            await newUser.save(function (error, obj) {
-                if (error) res.send(error);
-                return res.json({ success: 'Added' });
-            });
-        } catch (err) {
-            res.status(500).send('Server error');
-        }
-    },
+                let FoundUser = {};
+                const user = await User.findOne({
+                    UserName,
+                });
+                if (user) return res.json('Username already exists');
+
+                let users = await User.find();
+                const checkmail = await Promise.all(users.map(user => bcrypt.compare(Email, user.Email)));
+                checkmail.map((response, index) => { if (response) FoundUser = users[index] });
+                if (FoundUser._id) return res.json('email already exists');
+
+                const salt = await bcrypt.genSalt(10);
+                Email = await bcrypt.hash(Email, salt);
+                Password = await bcrypt.hash(Password, salt);
+                const newUser = new User({
+                    UserName,
+                    Email,
+                    Password,
+                    Country,
+                    Avatar,
+                    accountType,
+                    status
+                });
+                await newUser.save(function (error, obj) {
+                    if (error) res.send(error);
+                    return res.json({ success: 'Added' });
+                });
+            } catch (err) {
+                res.status(500).send('Server error');
+            }
+        },
+
+    signup:
+
+        async (req, res) => {
+
+            try {
+                let { UserName, Email, Password, Country, Avatar } = req.body;
+                let FoundUser = {};
+                const user = await User.findOne({
+                    UserName,
+                });
+                if (user) return res.json('Username already exists');
+
+                let users = await User.find();
+                const checkmail = await Promise.all(users.map(user => bcrypt.compare(Email, user.Email)));
+                checkmail.map((response, index) => { if (response) FoundUser = users[index] });
+                if (FoundUser._id) return res.json('email already exists');
+
+                const salt = await bcrypt.genSalt(10);
+                Email = await bcrypt.hash(Email, salt);
+                Password = await bcrypt.hash(Password, salt);
+                const newUser = new User({
+                    UserName,
+                    Email,
+                    Password,
+                    Country,
+                    Avatar
+                });
+                await newUser.save(function (error, obj) {
+                    if (error) res.send(error);
+                    return res.json({ success: 'Added' });
+                });
+            } catch (err) {
+                res.status(500).send('Server error');
+            }
+        },
 
 
     //@route    GET api/users/login
@@ -73,6 +121,7 @@ module.exports = {
                     if (!users) {
                         return res.json({ error: "Password incorrect" });
                     }
+
                     users.forEach((item) => {
                         //console.log(item.Email, "jeje");
                         temp = bcrypt.compareSync(email, item.Email);
@@ -80,11 +129,13 @@ module.exports = {
                             temp2 = bcrypt.compareSync(password, item.Password)
                             if (temp2 == true) {
                                 //User Matched
-
+                                if (item.status != "approved") {
+                                    return res.json({ error: "account not approved" })
+                                }
                                 const payload = {
                                     id: item.id,
                                     username: item.UserName,
-                                    //name: user.name,
+                                    accountType: item.accountType,
                                     avatar: item.Avatar
                                     //perm: user.perm
                                 }; // Create Jwt payload
@@ -109,6 +160,7 @@ module.exports = {
                         else {
                             temp == false;
 
+
                         }
 
                     })
@@ -128,6 +180,7 @@ module.exports = {
 
     getAllUsers: async (req, res) => {
         try {
+
             User.find()
                 .then(users => {
                     if (!users) {
@@ -169,7 +222,7 @@ module.exports = {
 
     getUsersById: async (req, res) => {
         try {
-            console.log(req.param.id)
+            //console.log(req.param.id)
             User.findOne({ '_id': (req.params.id) })
                 .then(user => res.json(user))
                 .catch(err =>
@@ -184,7 +237,7 @@ module.exports = {
 
     getUserAccountType: async (req, res) => {
         try {
-            console.log(req.param.id)
+            //console.log(req.param.id)
             User.findOne({ '_id': (req.params.id) })
                 .then(user => res.json(user.accountType))
                 .catch(err =>
@@ -200,7 +253,7 @@ module.exports = {
 
     updateUser: async (req, res) => {
         try {
-            console.log("in update")
+            //console.log("in update")
             User.findById(req.params.id)
                 .then(user => {
                     user.UserName = req.body.UserName;

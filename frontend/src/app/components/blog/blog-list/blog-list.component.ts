@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BlogService } from 'src/app/services/blog.service';
@@ -12,20 +12,22 @@ import { BlogService } from 'src/app/services/blog.service';
 export class BlogListComponent implements OnInit {
   public blogs: Blog[] = [];
   public loggedin = 0;
-  public check:number=0;
+  public check: number = 0;
   constructor(
     private blogService: BlogService,
-    private AuthService: AuthenticationService
+    private AuthService: AuthenticationService,
+    private cdr: ChangeDetectorRef
   ) { }
 
+  checker = 0;
   ngOnInit(): void {
     console.log("in bloglist");
     this.blogService.getAllBlogs().subscribe(data => {
       this.blogs = data;
       // console.log(data);
     });
-    if(this.blogs.length>0){
-      this.check=1;
+    if (this.blogs.length > 0) {
+      this.check = 1;
     }
     if (this.AuthService.parseJwt(localStorage.getItem("currentUser"))) {
       this.loggedin = 1;
@@ -35,8 +37,12 @@ export class BlogListComponent implements OnInit {
     }
 
   }
-  ngAfterViewChecked(){
-    
+  ngAfterViewChecked() {
+    if (this.blogs.length > 0 && this.checker == 0) {
+      this.blogs = this.blogs.filter(a => a.status == "show");
+      this.checker = 1;
+    }
+    this.cdr.detectChanges();
   }
 
   logout() {

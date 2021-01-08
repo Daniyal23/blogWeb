@@ -29,7 +29,7 @@ module.exports = {
                     //console.log(err),
                 );
         } catch (err) {
-            console.log(err, "tis is error")
+            //console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
 
@@ -54,7 +54,7 @@ module.exports = {
                         comment: 'There are no comments'
                     }));
         } catch (err) {
-            console.log(err, "tis is error")
+            //console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
     },
@@ -70,7 +70,7 @@ module.exports = {
                     })
                 );
         } catch (err) {
-            console.log(err, "tis is error")
+            //console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
     },
@@ -89,13 +89,13 @@ module.exports = {
                     })
                 );
         } catch (err) {
-            console.log(err, "tis is error")
+            //console.log(err, "tis is error")
             res.status(500).send('Server error');
         }
     },
     updateComment: async (req, res) => {
         try {
-            console.log("in update")
+            //console.log("in update")
             Comments.findById(req.params.id)
                 .then(user => {
 

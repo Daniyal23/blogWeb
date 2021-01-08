@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,9 @@ export class NavbarComponent implements OnInit {
   accounttype: any = "";
   check = 0;
   constructor(
-    private AuthService: AuthenticationService, private userService: UserService
+    private AuthService: AuthenticationService,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +31,7 @@ export class NavbarComponent implements OnInit {
         this.runonce = 1;
 
         this.userdetails = this.AuthService.getuserdetails();
-        console.log("üser details", this.userdetails);
+        // console.log("üser details", this.userdetails);
         this.userService.getUserAccountType(this.userdetails.id).subscribe(data => {
           this.accounttype = data;
         })
@@ -39,9 +42,10 @@ export class NavbarComponent implements OnInit {
       }
     }
     if (this.accounttype != "" && this.check == 0) {
-      console.log(this.accounttype, "dsfasd");
+      //console.log(this.accounttype, "dsfasd");
       this.check = 1;
     }
+    this.cdr.detectChanges();
   }
   logout() {
     this.AuthService.logout();

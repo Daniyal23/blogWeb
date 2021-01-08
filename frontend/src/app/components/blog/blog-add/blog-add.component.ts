@@ -31,6 +31,7 @@ export class BlogAddComponent implements OnInit {
   public imgsrcs: Array<any> = ["/assets/noimage.png"];
   public imgcheck: number = 0;
 
+  public title: string = "";
 
 
   config: AngularEditorConfig = {
@@ -69,6 +70,7 @@ export class BlogAddComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.AuthService.checkaccessregular();
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     console.log(this.userdetials);
     console.log(this.userdetials.username);
@@ -117,7 +119,7 @@ export class BlogAddComponent implements OnInit {
   }
 
   Publish() {
-    if(this.imgsrcs[0]=="/assets/noimage.png"){
+    if (this.imgsrcs[0] == "/assets/noimage.png") {
       this.snackBar.open("Header Image is required", null, {
         duration: 2000,
         panelClass: ['danger-snackbar'],
@@ -135,6 +137,16 @@ export class BlogAddComponent implements OnInit {
       });
       return;
     }
+    if (this.title == '') {
+      this.snackBar.open("Title is required", null, {
+        duration: 2000,
+        panelClass: ['danger-snackbar'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+      return;
+    }
+
     else {
       //this.blogobj.blogHeaderImage = this.imgsrcs;
       this.blogobj.datePublished = null;
@@ -145,9 +157,9 @@ export class BlogAddComponent implements OnInit {
       this.blogobj.numLikes = 0;
       this.blogobj.numOfReads = 0;
       this.blogobj.reportsCounter = 0;
-      this.blogobj.status = "idk";
+      this.blogobj.status = "hidden";
       this.blogobj.text = this.htmlContent;
-      this.blogobj.title = "blog";
+      this.blogobj.title = this.title;
       this.blogobj.creatorId = this.userdetials.id;
       this.blogobj.creatorName = this.userdetials.username;
 

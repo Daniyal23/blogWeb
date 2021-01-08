@@ -29,24 +29,26 @@ export class CommentComponent implements OnInit {
     }
   }
   dateset() {
-    console.log(this.comment.datePublished.toString());
+    //console.log(this.comment.datePublished.toString());
     this.date = this.comment.datePublished.toString();
     this.date = (this.date.split("T")[0]);
     var a = this.date.split("-");
     this.date = "";
     this.date = a[2] + "-" + a[1] + "-" + a[0];
-    console.log(this.date, "date");
+    // console.log(this.date, "date");
   }
 
   onedit() {
-    console.log("in edit", this.htmlcontent)
+    // console.log("in edit", this.htmlcontent)
     if (this.edit == 0) {
       this.edit = 1
     }
     else {
       this.comment.content = this.htmlcontent;
-      console.log(this.comment._id, "w");
-      this.commentService.updateComment(this.comment._id, this.comment);
+      //console.log(this.comment._id, "w");
+      this.commentService.updateComment(this.comment._id, this.comment).subscribe(data => {
+        console.log(data);
+      });;
       this.edit = 0;
     }
   }

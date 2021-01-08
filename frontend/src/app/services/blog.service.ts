@@ -25,7 +25,7 @@ export class BlogService {
 
   public addBlog(blog: Blog): void {
 
-    this.http.post(`${this.uri}/add`, blog, { headers: { 'Authorization': this.getheader() } })
+    this.http.post(`${this.uri}/addBlog`, blog, { headers: { 'Authorization': this.getheader() } })
       .subscribe(res => console.log('Done'));
 
   }
@@ -53,15 +53,13 @@ export class BlogService {
   public updateBlog(id, obj: Blog) {
     return this
       .http
-      .post(`${this.uri}/updateBlog/${id}`, obj);
-    //, { headers: { 'Authorization': this.getheader() } })
+      .post(`${this.uri}/updateBlog/${id}`, obj, { headers: { 'Authorization': this.getheader() } })
 
   }
   public deleteBlog(id) {
     return this
       .http
-      .delete(`${this.uri}/deleteBlog/${id}`)
-    //, { headers: { 'Authorization': this.getheader() } });
+      .delete(`${this.uri}/deleteBlog/${id}`, { headers: { 'Authorization': this.getheader() } });
   }
 
 }

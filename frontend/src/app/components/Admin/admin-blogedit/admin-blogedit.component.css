@@ -28,3 +28,11 @@ ul {
     background-size: cover;
   }
   
+  mat-card-title{
+    direction: rtl;
+  }
+
+  mat-card-content{
+    direction: rtl;
+    text-align: right;
+  }

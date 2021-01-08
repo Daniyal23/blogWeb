@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Blog } from 'src/app/models/blog';
 import { User } from 'src/app/models/users';
@@ -47,7 +47,8 @@ export class AdminViewusersComponent implements OnInit {
     public userService: UserService,
     public blogService: BlogService,
     public commentService: CommentsService,
-    private AuthService: AuthenticationService
+    private AuthService: AuthenticationService,
+    private cdr: ChangeDetectorRef,
   ) { }
   public userInfolist: Array<userInfo> = [];
   public forcheckBox: Array<forcheckbox> = [];
@@ -64,6 +65,10 @@ export class AdminViewusersComponent implements OnInit {
 
   public check = 0;
   ngOnInit(): void {
+    this.AuthService.checkaccessblogger();
+    this.AuthService.checkaccessmoderator();
+    this.AuthService.checkaccessregular();
+
     this.getusers();
     this.getblogs();
     this.getcomments();
@@ -73,6 +78,7 @@ export class AdminViewusersComponent implements OnInit {
   ngAfterViewChecked() {
     if (this.user.length > 0 && this.blogs.length > 0 && this.check == 0) {
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
+      this.user = this.user.filter(a => a.status != 'blocked');
       this.populate();
       this.check = 1;
       //console.log(this.user, " users");
@@ -83,7 +89,7 @@ export class AdminViewusersComponent implements OnInit {
     if (this.blogs.length > 0) {
       //console.log(this.blogs,"blogs");
     }
-
+    this.cdr.detectChanges();
   }
 
   getusers() {
@@ -126,6 +132,7 @@ export class AdminViewusersComponent implements OnInit {
       //      this.userInfolist[i].status = "mod"
 
       this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
+
       // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
 
       this.blogs.forEach(value => {
@@ -180,5 +187,21 @@ export class AdminViewusersComponent implements OnInit {
   //   onSelectionChange(entry) {
   //     this.selectedEntry = entry;
   // }
+  block(inp) {
+    //console.log(inp, this.user.findIndex(a => a._id == inp))
+    this.user[this.user.findIndex(a => a._id == inp)].status = "blocked";
+    //console.log(this.user);
+    this.userService.updateUser(inp, this.user.find(a => a._id == inp)).subscribe(data => {
+      console.log(data);
+    });
+  }
+  delete(inp) {
+    this.user = this.user.filter(a => a._id != inp);
+    this.userInfolist = this.userInfolist.filter(a => a._id != inp);
+    this.userService.deleteUsers(inp).subscribe(data => {
+      console.log(data);
+    });
+  }
 }
+
 

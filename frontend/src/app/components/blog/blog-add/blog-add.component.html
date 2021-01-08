@@ -10,6 +10,13 @@
 </ul-->
 <div class="col-md-10 offset-1 ">
     <mat-card class="card">
+
+        <div class="col-md-5 offset-4 rtl ">
+
+            <input class="big" size=20 matInput placeholder="Title" [(ngModel)]="title" type="text" name="password"
+                required />
+        </div>
+
         <div class="img_div col-md-8 offset-4">
 
             <div *ngFor="let imgsrc of imgsrcs" class="img_div">

@@ -12,7 +12,6 @@
         <div class="offset-5">
             <li><a href="/home">Home</a>
             </li>
-            <li><a href="/blog/add">Blog Add</a></li>
             <li><a href="/blog">Blogs</a></li>
             <li *ngIf="loggedin==1">
                 <a (click)="logout()" style="cursor: pointer;">logout</a>
@@ -34,20 +33,23 @@
                 <li><a href="/myblogs">My Blogs</a></li>
 
             </div>
-            <div *ngIf="accounttype=='moderator'" class="offset-5">
+            <div *ngIf="accounttype=='moderator'" class="offset-4">
                 <li><a href="/editprofile">Edit Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
                 <li><a href="/myblogs">My Blogs</a></li>
                 <li><a href="/admin/allcomments">Comments</a></li>
 
             </div>
-            <div *ngIf="accounttype=='admin'" class="offset-5">
+            <div *ngIf="accounttype=='admin'" class="offset-3">
                 <li><a href="/editprofile">Edit Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
                 <li><a href="/myblogs">My Blogs</a></li>
                 <li><a href="/admin/allcomments">Comments</a></li>
                 <li><a href="/admin/listusers">Users</a></li>
+                <li><a href="/admin/approveusers">Approve Users</a></li>
+
                 <li><a href="/admin/listblogs">Blogs</a></li>
+
 
 
 

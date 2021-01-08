@@ -13,6 +13,7 @@ const dotenv = require('dotenv');
 //import blog from '
 
 
+
 dotenv.config();
 //Connect Database
 connectDB();
@@ -31,6 +32,7 @@ app.use(passport.initialize());
 
 // //Passport Config
 require('./middleware/auth')(passport);
+
 
 
 // Routes

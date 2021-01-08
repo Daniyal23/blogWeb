@@ -12,7 +12,9 @@
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
 </ul-->
-
+<div style="margin-top: 10px; margin-left: 15px;">
+    <button mat-raised-button color="primary" routerLink="/blog/add">Create Blog</button>
+</div>
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
     <div class="row">
         <div *ngFor="let blog of blogs" style="border: 5px solid black;">
@@ -23,7 +25,7 @@
 
 
 
-                <app-blog-card [blog]="blog"></app-blog-card>
+                <app-blog-card [blog]="blog" routerLink="/blog/detail/{{blog._id}}"></app-blog-card>
             </div>
             <div class="rtl">
                 <h4 *ngIf="blog.status=='hidden'" style="background-color: red;">Status:{{blog.status}}</h4>

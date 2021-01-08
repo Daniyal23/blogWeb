@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/users';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,21 +11,25 @@ import { UserService } from 'src/app/services/user.service';
 export class AdminUserapproveComponent implements OnInit {
   public users: any[] = [];
   public user: any[] = [];
-  public check:number=0;
+  public check: number = 0;
   constructor(
-    public userService: UserService,
+    public userService: UserService, private authService: AuthenticationService, private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+    this.authService.checkaccessregular();
+    this.authService.checkaccessmoderator();
+    this.authService.checkaccessblogger();
     this.getusers();
   }
   ngAfterViewChecked() {
     if (this.user.length > 0) {
-      this.users=this.user.filter(a=> a.status=="notapproved")
+      this.users = this.user.filter(a => a.status == "notapproved")
       this.check = 1;
-    
+
       //console.log(this.user, " users");
     }
+    this.cdr.detectChanges();
 
   }
   getusers() {
@@ -37,14 +42,18 @@ export class AdminUserapproveComponent implements OnInit {
       //   console.log(value, 'daasd')
     })
   }
-  approve(inp){
+  approve(inp) {
     console.log(inp);
-   this.user[ this.user.findIndex(a=> a._id==inp)].status="approved";
-   this.userService.updateUser(this.user[ this.user.findIndex(a=> a._id==inp)]._id,this.user[ this.user.findIndex(a=> a._id==inp)]);
+    this.user[this.user.findIndex(a => a._id == inp)].status = "approved";
+    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
+      console.log(data);
+    });
   }
-  delete(inp){
-    this.user[ this.user.findIndex(a=> a._id==inp)].status="blacklist";
-    this.userService.updateUser(this.user[ this.user.findIndex(a=> a._id==inp)]._id,this.user[ this.user.findIndex(a=> a._id==inp)]);
-   
+  delete(inp) {
+    this.user[this.user.findIndex(a => a._id == inp)].status = "blacklist";
+    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
+      console.log(data);
+    });;
+
   }
 }
