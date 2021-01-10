@@ -95,7 +95,7 @@ export class AdminViewusersComponent implements OnInit {
 
   public check = 0;
 
-  openDialog(inp): void {
+  openDialog(inp,inp2): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
       width: '250px',
      
@@ -106,6 +106,7 @@ export class AdminViewusersComponent implements OnInit {
      
       console.log(result);
       if(result=='Yes'){
+        if(inp2=="delete"){
         this.delete(inp);
         this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
@@ -114,6 +115,16 @@ export class AdminViewusersComponent implements OnInit {
           verticalPosition: 'top'
         });
       }
+      else{
+        this.block(inp);
+        this.snackBar.open("Blocked successfully", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+    }
       else{
 
       }
@@ -134,7 +145,7 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.user.length > 0 && this.blogs.length > 0 && this.check == 0) {
+    if (this.user.length > 0 && this.blogs.length >= 0 && this.check == 0) {
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
       this.user = this.user.filter(a => a.status != 'blocked');
       this.populate();
@@ -208,9 +219,7 @@ export class AdminViewusersComponent implements OnInit {
       })
     }
       this.fillcheckboxlist(i, this.user[i].accountType);
-      if(this.comments.length>0){
       this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
-    }
 
     }
 
@@ -246,7 +255,9 @@ export class AdminViewusersComponent implements OnInit {
   updateAccount(inp, inp2) {
     console.log(inp, inp2, "here");
     this.user[this.user.findIndex(a => a._id == inp)].accountType = inp2;
-    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]);
+    this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data=>{
+      console.log(data);
+    });
     this.userInfolist[this.userInfolist.findIndex(a => a._id == inp)].accountType = inp2;
 
   }

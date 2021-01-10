@@ -22,9 +22,12 @@ export class DialogOverviewExampleDialog {
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(inp): void {
+      this.dialogRef.close('No');
+    }
+    onYesClick(inp): void {
+      this.dialogRef.close('Yes');
+    }
 
 }
 
@@ -70,31 +73,29 @@ export class CommentEditComponent implements OnInit {
   openDialog(inp): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
-      data: { comment: inp.content }
+     
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log('The dialog was closed');
-      this.comment = result;
-      if (result == "") {
-        this.snackBar.open("Comment Cannot be Empty", null, {
+      console.log('The dialog was closed');
+     
+      console.log(result);
+      if(result=='Yes'){
+        this.deletecomment(inp);
+        this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
-          panelClass: ['danger-snackbar'],
+          panelClass: ['success-snackbar'],
           horizontalPosition: 'right',
           verticalPosition: 'top'
         });
-      } else {
-        if (inp.content != this.comment) {
-          inp.content = this.comment;
-          this.donecheck = "";
-          this.donecount = 0;
-          this.commentService.updateComment(inp._id, inp).subscribe(data => {
-            this.donecheck = data; console.log(data);
-          });
-        }
+      }
+      else{
+
       }
     });
+    
   }
+
 
   ngOnInit(): void {
     //console.log("hello");

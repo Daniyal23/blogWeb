@@ -97,7 +97,7 @@
                     <i class="material-icons">report_problem</i>
 
                     <i class="material-icons" *ngIf="comment.commentorId==userID || boss==0"
-                        (click)="commentDelete(comment._id,comment)">delete</i>
+                         (click)="openDialog(comment._id,comment,'delete')">delete</i>
                 </div>
             </div>
         </div>

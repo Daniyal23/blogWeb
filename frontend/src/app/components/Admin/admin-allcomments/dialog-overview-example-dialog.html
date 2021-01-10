@@ -1,10 +1,6 @@
-<h1 mat-dialog-title>Edit Comment</h1>
-<div mat-dialog-content>
-    <mat-form-field>
-        <input matInput [(ngModel)]="data.comment">
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.comment" cdkFocusInitial>Ok</button>
-</div>
+<div class="col-md-12">
+    <h2>Are you sure you ?</h2>
+    
+        <button mat-raised-button (click)="onNoClick('No')" style="width: 50px;">No</button>
+        <button mat-raised-button (click)="onYesClick('Yes')" color="primary" style="margin-left: 70px;background-color: skyblue; width: 50px;" >Yes</button>
+    </div>

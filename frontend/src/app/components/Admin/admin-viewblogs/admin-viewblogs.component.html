@@ -14,7 +14,7 @@
 </ul-->
 
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
-    <div class="row">
+    <div class="row rtl">
         <div *ngFor="let blog of blogs" style="border: 5px solid black;" class="rtl">
             <div class="rtl">
                 <h4 *ngIf="blog.isApproved==false" style="background-color: red;">Approved:{{blog.isApproved}}

@@ -131,7 +131,7 @@ export class BlogDetailsComponent implements OnInit {
   };
   
 
-  openDialog(inp): void {
+  openDialog(inp,inp2,inp3): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
       width: '250px',
      
@@ -142,7 +142,8 @@ export class BlogDetailsComponent implements OnInit {
      
       console.log(result);
       if(result=='Yes'){
-        //this.delete(inp);
+        if(inp3=="delete"){
+        this.commentDelete(inp,inp2);
         this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
           panelClass: ['success-snackbar'],
@@ -150,6 +151,10 @@ export class BlogDetailsComponent implements OnInit {
           verticalPosition: 'top'
         });
       }
+      else{
+
+      }
+    }
       else{
 
       }
