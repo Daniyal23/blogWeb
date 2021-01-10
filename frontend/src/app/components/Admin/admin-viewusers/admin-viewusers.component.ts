@@ -42,12 +42,12 @@ export class DialogOverviewExampleDialogforAllComments {
     public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-    onNoClick(inp): void {
-      this.dialogRef.close('No');
-    }
-    onYesClick(inp): void {
-      this.dialogRef.close('Yes');
-    }
+  onNoClick(inp): void {
+    this.dialogRef.close('No');
+  }
+  onYesClick(inp): void {
+    this.dialogRef.close('Yes');
+  }
 
 }
 
@@ -88,7 +88,7 @@ export class AdminViewusersComponent implements OnInit {
   public yoy: true;
   public yoy1: false;
 
- 
+
   public moderator: number = 0;
   public blogger: number = 0;
   public regular: number = 0;
@@ -98,14 +98,14 @@ export class AdminViewusersComponent implements OnInit {
   openDialog(inp): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
       width: '250px',
-     
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-     
+
       console.log(result);
-      if(result=='Yes'){
+      if (result == 'Yes') {
         this.delete(inp);
         this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
@@ -114,11 +114,11 @@ export class AdminViewusersComponent implements OnInit {
           verticalPosition: 'top'
         });
       }
-      else{
+      else {
 
       }
     });
-    
+
   }
 
 
@@ -134,9 +134,13 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.user.length > 0 && this.blogs.length > 0 && this.check == 0) {
+    if (this.blogs) {
+      console.log(this.blogs, "d");
+    }
+    if (this.user.length > 0 && this.blogs.length >= 0 && this.check == 0) {
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
       this.user = this.user.filter(a => a.status != 'blocked');
+
       this.populate();
       this.check = 1;
       //console.log(this.user, " users");
@@ -162,7 +166,7 @@ export class AdminViewusersComponent implements OnInit {
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
-      this.blogs = data;
+      console.log(data);
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")
@@ -180,6 +184,7 @@ export class AdminViewusersComponent implements OnInit {
   }
   populate() {
 
+    console.log("in populate");
     for (var i = 0; i < this.user.length; i++) {
       this.userInfolist[i] = new userInfo();
       this.userInfolist[i].userName = this.user[i].UserName;
@@ -188,33 +193,33 @@ export class AdminViewusersComponent implements OnInit {
       this.userInfolist[i]._id = this.user[i]._id;
 
       //      this.userInfolist[i].status = "mod"
-      if(this.blogs.length<=0){
-        this.userInfolist[i].noBlogs=0;
+      if (this.blogs.length <= 0) {
+        this.userInfolist[i].noBlogs = 0;
       }
-      else{
-      this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
+      else {
+        this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
 
-      // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
-      
-      this.blogs.forEach(value => {
-        if (value.interactionIdList) {
-          this.userInfolist[i].noLikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Like").length;
-          this.userInfolist[i].noDislikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Dislike").length;
-          this.userInfolist[i].noReports += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Report").length;
-        }
-        else{
-          console.log("No blogs");
-        }
-      })
-    }
+        // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
+
+        this.blogs.forEach(value => {
+          if (value.interactionIdList) {
+            this.userInfolist[i].noLikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Like").length;
+            this.userInfolist[i].noDislikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Dislike").length;
+            this.userInfolist[i].noReports += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Report").length;
+          }
+          else {
+            console.log("No blogs");
+          }
+        })
+      }
       this.fillcheckboxlist(i, this.user[i].accountType);
-      if(this.comments.length>0){
-      this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
-    }
+      if (this.comments.length > 0) {
+        this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
+      }
 
     }
 
-    // console.log(this.userInfolist, "user infos");
+    console.log(this.userInfolist, "user infos");
   }
   statusUp(inp, inp2) {
     console.log(inp, inp2);

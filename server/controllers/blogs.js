@@ -56,7 +56,7 @@ module.exports = {
                     //console.log(err),
                     {
 
-                        dealer: 'There are no blogs'
+                        blogs: 'There are no blogs'
                     }));
         }
 

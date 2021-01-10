@@ -37,9 +37,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
-    this.authService.admin().subscribe(data => {
 
-    });
     this.userService.getAllUsers().subscribe(data => {
       this.gett = data;
     })
@@ -48,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   ngAfterViewChecked() {
     if (this.gett.length <= 0 && this.gettcheck == 0) {
-      this.authService.admin();
+      //this.authService.admin();
       this.gettcheck = 1;
     }
     if (this.tok) {

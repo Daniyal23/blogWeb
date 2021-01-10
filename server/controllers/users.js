@@ -145,7 +145,7 @@ module.exports = {
                                     payload,
                                     process.env.secretOrKey,
                                     {
-                                        expiresIn: 3600 * 4
+                                        expiresIn: 3600
                                     },
                                     (err, token) => {
                                         res.json({
