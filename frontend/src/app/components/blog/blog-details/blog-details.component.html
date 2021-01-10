@@ -45,11 +45,11 @@
                     </div>
 
                 </mat-card-content>
-                <mat-card-footer>
-                    <h3> Likes : {{blogs.numLikes}} Dislikes : {{blogs.numDislikes}} Reports :
+                <mat-card-footer class="rtl">
+                    <h3> الإعجابات : {{blogs.numLikes}} يكره : {{blogs.numDislikes}} التقارير :
                         {{blogs.reportsCounter}}</h3>
                 </mat-card-footer>
-                <mat-card-actions>
+                <mat-card-actions class="rtl">
                     <i class="material-icons" *ngIf="report==0" mat-button (click)="nbrreport()">report_problem</i>
                     <i class="material-icons" *ngIf="report==1" mat-button style="color: red;">report_problem</i>
 
@@ -75,20 +75,20 @@
     </div>
     <div class="row">
         <div class="col-md-8 offset-2 " style="border:2px solid black;">
-            <h2 style="text-align: center;"> Enter a Comment</h2>
+            <h2 style="text-align: center; direction: rtl;"> Enter a Comment</h2>
 
-            <div class="col-md-8 offset-2" style="background-color: lightpink;">
+            <div class="col-md-8 offset-2" class="rtl" style="background-color: lightpink;">
                 <div class="container">
                     <div class="comment">
-                        <textarea class="textinput" placeholder="Enter your comment here...."
-                            [(ngModel)]="commentContent"></textarea>
+                        <textarea class="textinput rtl" placeholder="Enter your comment here...."
+                            [(ngModel)]="commentContent" ></textarea>
                     </div>
                 </div>
-                <button mat-raised-button color="primary" (click)="commentAdd()"
-                    style="margin-left: 15px;margin-top: 5px;margin-bottom: 5px;">Send</button>
+                <button mat-raised-button class="rtl" color="primary" (click)="commentAdd()"
+                    style="margin-left: 15px;margin-top: 5px;margin-bottom: 5px;margin-right: 20px;">Send</button>
             </div>
             <div class="col-md-10 offset-1">
-                <div *ngFor="let comment of commentlist">
+                <div *ngFor="let comment of commentlist" class="rtl">
                     <app-comment [comment]="comment">
 
                     </app-comment>

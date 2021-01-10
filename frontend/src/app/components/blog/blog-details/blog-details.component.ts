@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Comment } from 'src/app/models/comments'
 import { DomSanitizer } from '@angular/platform-browser';
@@ -15,6 +15,33 @@ import { ThrowStmt } from '@angular/compiler';
 import { NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from 'src/app/guards/auth.guard';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+export interface DialogData {
+  comment: string;
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialogforAllComments {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+    onNoClick(inp): void {
+      this.dialogRef.close('No');
+    }
+    onYesClick(inp): void {
+      this.dialogRef.close('Yes');
+    }
+}
+
+
+
 
 @Component({
   selector: 'app-blog-details',
@@ -33,6 +60,7 @@ export class BlogDetailsComponent implements OnInit {
     private authGuard: AuthGuard,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
 
   ) { }
   public blogs?;
@@ -100,7 +128,33 @@ export class BlogDetailsComponent implements OnInit {
       },
     ]
   };
+  
 
+  openDialog(inp): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
+      width: '250px',
+     
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     
+      console.log(result);
+      if(result=='Yes'){
+        //this.delete(inp);
+        this.snackBar.open("Deleted successfully", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+      else{
+
+      }
+    });
+    
+  }
 
 
 

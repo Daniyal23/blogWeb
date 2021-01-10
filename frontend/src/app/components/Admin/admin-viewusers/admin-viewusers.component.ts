@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Blog } from 'src/app/models/blog';
 import { User } from 'src/app/models/users';
@@ -7,17 +7,19 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { UserService } from 'src/app/services/user.service';
 import { Comment } from 'src/app/models/comments'
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 class userInfo {
   noLikes: number = 0;
   noDislikes: number = 0;
   noBlogs: number = 0;
   noReports: number = 0;
-  status: string;
-  userName: string;
-  role: string;
+  status: string = "";
+  userName: string = "";
+  role: string = "";
   noComments: number = 0;
-  accountType: string;
+  accountType: string = "";
   _id: number = 0;
 }
 
@@ -25,6 +27,32 @@ class forcheckbox {
   text: string;
   selected: number;
 }
+
+export interface DialogData {
+  comment: string;
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialogforAllComments {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+    onNoClick(inp): void {
+      this.dialogRef.close('No');
+    }
+    onYesClick(inp): void {
+      this.dialogRef.close('Yes');
+    }
+
+}
+
+
+
 @Component({
   selector: 'app-admin-viewusers',
   templateUrl: './admin-viewusers.component.html',
@@ -49,6 +77,8 @@ export class AdminViewusersComponent implements OnInit {
     public commentService: CommentsService,
     private AuthService: AuthenticationService,
     private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
   public userInfolist: Array<userInfo> = [];
   public forcheckBox: Array<forcheckbox> = [];
@@ -58,12 +88,40 @@ export class AdminViewusersComponent implements OnInit {
   public yoy: true;
   public yoy1: false;
 
-
+ 
   public moderator: number = 0;
   public blogger: number = 0;
   public regular: number = 0;
 
   public check = 0;
+
+  openDialog(inp): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
+      width: '250px',
+     
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     
+      console.log(result);
+      if(result=='Yes'){
+        this.delete(inp);
+        this.snackBar.open("Deleted successfully", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+      else{
+
+      }
+    });
+    
+  }
+
+
   ngOnInit(): void {
     this.AuthService.checkaccessblogger();
     this.AuthService.checkaccessmoderator();
@@ -130,21 +188,29 @@ export class AdminViewusersComponent implements OnInit {
       this.userInfolist[i]._id = this.user[i]._id;
 
       //      this.userInfolist[i].status = "mod"
-
+      if(this.blogs.length<=0){
+        this.userInfolist[i].noBlogs=0;
+      }
+      else{
       this.userInfolist[i].noBlogs = this.blogs.filter(a => a.creatorId == this.user[i]._id).length;
 
       // console.log(this.blogs[i].interactionIdList.filter(a=> a.userId==this.user[i]._id).length,"this is it")
-
+      
       this.blogs.forEach(value => {
         if (value.interactionIdList) {
           this.userInfolist[i].noLikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Like").length;
           this.userInfolist[i].noDislikes += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Dislike").length;
           this.userInfolist[i].noReports += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Report").length;
         }
+        else{
+          console.log("No blogs");
+        }
       })
+    }
       this.fillcheckboxlist(i, this.user[i].accountType);
+      if(this.comments.length>0){
       this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
-
+    }
 
     }
 

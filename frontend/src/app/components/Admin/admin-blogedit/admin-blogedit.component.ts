@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,10 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Blog } from 'src/app/models/blog';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BlogService } from 'src/app/services/blog.service';
+
+
+
+
 
 @Component({
   selector: 'app-admin-blogedit',
@@ -22,6 +27,7 @@ export class AdminBlogeditComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private snackBar: MatSnackBar,
     private router: Router,
+    
 
 
 
@@ -72,6 +78,7 @@ export class AdminBlogeditComponent implements OnInit {
   public check = 0;
   public returnUrl: string;
 
+ 
   ngOnInit(): void {
     this.AuthService.checkaccessregular();
     this.getblogbyid();

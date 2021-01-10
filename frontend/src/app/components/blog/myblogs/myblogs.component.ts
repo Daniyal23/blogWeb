@@ -1,10 +1,36 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { BlogService } from 'src/app/services/blog.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+export interface DialogData {
+  comment: string;
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialogforAllComments {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+    onNoClick(inp): void {
+      this.dialogRef.close('No');
+    }
+    onYesClick(inp): void {
+      this.dialogRef.close('Yes');
+    }
+}
+
+
 
 @Component({
   selector: 'app-myblogs',
@@ -21,7 +47,36 @@ export class MyblogsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
+
+
+  openDialog(inp): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
+      width: '250px',
+     
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     
+      console.log(result);
+      if(result=='Yes'){
+        this.delete(inp);
+        this.snackBar.open("Deleted successfully", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+      else{
+
+      }
+    });
+    
+  }
 
   ngOnInit(): void {
 

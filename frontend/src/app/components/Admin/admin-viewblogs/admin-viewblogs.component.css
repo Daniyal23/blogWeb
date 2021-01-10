@@ -64,3 +64,8 @@ li a:hover {
   border: darkslategray;
   border-style: double;
 }
+
+.rtl {
+  text-align: right;
+  direction: rtl;
+}

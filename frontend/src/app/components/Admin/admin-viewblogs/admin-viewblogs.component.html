@@ -15,7 +15,7 @@
 
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
     <div class="row">
-        <div *ngFor="let blog of blogs" style="border: 5px solid black;">
+        <div *ngFor="let blog of blogs" style="border: 5px solid black;" class="rtl">
             <div class="rtl">
                 <h4 *ngIf="blog.isApproved==false" style="background-color: red;">Approved:{{blog.isApproved}}
                 </h4>
@@ -32,13 +32,13 @@
             <button *ngIf=" blog.isApproved==false" mat-raised-button color="primary" (click)="approve(blog._id)">
                 Approve</button>
 
-            <button mat-raised-button color="warn" (click)="delete(blog._id)">Delete</button>
+            <button mat-raised-button color="warn" (click)="openDialog(blog._id)">Delete</button>
 
             <button *ngIf="blog.status=='hidden'" mat-raised-button color="primary"
-                (click)="statuss(blog._id)">Show</button>
+                (click)="statuss(blog._id)" class="rtl">Show</button>
             <button *ngIf="blog.status=='show'" mat-raised-button color="primary"
-                (click)="statuss(blog._id)">Hide</button>
-            <button *ngIf="blog.status=='edit'" mat-raised-button color="primary"
+                (click)="statuss(blog._id)" class="rtl">Hide</button>
+            <button *ngIf="blog.status=='edit'" class="rtl" mat-raised-button color="primary"
                 (click)="statuss(blog._id)">Show</button>
 
             <button mat-raised-button color="primary" routerLink="/admin/editblog/{{blog._id}}">Edit</button>
