@@ -7,7 +7,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { fakeAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from 'src/app/services/blog.service';
-import { InteractionService } from 'src/app/services/interaction.service';
 
 import { Interaction } from 'src/app/models/interaction';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -27,7 +26,7 @@ export class BlogDetailsComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private blogService: BlogService,
-    private interactionService: InteractionService,
+
     private AuthService: AuthenticationService,
     private commentService: CommentsService,
     private snackBar: MatSnackBar,

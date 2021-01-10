@@ -30,7 +30,7 @@ export class AuthenticationService {
 
   }
   public admin() {
-    console.log("admin called");
+    //console.log("admin called");
     return this.http.post(`${this.uri}/createAdmin`, this.user1);
   }
 
@@ -49,7 +49,7 @@ export class AuthenticationService {
   setLocalStorage(responseObj) {
     localStorage.setItem('currentUser', JSON.stringify(responseObj));
     var a = this.parseJwt(localStorage.getItem('currentUser'));
-    console.log(a, "expire");
+    // console.log(a, "expire");
     const expiresAt = moment().add(a.exp);
     localStorage.setItem('id_token', responseObj.token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
@@ -85,7 +85,7 @@ export class AuthenticationService {
 
     this.currentUserSubject.next(null);
     this.router.navigate(['blog']);
-    console.log('logged out');
+    // console.log('logged out');
   };
 
   async clearlocal() {
@@ -104,7 +104,7 @@ export class AuthenticationService {
 
 
   public isLoggedIn() {
-    console.log(moment());
+    //console.log(moment());
     return moment().isBefore(this.getExpiration());
   }
 
@@ -115,7 +115,7 @@ export class AuthenticationService {
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration);
-    console.log(expiresAt, "at");
+    //console.log(expiresAt, "at");
     return moment(expiresAt);
   }
 
@@ -137,18 +137,18 @@ export class AuthenticationService {
 
     if (this.getuserdetails().accountType == "regular") {
 
-      console.log("in false");
+      //console.log("in false");
       this.router.events
         .pipe(filter(event => event instanceof NavigationEnd)
         ).subscribe(e => {
-          console.log('prev:', e['url']);
+          // console.log('prev:', e['url']);
           previousUrl = e['url'];
 
         });
       this.router.navigateByUrl(previousUrl);
     }
     else {
-      console.log("aa ja");
+      // console.log("aa ja");
     }
   }
 
@@ -157,18 +157,18 @@ export class AuthenticationService {
 
     if (this.getuserdetails().accountType == "blogger") {
 
-      console.log("in false");
+      //console.log("in false");
       this.router.events
         .pipe(filter(event => event instanceof NavigationEnd)
         ).subscribe(e => {
-          console.log('prev:', e['url']);
+          //console.log('prev:', e['url']);
           previousUrl = e['url'];
 
         });
       this.router.navigateByUrl(previousUrl);
     }
     else {
-      console.log("aa ja");
+      // console.log("aa ja");
     }
   }
 
@@ -177,18 +177,18 @@ export class AuthenticationService {
 
     if (this.getuserdetails().accountType == "moderator") {
 
-      console.log("in false");
+      //console.log("in false");
       this.router.events
         .pipe(filter(event => event instanceof NavigationEnd)
         ).subscribe(e => {
-          console.log('prev:', e['url']);
+          //console.log('prev:', e['url']);
           previousUrl = e['url'];
 
         });
       this.router.navigateByUrl(previousUrl);
     }
     else {
-      console.log("aa ja");
+      //console.log("aa ja");
     }
   }
 

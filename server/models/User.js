@@ -29,13 +29,13 @@ const UserSchema = new Schema({
     },
     accountType: {
         type: String,
-        default:"regular"
+        default: "regular"
     },
     status: {
         type: String,
-        default:"notapproved"
-        
-        
+        default: "approved"
+
+
     },
 
 });
