@@ -16,10 +16,10 @@
     <button mat-raised-button color="primary" routerLink="/blog/add">Create Blog</button>
 </div>
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
-    <div class="row">
-        <div *ngFor="let blog of blogs" style="border: 5px solid black;">
-            <button mat-raised-button color="warn" (click)="delete(blog._id)">Delete</button>
-            <button mat-raised-button color="primary" routerLink="/admin/editblog/{{blog._id}}">Edit</button>
+    <div class="row rt">
+        <div *ngFor="let blog of blogs" style="border: 5px solid black;" class="rt">
+            <button mat-raised-button color="warn" (click)="openDialog(blog._id)" class="rt">Delete</button>
+            <button mat-raised-button color="primary" routerLink="/admin/editblog/{{blog._id}}" class="rt">Edit</button>
 
             <div class="col-md-3">
 

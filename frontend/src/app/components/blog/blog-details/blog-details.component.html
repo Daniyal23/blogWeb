@@ -81,7 +81,7 @@
                 <div class="container">
                     <div class="comment">
                         <textarea class="textinput rtl" placeholder="Enter your comment here...."
-                            [(ngModel)]="commentContent" ></textarea>
+                            [(ngModel)]="commentContent"></textarea>
                     </div>
                 </div>
                 <button mat-raised-button class="rtl" color="primary" (click)="commentAdd()"
@@ -97,7 +97,7 @@
                     <i class="material-icons">report_problem</i>
 
                     <i class="material-icons" *ngIf="comment.commentorId==userID || boss==0"
-                        (click)="commentDelete(comment._id,comment)">delete</i>
+                        (click)="confirmDialog(comment._id,comment,'delete')">delete</i>
                 </div>
             </div>
         </div>

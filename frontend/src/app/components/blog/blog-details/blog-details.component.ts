@@ -16,31 +16,7 @@ import { NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-
-export interface DialogData {
-  comment: string;
-}
-
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialogforAllComments {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-    onNoClick(inp): void {
-      this.dialogRef.close('No');
-    }
-    onYesClick(inp): void {
-      this.dialogRef.close('Yes');
-    }
-}
-
-
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -128,37 +104,41 @@ export class BlogDetailsComponent implements OnInit {
       },
     ]
   };
-  
 
-  openDialog(inp): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
-      width: '250px',
-     
+
+  confirmDialog(inp, inp2, inp3): void {
+    const message = 'Are you sure you want to Delete this Comment?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-     
-      console.log(result);
-      if(result=='Yes'){
-        //this.delete(inp);
-        this.snackBar.open("Deleted successfully", null, {
-          duration: 2000,
-          panelClass: ['success-snackbar'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      //console.log(result);
+      if (dialogResult == true) {
+        if (inp3 == "delete") {
+          this.commentDelete(inp, inp2);
+          this.snackBar.open("Deleted successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        else {
+
+        }
       }
-      else{
+      else {
 
       }
+
     });
-    
   }
-
-
-
-
 
   ngOnInit(): void {
     this.getblogbyid();

@@ -24,49 +24,52 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-    background-color: #111;
-  }
-  
-  .header-image {
-    height: 150px;
-    background-size: cover;
-  }
-  
-  .content {
-    padding: 10px;
-    word-wrap: break-word;
-  }
-  
-  .content > mat-card {
-    width: 200px;
-  }
-  .mat-card {
-    height: 270px;
-    border-radius: 20px;
-    background-color: rgb(165, 211, 165);
-  }
-  .mat-card-image {
-    height: 100px;
-  }
-  .mat-card-header {
-  }
-  .mat-card-actions {
-    margin-top: 5px;
-  }
-  
-  .rt {
-    text-align: right;
-    direction: rtl;
-  }
-  .mat-card-content {
-    background-color: white;
-    border-radius: 1px;
-    border: darkslategray;
-    border-style: double;
-  }
-  .rtl{
-      color: white;
-      text-align: left;
-      direction: rtl;
-  }
-  
+  background-color: #111;
+}
+
+.header-image {
+  height: 150px;
+  background-size: cover;
+}
+
+.content {
+  padding: 10px;
+  word-wrap: break-word;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+.mat-card {
+  height: 270px;
+  border-radius: 20px;
+  background-color: rgb(165, 211, 165);
+}
+.mat-card-image {
+  height: 100px;
+}
+.mat-card-header {
+}
+.mat-card-actions {
+  margin-top: 5px;
+}
+
+.rt {
+  text-align: right;
+  direction: rtl;
+}
+.mat-card-content {
+  background-color: white;
+  border-radius: 1px;
+  border: darkslategray;
+  border-style: double;
+}
+.rtl {
+  color: white;
+  text-align: left;
+  direction: rtl;
+}
+.rt {
+  text-align: right;
+  direction: rtl;
+}

@@ -9,6 +9,7 @@ import { Comment } from 'src/app/models/comments'
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
 
 class userInfo {
   noLikes: number = 0;
@@ -28,39 +29,11 @@ class forcheckbox {
   selected: number;
 }
 
-export interface DialogData {
-  comment: string;
-}
-
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialogforAllComments {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  onNoClick(inp): void {
-    this.dialogRef.close('No');
-  }
-  onYesClick(inp): void {
-    this.dialogRef.close('Yes');
-  }
-
-}
-
-
-
 @Component({
   selector: 'app-admin-viewusers',
   templateUrl: './admin-viewusers.component.html',
   styleUrls: ['./admin-viewusers.component.css']
 })
-
-
-
 
 
 export class AdminViewusersComponent implements OnInit {
@@ -77,8 +50,8 @@ export class AdminViewusersComponent implements OnInit {
     public commentService: CommentsService,
     private AuthService: AuthenticationService,
     private cdr: ChangeDetectorRef,
-    public dialog: MatDialog,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
   public userInfolist: Array<userInfo> = [];
   public forcheckBox: Array<forcheckbox> = [];
@@ -95,30 +68,44 @@ export class AdminViewusersComponent implements OnInit {
 
   public check = 0;
 
-  openDialog(inp): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
-      width: '250px',
+  confirmDialog(inp1, inp2): void {
+    const message = 'Are you sure you want to ' + inp2 + ' this User?';
 
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
 
-      console.log(result);
-      if (result == 'Yes') {
-        this.delete(inp);
-        this.snackBar.open("Deleted successfully", null, {
-          duration: 2000,
-          panelClass: ['success-snackbar'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+
+      if (dialogResult == true) {
+        if (inp2 == "delete") {
+          this.delete(inp1);
+          this.snackBar.open("Deleted successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        else {
+          this.block(inp1);
+          this.snackBar.open("Blocked successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
       }
       else {
 
       }
     });
-
   }
 
 
@@ -134,9 +121,6 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.blogs) {
-      console.log(this.blogs, "d");
-    }
     if (this.user.length > 0 && this.blogs.length >= 0 && this.check == 0) {
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
       this.user = this.user.filter(a => a.status != 'blocked');
@@ -213,9 +197,7 @@ export class AdminViewusersComponent implements OnInit {
         })
       }
       this.fillcheckboxlist(i, this.user[i].accountType);
-      if (this.comments.length > 0) {
-        this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
-      }
+      this.userInfolist[i].noComments = this.comments.filter(a => a.commentorId == this.user[i]._id).length;
 
     }
 
@@ -267,6 +249,8 @@ export class AdminViewusersComponent implements OnInit {
     this.userService.updateUser(inp, this.user.find(a => a._id == inp)).subscribe(data => {
       console.log(data);
     });
+    this.userInfolist = this.userInfolist.filter(a => a._id != inp);
+
   }
   delete(inp) {
     this.user = this.user.filter(a => a._id != inp);

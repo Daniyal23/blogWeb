@@ -9,7 +9,7 @@
 </ul-->
 
 
-<div *ngIf="user.length<=0" style="margin-top: 40vh;">
+<div *ngIf="userInfolist.length<=0" style="margin-top: 40vh;">
   <h1 style="text-align: center;"> No Users To Show. </h1>
 </div>
 
@@ -39,8 +39,8 @@
 
         </div>
         <div class="col-md-3" style="height: 200px;">
-          <button mat-raised-button color="primary" (click)="block(user._id)">Block</button> <br> <br>
-          <button mat-raised-button color="warn" (click)="openDialog(user._id)">Delete</button>
+          <button mat-raised-button color="primary" (click)="confirmDialog(user._id,'block')">Block</button> <br> <br>
+          <button mat-raised-button color="warn" (click)="confirmDialog(user._id,'delete')">Delete</button>
         </div>
         <div class="col-md-3" style="height:200px;">
           <p class="rtl">No of Blogs: {{user.noBlogs}} </p>

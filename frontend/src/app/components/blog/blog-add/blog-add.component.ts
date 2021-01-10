@@ -72,8 +72,8 @@ export class BlogAddComponent implements OnInit {
 
     this.AuthService.checkaccessregular();
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
-    console.log(this.userdetials);
-    console.log(this.userdetials.username);
+    // console.log(this.userdetials);
+    // console.log(this.userdetials.username);
 
   }
 
@@ -105,13 +105,13 @@ export class BlogAddComponent implements OnInit {
     }
     this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl("data:image/png;charset=utf-8;base64," + this.base64textString));
 
-    console.log(this.imgsrcs, "img");
-    console.log(this.blogobj.blogHeaderImage, "header");
+    // console.log(this.imgsrcs, "img");
+    // console.log(this.blogobj.blogHeaderImage, "header");
     this.imgcheck = 1;
   }
 
   removeImage() {
-    console.log("remove func");
+    //  console.log("remove func");
     this.imgsrcs[0] = "/assets/noimage.png";
     this.imgcheck = 0;
 
@@ -163,7 +163,7 @@ export class BlogAddComponent implements OnInit {
       this.blogobj.creatorId = this.userdetials.id;
       this.blogobj.creatorName = this.userdetials.username;
 
-      console.log(this.blogobj);
+      //  console.log(this.blogobj);
       localStorage.setItem('blog', JSON.stringify(this.blogobj));
       this.blogService.addBlog(this.blogobj);
 

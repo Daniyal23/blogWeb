@@ -38,6 +38,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditprofileComponent } from './components/auth/editprofile/editprofile.component';
 import { AdminAllcommentsComponent, DialogOverviewExampleDialogforAllComments } from './components/admin/admin-allcomments/admin-allcomments.component';
 import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
+import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
     EditprofileComponent,
     AdminAllcommentsComponent,
     MyblogsComponent,
+    ConfirmDialogComponent,
 
   ],
   imports: [
@@ -85,12 +87,13 @@ import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
     MatFormFieldModule,
     MatGridListModule,
     AngularEditorModule,
-    MatDialogModule
+    MatDialogModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [CommentEditComponent, DialogOverviewExampleDialog, DialogOverviewExampleDialogforAllComments]
+  entryComponents: [ConfirmDialogComponent, CommentEditComponent, DialogOverviewExampleDialog, DialogOverviewExampleDialogforAllComments]
 
 })
 export class AppModule { }

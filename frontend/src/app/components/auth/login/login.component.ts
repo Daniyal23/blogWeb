@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
+    this.authService.admin().subscribe(data => {
 
+    });
     this.userService.getAllUsers().subscribe(data => {
       this.gett = data;
     })

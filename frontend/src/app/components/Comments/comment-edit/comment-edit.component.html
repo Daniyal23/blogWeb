@@ -13,12 +13,12 @@
                         (click)="openDialog(comment.comment)">Edit</button>
 
                     <br> <br>
-                    <button mat-raised-button color="warn" (click)="deletecomment(comment)">Delete</button>
+                    <button mat-raised-button color="warn" (click)="confirmDialog(comment)">Delete</button>
 
                     <br><br>
 
                 </div>
-                <div class="col-md-4 rtl" style="height: 200px;">
+                <div class="col-md-4 rtl" style="height: 200px; word-wrap:break-word;">
                     <p class="rtl">comment : {{comment.comment.content}} </p>
 
                 </div>

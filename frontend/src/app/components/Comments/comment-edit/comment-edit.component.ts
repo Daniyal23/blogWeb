@@ -7,6 +7,7 @@ import { BlogService } from 'src/app/services/blog.service';
 import { CommentsService } from 'src/app/services/comments.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
 
 export interface DialogData {
   comment: string;
@@ -67,6 +68,37 @@ export class CommentEditComponent implements OnInit {
     private snackBar: MatSnackBar,
   ) { }
 
+
+  confirmDialog(inp1): void {
+    const message = 'Are you sure you want to Delete this Comment?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult == true) {
+        this.deletecomment(inp1);
+        this.snackBar.open("Deleted successfully", null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+      else {
+
+      }
+
+    });
+  }
+
+
+
   openDialog(inp): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
@@ -105,7 +137,7 @@ export class CommentEditComponent implements OnInit {
   ngAfterViewChecked() {
     if (this.comments.length > 0 && this.bloglist.length > 0 && this.check == 0) {
       this.check = 1;
-      (this.comments.filter(a => a.commentorId == this.userdetails.id), "lol");
+      this.comments = (this.comments.filter(a => a.commentorId == this.userdetails.id));
       this.bloglist.forEach(value => {
         if (value.commentsIdList != null) {
           value.commentsIdList.forEach(element => {
@@ -187,12 +219,8 @@ export class CommentEditComponent implements OnInit {
 
   }
   deletecomment(inp) {
-    console.log(inp, "delete comment");
     this.displaylist.splice(this.displaylist.findIndex(a => a == inp), 1);
-    //this.bloglist[this.bloglist.findIndex(a=>a._id==inp.blog._id)].commentsIdList.splice(inp.comment._id);    
-    inp.blog.commentsIdList.splice(a => a == inp.comment._id, 1);
-
-    // this.displaylist[a].blog = inp
+    inp.blog.commentsIdList.splice(inp.blog.commentsIdList.findIndex(a => a == inp.comment._id), 1);
     this.blogService.updateBlog(inp.blog._id, inp.blog).subscribe(data => {
       this.blogdata = data;
     });
@@ -201,5 +229,7 @@ export class CommentEditComponent implements OnInit {
     });
 
   }
+
+
 
 }

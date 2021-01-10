@@ -5,33 +5,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
-export interface DialogData {
-  comment: string;
-
-}
-
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialogforAllComments {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>) { }
-
-  onNoClick(inp): void {
-    this.dialogRef.close('No');
-  }
-  onYesClick(inp): void {
-    this.dialogRef.close('Yes');
-  }
-
-}
-
-
-
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -47,19 +21,22 @@ export class AdminViewblogsComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
   ) { }
-   
-  openDialog(inp): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
-      width: '250px',
-     
+
+
+  confirmDialog(inp1): void {
+    const message = 'Are you sure you want to Delete this Blog?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-     
-      console.log(result);
-      if(result=='Yes'){
-        this.delete(inp);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult == true) {
+        this.delete(inp1);
         this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
           panelClass: ['success-snackbar'],
@@ -67,11 +44,11 @@ export class AdminViewblogsComponent implements OnInit {
           verticalPosition: 'top'
         });
       }
-      else{
+      else {
 
       }
+
     });
-    
   }
 
 
