@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-3" style="height: 200px;">
           <button mat-raised-button color="primary" (click)="block(user._id)">Block</button> <br> <br>
-          <button mat-raised-button color="warn" (click)="delete(user._id)">Delete</button>
+          <button mat-raised-button color="warn" (click)="openDialog(user._id)">Delete</button>
         </div>
         <div class="col-md-3" style="height:200px;">
           <p class="rtl">No of Blogs: {{user.noBlogs}} </p>

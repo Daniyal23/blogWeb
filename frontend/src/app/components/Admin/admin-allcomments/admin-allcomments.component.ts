@@ -8,13 +8,14 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-export interface DialogData {
-  comment: string;
-}
 class display {
   comment: Comment;
   blog: Blog;
   date: string;
+}
+
+export interface DialogData {
+  comment: string;
 }
 
 @Component({

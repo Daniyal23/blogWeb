@@ -21,9 +21,8 @@
 		<textarea *ngIf="edit==1" style="direction: rtl;text-align: right;"
 			[(ngModel)]="htmlcontent">{{comment.content}} </textarea>
 	</mat-card-content>
-
 	<mat-card-footer class="rtl">
-		<small>Likes : {{comment.likes}} Dislikes : {{comment.dislikes}}</small>
+		<small>الإعجابات : {{comment.likes}}  يكره : {{comment.dislikes}}</small>
 	</mat-card-footer>
 	<mat-card-actions>
 
