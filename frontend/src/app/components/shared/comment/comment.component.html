@@ -21,8 +21,28 @@
 		<textarea *ngIf="edit==1" style="direction: rtl;text-align: right;"
 			[(ngModel)]="htmlcontent">{{comment.content}} </textarea>
 	</mat-card-content>
+
+
 	<mat-card-footer class="rtl">
-		<small>الإعجابات : {{comment.likes}}  يكره : {{comment.dislikes}}</small>
+		<div class="rtl" style="cursor: pointer;">
+			<i class="material-icons" *ngIf="reportComment==0" mat-button (click)="nbrreport()">report_problem</i>
+
+			<i class="material-icons" *ngIf="reportComment==1" mat-button (click)="nbrDeReport()"
+				style="color: red;">report_problem</i>
+
+			<i class="material-icons" *ngIf="disliked==0" mat-button (click)="nbrCommentDislike()">thumb_down_alt</i>
+			<i class="material-icons" *ngIf="disliked==1" mat-button (click)="nbrCommentDislike()"
+				style="color:red ;">thumb_down_alt</i>
+
+
+			<i class="material-icons" *ngIf="liked==0" mat-button (click)="nbrCommentLike()">thumb_up_alt</i>
+			<i class="material-icons" *ngIf="liked==1" mat-button (click)="nbrCommentLike()"
+				style="color: blue;">thumb_up_alt</i>
+
+
+		</div>
+		<small>التقارير :
+			{{comment.reportsCounter}} يكره : {{comment.dislikes}} الإعجابات : {{comment.likes}} </small>
 	</mat-card-footer>
 	<mat-card-actions>
 

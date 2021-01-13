@@ -1,6 +1,11 @@
 <div class="rtl" *ngIf="displaylist.length<=0" style="margin-top: 40vh;">
     <h1 style="text-align: center;"> There are No Comments . </h1>
 </div>
+<button mat-raised-button color="primary" (click)="filterDialog()">Filter</button>
+<button mat-raised-button color="primary" (click)="searchDialog()">Search</button>
+<button *ngIf="searched=='true'" mat-raised-button color="primary" (click)="searchreset()">X</button>
+
+
 <div *ngFor="let comment of displaylist">
     <div class="col-md-8 offset-2" style="border:5px solid black; margin-top: 10px;">
         <div class="container">

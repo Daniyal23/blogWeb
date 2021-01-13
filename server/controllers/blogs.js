@@ -23,6 +23,7 @@ module.exports = {
                     numDislikes: req.body.numDislikes,
                     reportsCounter: req.body.reportsCounter,
                     interactionIdList: req.body.interactionIdList,
+                    reportlistList: req.body.reportlistList,
                     commentsIdList: req.body.commentsIdList,
                     numOfReads: req.body.numOfReads,
                     status: req.body.status,
@@ -106,6 +107,7 @@ module.exports = {
                         blog.commentsIdList = req.body.commentsIdList,
                         blog.numOfReads = req.body.numOfReads,
                         blog.status = req.body.status,
+                        blog.reportlistList = req.body.reportlistList,
 
                         blog
                             .save()

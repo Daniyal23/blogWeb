@@ -8,6 +8,8 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
+import { FilterDialogComponent, FilterDialogModel } from '../../confirmation-dialog/filter-dialog/filter-dialog.component';
+import { SearchDialogComponent, SearchDialogModel } from '../../confirmation-dialog/search-dialog/search-dialog.component';
 
 export interface DialogData {
   comment: string;
@@ -46,6 +48,9 @@ export class CommentEditComponent implements OnInit {
   public comments: any[] = [];
   public bloglist: any[] = [];
   public displaylist: display[] = [];
+  public displaylistmain: display[] = [];
+
+
   public check = 0;
   public date: string = "";
 
@@ -96,6 +101,71 @@ export class CommentEditComponent implements OnInit {
 
     });
   }
+  public filtered: string = "";
+  filterDialog(): void {
+    const message = ['Ascending Date', 'Descending Date'];
+
+    const dialogData = new FilterDialogModel(this.filtered, message);
+
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+        if (dialogResult == "Ascending Date") {
+          this.filtered = dialogResult;
+          this.displaylist.sort((a, b) => a.date.localeCompare(b.date));
+        }
+        else if (dialogResult == 'Descending Date') {
+          this.filtered = dialogResult;
+
+          this.displaylist.sort((a, b) => b.date.localeCompare(a.date));
+
+        }
+
+      }
+
+    });
+  }
+
+  public searched: string = "";
+  public searchtext: string = "";
+
+
+  searchDialog(): void {
+    const message = ['blogname'];
+
+    const dialogData = new SearchDialogModel(this.searched, message, this.searchtext);
+
+    const dialogRef = this.dialog.open(SearchDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+
+        if (dialogResult[0] == 'blogname') {
+          this.displaylistmain = this.displaylist;
+          this.displaylist = this.displaylist.filter(a => a.blog.title.toLowerCase().includes(dialogResult[1]));
+          this.searched = "true";
+
+
+        }
+
+      }
+
+    });
+  }
+  searchreset() {
+    this.displaylist = this.displaylistmain;
+    this.searched = 'false';
+  }
+
 
 
 

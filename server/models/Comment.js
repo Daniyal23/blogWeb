@@ -36,11 +36,14 @@ const CommentSchema = new Schema({
         type: Schema.Types.Mixed,
         //required: true
     },
+    reportlistList: {
+        type: Schema.Types.Mixed,
+    },
     reportsCounter: {
         type: Number,
         //required: true
     },
-    commentorUserName:{
+    commentorUserName: {
         type: String,
     },
 

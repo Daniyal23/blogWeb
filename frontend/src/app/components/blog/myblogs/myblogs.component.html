@@ -15,9 +15,16 @@
 <div style="margin-top: 10px; margin-left: 15px;">
     <button mat-raised-button color="primary" routerLink="/blog/add">Create Blog</button>
 </div>
+<div style="margin-top: 10px; margin-left: 15px;">
+    <button mat-raised-button color="primary" (click)="filterDialog()">Filter</button>
+    <button mat-raised-button color="primary" (click)="searchDialog()">Search</button>
+    <button *ngIf="searched=='true'" mat-raised-button color="primary" (click)="searchreset()">X</button>
+
+</div>
+
 <div *ngIf="blogs" class="container" style="margin-top: 20px;">
     <div class="row rt">
-        <div *ngFor="let blog of blogs" style="border: 5px solid black;" class="rt">
+        <div *ngFor="let blog of blogs " style="border: 5px solid black;" class="rt">
             <button mat-raised-button color="warn" (click)="openDialog(blog._id)" class="rt">Delete</button>
             <button mat-raised-button color="primary" routerLink="/admin/editblog/{{blog._id}}" class="rt">Edit</button>
 

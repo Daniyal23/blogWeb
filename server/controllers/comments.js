@@ -20,6 +20,8 @@ module.exports = {
                     datePublished: req.body.datePublished,
                     dateUpdated: req.body.dateUpdated,
                     commentorUserName: req.body.commentorUserName,
+                    reportlistList: req.body.reportlistList,
+
 
                 }
             );
@@ -111,6 +113,8 @@ module.exports = {
                         user.datePublished = req.body.datePublished,
                         user.dateUpdated = req.body.dateUpdated,
                         user.commentorUserName = req.body.commentorUserName,
+                        user.reportlistList = req.body.reportlistList,
+
 
                         user
                             .save()

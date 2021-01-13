@@ -10,6 +10,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
+import { FilterDialogComponent, FilterDialogModel } from '../../confirmation-dialog/filter-dialog/filter-dialog.component';
+import { SearchDialogComponent, SearchDialogModel } from '../../confirmation-dialog/search-dialog/search-dialog.component';
 
 class userInfo {
   noLikes: number = 0;
@@ -54,6 +56,8 @@ export class AdminViewusersComponent implements OnInit {
     public dialog: MatDialog
   ) { }
   public userInfolist: Array<userInfo> = [];
+  public userInfolistmain: Array<userInfo> = [];
+
   public forcheckBox: Array<forcheckbox> = [];
   public forcheck: forcheckbox = new forcheckbox();
   public forcheck1: forcheckbox = new forcheckbox();
@@ -108,6 +112,98 @@ export class AdminViewusersComponent implements OnInit {
     });
   }
 
+  public filtered: string = "";
+
+  filterDialog(): void {
+    const message = ['No of Blogs',
+
+      'No of Comments',
+
+      'No of Likes',
+
+      'No of Dislikes',
+
+      'No of Reports'];
+
+    const dialogData = new FilterDialogModel(this.filtered, message);
+
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+        if (dialogResult == "No of Blogs") {
+          console.log("in blogs");
+          this.filtered = dialogResult;
+          this.userInfolist.sort((a, b) => b.noBlogs - a.noBlogs);
+        }
+        else if (dialogResult == 'No of Likes') {
+          console.log("in likes");
+          this.filtered = dialogResult;
+
+          this.userInfolist.sort((a, b) => b.noLikes - a.noLikes);
+
+        }
+        else if (dialogResult == 'No of Dislikes') {
+          this.filtered = dialogResult;
+
+          this.userInfolist.sort((a, b) => b.noDislikes - a.noDislikes);
+
+        }
+        else if (dialogResult == 'No of Reports') {
+          this.filtered = dialogResult;
+
+          this.userInfolist.sort((a, b) => b.noReports - a.noReports);
+
+        }
+        else if (dialogResult == 'No of Comments') {
+          this.filtered = dialogResult;
+
+          this.userInfolist.sort((a, b) => b.noComments - a.noComments);
+
+        }
+      }
+
+    });
+  }
+
+
+  public searched: string = "";
+  public searchtext: string = "";
+
+
+  searchDialog(): void {
+    const message = ['username'];
+
+    const dialogData = new SearchDialogModel(this.searched, message, this.searchtext);
+
+    const dialogRef = this.dialog.open(SearchDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+        if (dialogResult[0] == "username") {
+          this.userInfolistmain = this.userInfolist;
+          this.userInfolist = this.userInfolist.filter(a => a.userName.toLowerCase().includes(dialogResult[1]));
+          this.searched = "true";
+        }
+
+      }
+
+    });
+  }
+  searchreset() {
+    this.userInfolist = this.userInfolistmain;
+    this.searched = 'false';
+  }
+
+
 
   ngOnInit(): void {
     this.AuthService.checkaccessblogger();
@@ -121,10 +217,10 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.user.length > 0 && this.blogs.length >= 0 && this.check == 0) {
+    if (this.user.length > 0 && this.blogs.length > 0 && this.comments.length > 0) {
+
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
       this.user = this.user.filter(a => a.status != 'blocked');
-
       this.populate();
       this.check = 1;
       //console.log(this.user, " users");
@@ -150,7 +246,7 @@ export class AdminViewusersComponent implements OnInit {
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
-      console.log(data);
+      this.blogs = data;
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")
@@ -168,7 +264,6 @@ export class AdminViewusersComponent implements OnInit {
   }
   populate() {
 
-    console.log("in populate");
     for (var i = 0; i < this.user.length; i++) {
       this.userInfolist[i] = new userInfo();
       this.userInfolist[i].userName = this.user[i].UserName;
@@ -201,7 +296,7 @@ export class AdminViewusersComponent implements OnInit {
 
     }
 
-    console.log(this.userInfolist, "user infos");
+    // console.log(this.userInfolist, "user infos");
   }
   statusUp(inp, inp2) {
     console.log(inp, inp2);
@@ -249,8 +344,6 @@ export class AdminViewusersComponent implements OnInit {
     this.userService.updateUser(inp, this.user.find(a => a._id == inp)).subscribe(data => {
       console.log(data);
     });
-    this.userInfolist = this.userInfolist.filter(a => a._id != inp);
-
   }
   delete(inp) {
     this.user = this.user.filter(a => a._id != inp);
@@ -260,5 +353,7 @@ export class AdminViewusersComponent implements OnInit {
     });
   }
 }
+
+
 
 

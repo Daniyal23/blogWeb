@@ -43,6 +43,9 @@ export class BlogDetailsComponent implements OnInit {
   public img: any;
   public imgsrcs: Array<any> = [];
   public interact: Interaction = new Interaction();
+  public reports: Interaction = new Interaction();
+
+
   public comment: Comment = new Comment();
 
   public commentlist: any = [];
@@ -170,6 +173,16 @@ export class BlogDetailsComponent implements OnInit {
       this.interact.blogId = this.blogs._id;
       this.interact.userId = this.userdetials.id;
       this.interact.InteractionType = "";
+      if (this.blogs.reportlistList == undefined) {
+        this.blogs.reportlistList = [];
+      }
+      else {
+        var a = this.blogs.reportlistList.find(a => a.userId == this.userdetials.id);
+        if (a) {
+          this.report = 1;
+        }
+      }
+
       if (this.blogs.interactionIdList) {
         if (this.blogs.interactionIdList.length == 0) {
           this.blogs.interactionIdList = [];
@@ -177,13 +190,9 @@ export class BlogDetailsComponent implements OnInit {
         }
         else {
           //console.log("in eleeee");
-          var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id && a.InteractionType == "report");
+          var a = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id);
           if (a) {
-            this.report = 1;
-          }
-          var b = this.blogs.interactionIdList.find(a => a.userId == this.userdetials.id && a.InteractionType != "report");
-          if (b) {
-            this.interact = b;
+            this.interact = a;
           }
 
           if (this.interact) {
@@ -194,7 +203,6 @@ export class BlogDetailsComponent implements OnInit {
             else if (this.interact.InteractionType == "Dislike") {
               this.disliked = 1;
             }
-
           }
         }
       }
@@ -284,6 +292,10 @@ export class BlogDetailsComponent implements OnInit {
 
   }
   nbrDislike() {
+    this.authcheck();
+
+    //////////////////////////////////
+
     if (this.disliked == 0 && this.liked == 0) {
       this.blogs.numDislikes = this.blogs.numDislikes + 1;
       this.disliked = 1;
@@ -309,10 +321,29 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   nbrreport() {
+    this.authcheck();
+
     this.report = 1;
     this.blogs.reportsCounter += 1;
+    this.reports.InteractionType = "report";
+    this.reports.blogId = this.blogs._id;
+    this.reports.timestamp = new Date();
+    this.reports.userId = this.userdetials.id;
+    this.blogs.reportlistList.push(this.reports);
+    this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+      console.log(data);
+    });
+  }
 
-    this.interactingadd("report")
+  nbrDeReport() {
+    this.authcheck();
+
+    this.report = 0;
+    this.blogs.reportsCounter -= 1;
+    this.blogs.reportlistList.splice(a => a.userId == this.userdetials.id);
+    this.blogService.updateBlog(this.blogs._id, this.blogs).subscribe(data => {
+      console.log(data);
+    })
   }
 
   interactingadd(inp) {
@@ -388,11 +419,6 @@ export class BlogDetailsComponent implements OnInit {
     this.newcomment = 0;
     this.commentContent = "";
 
-
-
-
-
-
   }
   commentDelete(inp, inp2) {
     if (inp2.commentorId == this.userID || this.boss == 0) {
@@ -465,6 +491,7 @@ export class BlogDetailsComponent implements OnInit {
 
     return false;
   }
+
 }
 
 

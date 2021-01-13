@@ -57,6 +57,10 @@ const BlogSchema = new Schema({
     interactionIdList: {
         type: Schema.Types.Mixed,
     },
+    reportlistList: {
+        type: Schema.Types.Mixed,
+    },
+
     commentsIdList: {
         type: Schema.Types.Mixed,
     },

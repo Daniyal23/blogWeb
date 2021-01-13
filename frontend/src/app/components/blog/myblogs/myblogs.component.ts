@@ -7,6 +7,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FilterDialogComponent, FilterDialogModel } from '../../confirmation-dialog/filter-dialog/filter-dialog.component';
+import { SearchDialogComponent, SearchDialogModel } from '../../confirmation-dialog/search-dialog/search-dialog.component';
 
 export interface DialogData {
   comment: string;
@@ -22,12 +24,12 @@ export class DialogOverviewExampleDialogforAllComments {
     public dialogRef: MatDialogRef<DialogOverviewExampleDialogforAllComments>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-    onNoClick(inp): void {
-      this.dialogRef.close('No');
-    }
-    onYesClick(inp): void {
-      this.dialogRef.close('Yes');
-    }
+  onNoClick(inp): void {
+    this.dialogRef.close('No');
+  }
+  onYesClick(inp): void {
+    this.dialogRef.close('Yes');
+  }
 }
 
 
@@ -39,8 +41,11 @@ export class DialogOverviewExampleDialogforAllComments {
 })
 export class MyblogsComponent implements OnInit {
   public blogs: any[] = [];
+  public blogmain: any[] = [];
+
   public check = 0;
   returnUrl: string;
+  filtered: string = "";
   constructor(
     public blogService: BlogService,
     private AuthService: AuthenticationService,
@@ -55,14 +60,14 @@ export class MyblogsComponent implements OnInit {
   openDialog(inp): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogforAllComments, {
       width: '250px',
-     
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-     
+
       console.log(result);
-      if(result=='Yes'){
+      if (result == 'Yes') {
         this.delete(inp);
         this.snackBar.open("Deleted successfully", null, {
           duration: 2000,
@@ -71,12 +76,84 @@ export class MyblogsComponent implements OnInit {
           verticalPosition: 'top'
         });
       }
-      else{
+      else {
 
       }
     });
-    
+
   }
+
+  filterDialog(): void {
+    const message = ['created on', 'likes', 'dislikes'];
+
+    const dialogData = new FilterDialogModel(this.filtered, message);
+
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+        if (dialogResult == "created on") {
+          this.filtered = dialogResult;
+          this.blogs.sort((a, b) => a.dateSubmitted.localeCompare(b.dateSubmitted));
+        }
+        else if (dialogResult == 'likes') {
+          this.filtered = dialogResult;
+
+          this.blogs.sort((a, b) => b.numLikes - a.numLikes);
+
+        }
+        else if (dialogResult == 'dislikes') {
+          this.filtered = dialogResult;
+
+          this.blogs.sort((a, b) => b.numDislikes - a.numDislikes);
+
+        }
+
+      }
+
+    });
+  }
+
+
+  public searched: string = "";
+  public searchtext: string = "";
+
+
+  searchDialog(): void {
+    const message = ['blogname'];
+
+    const dialogData = new SearchDialogModel(this.searched, message, this.searchtext);
+
+    const dialogRef = this.dialog.open(SearchDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult != false) {
+
+        if (dialogResult[0] == 'blogname') {
+          this.blogmain = this.blogs;
+          this.blogs = this.blogs.filter(a => a.title.toLowerCase().includes(dialogResult[1]));
+          this.searched = "true";
+
+
+        }
+
+      }
+
+    });
+  }
+  searchreset() {
+    this.blogs = this.blogmain;
+    this.searched = 'false';
+  }
+
 
   ngOnInit(): void {
 

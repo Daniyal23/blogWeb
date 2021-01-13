@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>
+    Search
+</h1>
+
+<div mat-dialog-content>
+    <div *ngFor="let j of message ">
+        <mat-checkbox [checked]="title == j" (change)="title = j">{{j}}</mat-checkbox>
+    </div>
+
+</div>
+<div>
+    <input style="width: 150px;" [(ngModel)]='searchtext'>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onDismiss()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onConfirm(title,searchtext)">Ok</button>
+</div>

@@ -12,6 +12,11 @@
 <div *ngIf="userInfolist.length<=0" style="margin-top: 40vh;">
   <h1 style="text-align: center;"> No Users To Show. </h1>
 </div>
+<button mat-raised-button color="primary" (click)="filterDialog()">Filter</button>
+
+<button mat-raised-button color="primary" (click)="searchDialog()">Search</button>
+<button *ngIf="searched=='true'" mat-raised-button color="primary" (click)="searchreset()">X</button>
+
 
 <div *ngFor="let user of userInfolist">
   <div class="col-md-8 offset-2" style="border:5px solid black; margin-top: 10px;">

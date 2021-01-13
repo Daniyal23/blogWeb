@@ -39,7 +39,9 @@ import { EditprofileComponent } from './components/auth/editprofile/editprofile.
 import { AdminAllcommentsComponent, DialogOverviewExampleDialogforAllComments } from './components/admin/admin-allcomments/admin-allcomments.component';
 import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
 import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm-dialog/confirm-dialog.component';
-
+import { FilterDialogComponent } from './components/confirmation-dialog/filter-dialog/filter-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SearchDialogComponent } from './components/confirmation-dialog/search-dialog/search-dialog.component'
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm
     AdminAllcommentsComponent,
     MyblogsComponent,
     ConfirmDialogComponent,
+    FilterDialogComponent,
+    SearchDialogComponent,
 
   ],
   imports: [
@@ -88,6 +92,7 @@ import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm
     MatGridListModule,
     AngularEditorModule,
     MatDialogModule,
+    MatCheckboxModule,
 
   ],
   providers: [],

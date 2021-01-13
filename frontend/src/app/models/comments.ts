@@ -9,6 +9,8 @@ export class Comment {
     likes: number;
     dislikes: number;
     interactionList: any = {};
+    reportlistList: any = {};
+
     reportsCounter: number;
     datePublished: Date;
     dateUpdated: Date;

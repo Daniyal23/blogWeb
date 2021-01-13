@@ -1,24 +1,8 @@
-<!--ul>
-    <li><a href="/home">Home</a></li>
-    <li><a href="/blog">Blogs</a></li>
-    <li>
-        <a (click)="logout()">logout</a>
-    </li>
-
-    <img width="50" alt="Angular Logo" style="float: right;"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-
-</ul-->
 <div *ngIf="blogs">
     <div class="row">
         <div class="col-md-8 offset-2" style="border:2px solid black;">
             <mat-card class="card">
-                <!--mat-card-header>
-                    <div mat-card-avatar class="header-image"></div>
-                    <mat-card-title class="rtl">{{blogs.creatorName}}</mat-card-title>
-                    <mat-card-subtitle class="rtl">{{blogs.title}}</mat-card-subtitle>
-                    <mat-card-subtitle class="rtl">{{blogs.dateSubmitted}}</mat-card-subtitle>
-                </mat-card-header-->
+
                 <div>
 
                 </div>
@@ -46,12 +30,13 @@
 
                 </mat-card-content>
                 <mat-card-footer class="rtl">
-                    <h3> الإعجابات : {{blogs.numLikes}} يكره : {{blogs.numDislikes}} التقارير :
-                        {{blogs.reportsCounter}}</h3>
+                    <h3>التقارير :
+                        {{blogs.reportsCounter}} يكره : {{blogs.numDislikes}} الإعجابات : {{blogs.numLikes}}</h3>
                 </mat-card-footer>
                 <mat-card-actions class="rtl">
                     <i class="material-icons" *ngIf="report==0" mat-button (click)="nbrreport()">report_problem</i>
-                    <i class="material-icons" *ngIf="report==1" mat-button style="color: red;">report_problem</i>
+                    <i class="material-icons" *ngIf="report==1" mat-button (click)="nbrDeReport()"
+                        style="color: red;">report_problem</i>
 
                     <i class="material-icons" *ngIf="disliked==0" mat-button (click)="nbrDislike()">thumb_down_alt</i>
                     <i class="material-icons" *ngIf="disliked==1" mat-button (click)="nbrDislike()"
@@ -61,12 +46,6 @@
                     <i class="material-icons" *ngIf="liked==0" mat-button (click)="nbrLike()">thumb_up_alt</i>
                     <i class="material-icons" *ngIf="liked==1" mat-button (click)="nbrLike()"
                         style="color: blue;">thumb_up_alt</i>
-
-
-
-                    <!--button mat-button (click)="nbrL()" class="men">SHARE</button-->
-
-
 
 
                 </mat-card-actions>
@@ -92,9 +71,7 @@
                     <app-comment [comment]="comment">
 
                     </app-comment>
-                    <i class="material-icons">thumb_up_alt</i>
-                    <i class="material-icons">thumb_down_alt</i>
-                    <i class="material-icons">report_problem</i>
+
 
                     <i class="material-icons" *ngIf="comment.commentorId==userID || boss==0"
                         (click)="confirmDialog(comment._id,comment,'delete')">delete</i>
