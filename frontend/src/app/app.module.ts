@@ -41,7 +41,10 @@ import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
 import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm-dialog/confirm-dialog.component';
 import { FilterDialogComponent } from './components/confirmation-dialog/filter-dialog/filter-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SearchDialogComponent } from './components/confirmation-dialog/search-dialog/search-dialog.component'
+import { SearchDialogComponent } from './components/confirmation-dialog/search-dialog/search-dialog.component';
+import { RichtextEditorComponent } from './components/shared/richtext-editor/richtext-editor.component'
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import 'froala-editor/js/plugins.pkgd.min.js';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,7 @@ import { SearchDialogComponent } from './components/confirmation-dialog/search-d
     ConfirmDialogComponent,
     FilterDialogComponent,
     SearchDialogComponent,
+    RichtextEditorComponent,
 
   ],
   imports: [
@@ -93,6 +97,9 @@ import { SearchDialogComponent } from './components/confirmation-dialog/search-d
     AngularEditorModule,
     MatDialogModule,
     MatCheckboxModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
+
 
   ],
   providers: [],

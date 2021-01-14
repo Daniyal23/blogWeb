@@ -9,6 +9,12 @@ const blogs = require("./routes/blogs");
 const comments = require("./routes/comments");
 const passport = require("passport");
 const dotenv = require('dotenv');
+var path = require("path");
+var fs = require("fs");
+
+var upload_image = require("./image_upload.js");
+var delete_image = require("./image_delete.js");
+
 //const blog = require('./routes/blogs')
 //import blog from '
 
@@ -43,6 +49,49 @@ app.use("/users", users);
 app.use("/comments", comments);
 app.use('/blogs', blogs)
 
+///////////////
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
+app.use(express.static(__dirname + '/'));
+
+// Image POST handler.
+app.post("/image_upload", function (req, res) {
+    console.log("img");
+    upload_image(req, function (err, data) {
+
+        if (err) {
+            return res.status(404).end(JSON.stringify(err));
+        }
+        setTimeout(function () {
+            console.log('hello world!');
+            console.log("http://localhost:3000/" + data.link, "from server")
+            data.link = "http://localhost:3000" + data.link;
+            res.send(data);
+        }, 5000);
+
+    });
+});
+
+app.post('/delete_image', function (req, res) {
+
+    console.log("in delete");
+    delete_image(req, function (err, data) {
+
+        if (err) {
+            return res.status(404).end(JSON.stringify(err));
+        }
+        return res.end();
+    });
+});
+
+// Create folder for uploading files.
+var filesDir = path.join(path.dirname(require.main.filename), "assets");
+
+if (!fs.existsSync(filesDir)) {
+    fs.mkdirSync(filesDir);
+}
+////////
 
 const PORT = process.env.PORT;
 
