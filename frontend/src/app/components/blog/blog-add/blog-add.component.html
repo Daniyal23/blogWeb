@@ -41,7 +41,7 @@
         <button mat-raised-button color="primary" (click)="fileInput.click()" class="col-md-3 offset-8">Upload</button>
         <input hidden type="file" multiple #fileInput (change)="handleFileSelect($event)">
         <mat-card-content class="rtl">
-            <div [froalaEditor]="options" [(froalaModel)]="htmlContent"></div>
+            <div class="rtl" [froalaEditor]="options" [(froalaModel)]="htmlContent"></div>
 
         </mat-card-content>
         <mat-card-actions class="rtl">

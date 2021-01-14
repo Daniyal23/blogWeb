@@ -22,11 +22,27 @@ export class BlogAddComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) { }
-  
-  
+
+
   public editorContent: string = '<p><img src="http://localhost:3000/assets/3a57c7ac2d66c194aed7fcafac54c25229ea70e3.PNG" style="width: 176px;" class="fr-fic fr-dii"></p><p>fjwejfjqefjqjdfqw</p><p><br></p> ';
   public displayman: any;
+
   public options: Object = {
+    attribution: false,
+    toolbarButtons: {
+      'moreText': {
+        'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+      },
+      'moreParagraph': {
+        'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+      },
+      'moreRich': {
+        'buttons': ['insertLink', 'insertImage', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly', 'insertHR']
+      },
+
+    },
+    direction: 'rtl',
+
     charCounterCount: true,
     imageManagerDeleteMethod: "POST",
     imageManagerDeleteURL: 'http://localhost:3000/delete_image',
@@ -73,7 +89,7 @@ export class BlogAddComponent implements OnInit {
 
     }
   }
-  
+
 
 
   name = 'Angular 6';
@@ -87,40 +103,6 @@ export class BlogAddComponent implements OnInit {
 
   public title: string = "";
 
-
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '15rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['bold']
-    ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
-      },
-    ],
-    //uploadUrl: 'v1/image',
-    // upload: (file: File) => {this.handleFileSelect(file)},
-    //uploadWithCredentials: false,
-    sanitize: true,
-
-  };
 
   ngOnInit(): void {
 
