@@ -22,6 +22,60 @@ export class BlogAddComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) { }
+  
+  
+  public editorContent: string = '<p><img src="http://localhost:3000/assets/3a57c7ac2d66c194aed7fcafac54c25229ea70e3.PNG" style="width: 176px;" class="fr-fic fr-dii"></p><p>fjwejfjqefjqjdfqw</p><p><br></p> ';
+  public displayman: any;
+  public options: Object = {
+    charCounterCount: true,
+    imageManagerDeleteMethod: "POST",
+    imageManagerDeleteURL: 'http://localhost:3000/delete_image',
+    // Set the image upload parameter.
+    imageUpload: true,
+    // Set the image upload URL.
+    imageUploadURL: 'http://localhost:3000/image_upload',
+    imageDefaultDisplay: 'inline-block',
+    // Additional upload params.
+    imageUploadParams: { id: 'my_editor' },
+
+    // Set request type.
+    imageUploadMethod: 'POST',
+    imageManagerLoadMethod: "GET",
+
+    // Set max image size to 5MB.
+    imageMaxSize: 5 * 1024 * 1024,
+
+    // Allow to upload PNG and JPG.
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    events: {
+      'froalaEditor.initialized': function () {
+        console.log('initialized');
+      },
+      'froalaEditor.image.beforeUpload': function (e, editor, images) {
+        //Your code 
+        console.log("in upload")
+        if (images.length) {
+          console.log("in if ", images);
+          // Create a File Reader.
+          const reader = new FileReader();
+          // Set the reader to insert images when they are loaded.
+          reader.onload = (ev) => {
+            const result = ev.target['result'];
+            editor.image.insert(result, null, null, editor.image.get());
+            console.log(ev, editor.image, ev.target['result'])
+          };
+          // Read image as base64.
+          reader.readAsDataURL(images[0]);
+        }
+        // Stop default upload chain.
+        return false;
+      }
+
+    }
+  }
+  
+
+
   name = 'Angular 6';
   htmlContent = '';
   blogobj: Blog = new Blog();

@@ -42,7 +42,6 @@ import { ConfirmDialogComponent } from './components/confirmation-dialog/confirm
 import { FilterDialogComponent } from './components/confirmation-dialog/filter-dialog/filter-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchDialogComponent } from './components/confirmation-dialog/search-dialog/search-dialog.component';
-import { RichtextEditorComponent } from './components/shared/richtext-editor/richtext-editor.component'
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import 'froala-editor/js/plugins.pkgd.min.js';
 
@@ -72,8 +71,7 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     ConfirmDialogComponent,
     FilterDialogComponent,
     SearchDialogComponent,
-    RichtextEditorComponent,
-
+  
   ],
   imports: [
     BrowserModule,
