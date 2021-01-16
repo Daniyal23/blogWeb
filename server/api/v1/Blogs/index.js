@@ -7,10 +7,10 @@ let { SEND_RESPONSE } = require('../../../utils/helpers');
 router.get('/getAllBlogs', async (req, res) => {
   try {
     let data = await controller.getAllBlogs(req, res);
-
-    res.status(200).send(data);
+    // console.log(data);
+    SEND_RESPONSE(res, data);
   } catch (error) {
-    res.status(500).send(error);
+    SEND_RESPONSE(res, error);
   }
 });
 router.post(
@@ -32,9 +32,9 @@ router.get('/getBlogsById/:id', async (req, res) => {
   try {
     let data = await controller.getBlogsById(req, res);
 
-    res.status(200).send(data);
+    SEND_RESPONSE(res, data);
   } catch (error) {
-    res.status(500).send(error);
+    SEND_RESPONSE(res, error);
   }
 });
 router.post(
@@ -44,9 +44,9 @@ router.post(
     try {
       let data = await controller.updateBlog(req, res);
 
-      res.status(200).send(data);
+      SEND_RESPONSE(res, data);
     } catch (error) {
-      res.status(500).send(error);
+      SEND_RESPONSE(res, error);
     }
   }
 );
@@ -57,9 +57,9 @@ router.delete(
     try {
       let data = await controller.deleteBlog(req, res);
 
-      res.status(200).send(data);
+      SEND_RESPONSE(res, data);
     } catch (error) {
-      res.status(500).send(error);
+      SEND_RESPONSE(res, error);
     }
   }
 );

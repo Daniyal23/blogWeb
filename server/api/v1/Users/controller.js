@@ -96,7 +96,7 @@ module.exports = {
         if (error) res.send(error);
         return res.json({ success: 'Added' });
       });
-    } catch (err) {
+    } catch (error) {
       return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
@@ -110,6 +110,7 @@ module.exports = {
       let token = null;
 
       let users = await User.find();
+      //console.log(users, "dds");
       if (!users) {
         return HTTPRESPONSE.BAD_REQUEST('No users', {
           error: 'No users',
@@ -120,12 +121,15 @@ module.exports = {
       for await (let item of users) {
         //users.forEach((item) => {
         //console.log(item.Email, "jeje");
-        temp = bcrypt.compareSync(email, item.Email);
-        // console.log(temp);
+        console.log("item->", item);
+        temp = await bcrypt.compareSync(email, item.Email);
+        console.log(temp, "1");
         if (temp == true) {
           temp2 = bcrypt.compareSync(password, item.Password);
+          console.log(temp2, "2");
           if (temp2 == true) {
             //User Matched
+            console.log("item", item);
             if (item.status != 'approved') {
               //   return res.json({ error: 'account not approved' });
               return HTTPRESPONSE.CONFLICT('account not approved', {
@@ -143,48 +147,61 @@ module.exports = {
             //Sign Token
 
             token = await jwt.sign(payload, process.env.secretOrKey, {
-              expiresIn: 3600,
+              expiresIn: 3600 * 4,
             });
           }
         } else {
+          //console.log("else tokem", token);
           temp == false;
-          return HTTPRESPONSE.NOT_FOUND('Account not found', {
-            error: 'Account not found',
-          });
+          // return HTTPRESPONSE.NOT_FOUND('Account not found', {
+          //   error: 'Account not found',
+          // });
         }
       }
       // console.log(temp,temp2,"this is the error  ")
-
-      if (temp2 == false) {
-        // return res.json({ error: 'Password incorrect' });
-        return HTTPRESPONSE.CONFLICT('Incorrect Password', {
-          error: 'Incorrect Password',
-        });
-      }
       if (token) {
         // res.json();
+
         return HTTPRESPONSE.SUCCESS('User Lgged in', {
           success: true,
           token: 'Bearer ' + token,
         });
       }
-    } catch (err) {
+      else if (temp == false) {
+        return HTTPRESPONSE.NOT_FOUND('Account not found', {
+          error: 'Account not found',
+        });
+      }
+      else if (temp2 == false) {
+        // return res.json({ error: 'Password incorrect' });
+        return HTTPRESPONSE.CONFLICT('Incorrect Password', {
+          error: 'Incorrect Password',
+        });
+      }
+
+    } catch (error) {
       //   return res.status(500).send('Server error');
       return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
+
   getAllUsers: async (req, res) => {
     try {
       let users = await User.find();
 
       if (!users) {
-        return res.status(404).json(errors);
+        return HTTPRESPONSE.NOT_FOUND('Users not found', {
+          error: 'Users not found',
+        });
       }
-      return users;
+      else {
+        return HTTPRESPONSE.SUCCESS('Users list found', users);
+      }
 
       //return res.json({ error: "Password incorrect" });
-    } catch (err) {
-      return res.status(500).send('Server error');
+    } catch (error) {
+      //   return res.status(500).send('Server error');
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
@@ -192,31 +209,33 @@ module.exports = {
     try {
       let user = await User.findOneAndDelete({ _id: req.params.id });
       if (user) {
-        res.json('Deleted Successfully');
+        return HTTPRESPONSE.SUCCESS('Deleted Successfully');
       } else {
-        res.status(404).json({
-          nouserfound: 'no user found with that id',
-          id: req.params.id,
+        return HTTPRESPONSE.NOT_FOUND('User not found', {
+          error: 'User not found',
         });
       }
-    } catch (err) {
-      return res.status(500).send('Server error');
+    } catch (error) {
+      //   return res.status(500).send('Server error');
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
+
 
   getUsersById: async (req, res) => {
     try {
       //console.log(req.param.id)
       let user = await User.findOne({ _id: req.params.id });
       if (user) {
-        return res.json(user);
+        return HTTPRESPONSE.SUCCESS('user found', user);
+
       } else {
-        res.status(404).json({
-          nouserfound: 'no user found with that id',
+        return HTTPRESPONSE.NOT_FOUND('User not found', {
+          error: 'User not found',
         });
       }
-    } catch (err) {
-      return res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
@@ -225,14 +244,16 @@ module.exports = {
       //console.log(req.param.id)
       let user = await User.findOne({ _id: req.params.id });
       if (user) {
-        return res.json(user.accountType);
+        return HTTPRESPONSE.SUCCESS('User Lgged in', user.accountType);
+
       } else {
-        res.status(404).json({
-          nouserfound: 'no user found with that id',
+        return HTTPRESPONSE.NOT_FOUND('Account not found', {
+          error: 'Account not found',
         });
       }
-    } catch (err) {
-      return res.status(500).send('Server error');
+    } catch (error) {
+      //   return res.status(500).send('Server error');
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
@@ -249,13 +270,13 @@ module.exports = {
         user.Email = req.body.Email;
 
         const data = await user.save();
-        return res.json('Update complete');
+        return HTTPRESPONSE.SUCCESS('Update complete');
       } else {
-        res.status(404).json({
-          nouserfound: 'no user found with that id',
+        return HTTPRESPONSE.NOT_FOUND('Account not found with that id', {
+          error: 'Account not found with that id',
         });
       }
-    } catch (err) {
+    } catch (error) {
       return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },

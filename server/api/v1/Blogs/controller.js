@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const Blog = require('../../../models/Blog');
+const HTTPRESPONSE = require('../../../utils/httpResponses');
 
 module.exports = {
   addBlog: async (req, res) => {
@@ -29,8 +30,8 @@ module.exports = {
       const data = await newBlog.save();
       // return res.json(blog);
       return HTTPRESPONSE.CREATED('Blog created successfully', data);
-    } catch (err) {
-      res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
@@ -41,29 +42,34 @@ module.exports = {
 
       if (!blogs) {
         //console.log("error");
-        return res.status(404).json(errors);
+        return HTTPRESPONSE.NOT_FOUND('Blog not found', {
+          error: 'Blog not found',
+        });
       }
       //console.log("done");
       else {
-        return res.json(blogs);
+        return HTTPRESPONSE.SUCCESS('Blog list found', blogs);
+
       }
-    } catch (err) {
-      res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
   getBlogsById: async (req, res) => {
-    //console.log(req.param.id)
+    console.log(req.param.id)
     try {
       let blog = await Blog.findOne({ _id: req.params.id });
-      if (blog) return res.json(blog);
+      if (blog) {
+        return HTTPRESPONSE.SUCCESS('Blog found', blog);
+      }
       else {
-        return res.status(404).json({
-          noblogfound: 'no blog found with that id',
+        return HTTPRESPONSE.NOT_FOUND('Blog not found', {
+          error: 'Blog not found',
         });
       }
-    } catch (err) {
-      res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 
@@ -91,27 +97,25 @@ module.exports = {
           (blog.status = req.body.status),
           (blog.reportlistList = req.body.reportlistList);
         const data = await blog.save();
-        return res.json('Update complete');
+        return HTTPRESPONSE.SUCCESS('Blog updated');
       }
-    } catch (err) {
-      res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
   deleteBlog: async (req, res) => {
     try {
       let blog = await Blog.findOneAndDelete({ _id: req.params.id });
       if (blog) {
-        return res.json('Deleted Successfully');
-        //return res.json({ error: "username already exists" });
+        return HTTPRESPONSE.SUCCESS('Deleted Successfully');
+
       } else {
-        return res.json({
-          noblogfound: 'no blog found with that id',
-          //id: req.params.id
+        return HTTPRESPONSE.NOT_FOUND('Blog not found', {
+          error: 'Blog not found',
         });
       }
-    } catch (err) {
-      //console.log(err, "ttis is error")
-      return res.status(500).send('Server error');
+    } catch (error) {
+      return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
 };

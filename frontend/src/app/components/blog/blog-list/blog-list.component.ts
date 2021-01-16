@@ -22,11 +22,14 @@ export class BlogListComponent implements OnInit {
   checker = 0;
   ngOnInit(): void {
     console.log("in bloglist");
-    this.blogService.getAllBlogs().subscribe(data => {
-      this.blogs = data;
-      // console.log(data);
+    this.blogService.getAllBlogs().subscribe((data1) => {
+
+      this.blogs = data1["data"];
     });
+
+
     if (this.blogs.length > 0) {
+      console.log(this.blogs)
       this.check = 1;
     }
     if (this.AuthService.parseJwt(localStorage.getItem("currentUser"))) {

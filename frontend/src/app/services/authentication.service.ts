@@ -47,11 +47,11 @@ export class AuthenticationService {
   }
 
   setLocalStorage(responseObj) {
-    localStorage.setItem('currentUser', JSON.stringify(responseObj));
+    localStorage.setItem('currentUser', JSON.stringify(responseObj.data));
     var a = this.parseJwt(localStorage.getItem('currentUser'));
     // console.log(a, "expire");
     const expiresAt = moment().add(a.exp);
-    localStorage.setItem('id_token', responseObj.token);
+    localStorage.setItem('id_token', responseObj.data.token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 

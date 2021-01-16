@@ -52,21 +52,21 @@ export class LoginComponent implements OnInit {
       this.gettcheck = 1;
     }
     if (this.tok) {
-        if (this.tok.error !== "" && this.checkingerror == 0) {
-          // console.log("laa");
-          this.errorss = [];
-          //this.check = 0;
-          this.checkingerror = 1;
-          //this.snackBar.open("Invalid Username or password");
-          this.snackBar.open(this.tok.error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-  
-        }
-      if (this.tok && this.check === 0 && this.tok.error===undefined) {
+      if (this.tok.error !== "" && this.checkingerror == 0) {
+        // console.log("laa");
+        this.errorss = [];
+        //this.check = 0;
+        this.checkingerror = 1;
+        //this.snackBar.open("Invalid Username or password");
+        this.snackBar.open(this.tok.error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
+      }
+      if (this.tok && this.check === 0 && this.tok.error === undefined) {
         this.errorss = null;
         //  console.log(this.tok, "wewfw");
         this.check = 1;
@@ -110,22 +110,18 @@ export class LoginComponent implements OnInit {
     //console.log(this.user, "in login component");
 
 
-    this.authService.mylogin(this.users)   .subscribe((response) => {                           //Next callback
+    this.authService.mylogin(this.users).subscribe((response) => {                           //Next callback
       this.tok = response;
     },
-    (error) => {                              //Error callback
-      // console.error(error.error.data.error)
-      this.tok=error.error.data
-      // this.tok.error = error;
+      (error) => {                              //Error callback
+        this.tok = error.error.data
+      })
+    //   .subscribe((data: any) =>
+    // // this.tok = data
+    // console.log(data)
+    //   );
 
-      //throw error;   //You can also throw the error to a global error handler
-    })
-  //   .subscribe((data: any) =>
-  // // this.tok = data
-  // console.log(data)
-  //   );
- 
-  
+
   }
 
 }
