@@ -236,7 +236,8 @@ export class AdminViewusersComponent implements OnInit {
 
   getusers() {
     this.userService.getAllUsers().subscribe(data => {
-      this.user = data;
+      this.user = data["data"];
+      this.users= data["data"];
 
     })
     //  console.log("hello");
@@ -246,7 +247,7 @@ export class AdminViewusersComponent implements OnInit {
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
-      this.blogs = data;
+      this.blogs = data["data"];
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")
@@ -256,7 +257,7 @@ export class AdminViewusersComponent implements OnInit {
   }
   getcomments() {
     this.commentService.getAllComments().subscribe(data => {
-      this.comments = data;
+      this.comments = data["data"];
     })
     this.comments.forEach(value => {
       //console.log(value, "get comment")
@@ -266,10 +267,11 @@ export class AdminViewusersComponent implements OnInit {
 
     for (var i = 0; i < this.user.length; i++) {
       this.userInfolist[i] = new userInfo();
+      this.userInfolist[i]._id = this.user[i]._id;
       this.userInfolist[i].userName = this.user[i].UserName;
       this.userInfolist[i].status = this.user[i].status;
       this.userInfolist[i].accountType = this.user[i].accountType;
-      this.userInfolist[i]._id = this.user[i]._id;
+      
 
       //      this.userInfolist[i].status = "mod"
       if (this.blogs.length <= 0) {
@@ -326,11 +328,17 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   updateAccount(inp, inp2) {
-    console.log(inp, inp2, "here");
+    console.log(inp, "here");
+    console.log(this.userInfolist,"userinfolist");
+    console.log(this.user);
+    console.log(this.users);
+    console.log(this.users.findIndex(a => a.id == inp));
     this.user[this.user.findIndex(a => a._id == inp)].accountType = inp2;
+    console.log('1');
     this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
       console.log(data);
     });
+    console.log('1');
     this.userInfolist[this.userInfolist.findIndex(a => a._id == inp)].accountType = inp2;
 
   }

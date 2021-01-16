@@ -173,7 +173,7 @@ export class MyblogsComponent implements OnInit {
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
-      this.blogs = data;
+      this.blogs = data["data"];
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")

@@ -272,14 +272,14 @@ export class CommentEditComponent implements OnInit {
 
   getcomments() {
     this.commentService.getAllComments().subscribe(data => {
-      this.comments = data;
+      this.comments = data["data"];
     })
 
   }
 
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
-      this.bloglist = data;
+      this.bloglist = data["data"];
     })
 
   }

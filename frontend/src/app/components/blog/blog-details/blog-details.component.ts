@@ -401,7 +401,7 @@ export class BlogDetailsComponent implements OnInit {
     this.route.params.subscribe(async param => {
       this.blogService.getBlog(param['id']).subscribe(data => {
         //console.log(data);
-        this.blogs = data;
+        this.blogs = data["data"];
       })
     })
   }
@@ -451,7 +451,7 @@ export class BlogDetailsComponent implements OnInit {
   getCommentbyid() {
     if (this.blogs.commentsIdList) {
       for (let Key in this.blogs.commentsIdList) {
-        this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => { this.commentlist.push(data); })
+        this.commentService.getCommentbyid(this.blogs.commentsIdList[Key]).subscribe(data => { this.commentlist.push(data["data"]); })
       }
     }
     else {

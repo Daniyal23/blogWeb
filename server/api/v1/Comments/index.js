@@ -9,49 +9,49 @@ router.get('/getAllComments', passport.authenticate('jwt', { session: false }), 
     try {
         let data = await controller.getAllComments(req,res);
         
-        res.status(200).send( data);
+        SEND_RESPONSE(res, data);
     } catch (error) {
         
-        res.status(500).send( error);
+        SEND_RESPONSE(res, error);
     }
 });
 router.post('/addComments', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         let data = await controller.addComments(req,res);
         console.log(data,"comment man");
-        res.status(200).send( data);
+        SEND_RESPONSE(res, data);
     } catch (error) {
-        res.status(500).send( error);
+        SEND_RESPONSE(res, error);
     }
 });
 router.get('/getCommentsById/:id', async (req, res) => {
     try {
         let data = await controller.getCommentsById(req,res);
         
-        res.status(200).send( data);
+        SEND_RESPONSE(res, data);
     } catch (error) {
         
-        res.status(500).send( error);
+        SEND_RESPONSE(res, error);
     }
 });
 router.delete('/deleteComment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         let data = await controller.deleteComment(req,res);
         
-        res.status(200).send( data);
+        SEND_RESPONSE(res, data);
     } catch (error) {
         
-        res.status(500).send( error);
+        SEND_RESPONSE(res, error);
     }
 });
 router.post('/updateComment/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         let data = await controller.updateComment(req,res);
         
-        res.status(200).send( data);
+        SEND_RESPONSE(res, data);
     } catch (error) {
         
-        res.status(500).send( error);
+        SEND_RESPONSE(res, error);
     }
 });
 

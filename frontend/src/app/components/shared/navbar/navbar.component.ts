@@ -33,7 +33,8 @@ export class NavbarComponent implements OnInit {
         this.userdetails = this.AuthService.getuserdetails();
         // console.log("üser details", this.userdetails);
         this.userService.getUserAccountType(this.userdetails.id).subscribe(data => {
-          this.accounttype = data;
+          this.accounttype = data["data"];
+          console.log(data);
         })
 
       }

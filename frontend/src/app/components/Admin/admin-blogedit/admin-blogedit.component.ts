@@ -111,8 +111,8 @@ export class AdminBlogeditComponent implements OnInit {
     this.route.params.subscribe(async param => {
       this.blogService.getBlog(param['id']).subscribe(data => {
         //console.log(data);
-        this.blogs = data;
-        this.test = data;
+        this.blogs = data["data"];
+        this.test = data["data"];
         // console.log(this.test);
       })
     })
