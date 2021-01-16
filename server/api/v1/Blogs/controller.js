@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const Blog = require("../models/Blog");
+const Blog = require("../../../models/Blog");
 
 module.exports = {
     addBlog: (async (req, res) => {
@@ -32,8 +32,8 @@ module.exports = {
 
                 }
             );
-            await newBlog.save()
-                .then(blog => res.json(blog))
+            const data = await newBlog.save();
+            return res.json(blog);
         } catch (err) {
             res.status(500).send('Server error');
         }
@@ -44,21 +44,17 @@ module.exports = {
     getAllBlogs: (async (req, res) => {
         //console.log("in list all");
         try {
-            Blog.find()
-                .then(blogs => {
+            let blogs = await Blog.find()
+        
                     if (!blogs) {
                         //console.log("error");
                         return res.status(404).json(errors);
                     }
                     //console.log("done");
-                    res.json(blogs);
-                })
-                .catch(err => res.status(404).json(
-                    //console.log(err),
-                    {
-
-                        blogs: 'There are no blogs'
-                    }));
+                else{  
+                      return res.json(blogs);
+                }
+                
         }
 
         catch (err) {
@@ -71,13 +67,13 @@ module.exports = {
     getBlogsById: (async (req, res) => {
         //console.log(req.param.id)
         try {
-            Blog.findOne({ '_id': (req.params.id) })
-                .then(blog => res.json(blog))
-                .catch(err =>
-                    res.status(404).json({
+            let blog = await Blog.findOne({ '_id': (req.params.id) })
+               if(blog )return res.json(blog)
+                else{
+                    return res.status(404).json({
                         noblogfound: "no blog found with that id"
                     })
-                );
+                }
         } catch (err) {
             res.status(500).send('Server error');
         }
@@ -86,13 +82,13 @@ module.exports = {
 
     updateBlog: async (req, res) => {
         try {
-            Blog.findById(req.params.id)
-                .then(blog => {
+            let blog = await Blog.findById(req.params.id)
+               if(blog) {
 
-                    blog.id = req.body.id,
-                        blog.creatorId = req.body.creatorId,
-                        blog.title = req.body.title,
-                        blog.blogHeaderImage = req.body.blogHeaderImage,
+                    blog.id = req.body.id;
+                        blog.creatorId = req.body.creatorId;
+                        blog.title = req.body.title;
+                        blog.blogHeaderImage = req.body.blogHeaderImage;
                         blog.text = req.body.text,
                         blog.images = req.body.images,
                         blog.creatorName = req.body.creatorName,
@@ -107,14 +103,11 @@ module.exports = {
                         blog.commentsIdList = req.body.commentsIdList,
                         blog.numOfReads = req.body.numOfReads,
                         blog.status = req.body.status,
-                        blog.reportlistList = req.body.reportlistList,
-
-                        blog
-                            .save()
-                            .then(blog => {
-                                res.json('Update complete')
-                            })
-                })
+                        blog.reportlistList = req.body.reportlistList;
+                        const data = await blog.save();
+                        return res.json('Update complete');
+                       
+                }
         }
         catch (err) {
             res.status(500).send('Server error');
@@ -123,20 +116,20 @@ module.exports = {
     },
     deleteBlog: async (req, res) => {
         try {
-            Blog.findOneAndDelete({ '_id': req.params.id })
-                .then(blog => {
-                    res.json("Deleted Successfully");
+            let blog = await Blog.findOneAndDelete({ '_id': req.params.id })
+                if(blog) {
+                    return res.json("Deleted Successfully");
                     //return res.json({ error: "username already exists" });
-                })
-                .catch(err =>
-                    res.json({
+                }
+               else{
+                  return  res.json({
                         noblogfound: "no blog found with that id"
                         //id: req.params.id
                     })
-                );
+               }
         } catch (err) {
             //console.log(err, "ttis is error")
-            res.status(500).send('Server error');
+            return res.status(500).send('Server error');
         }
     },
 

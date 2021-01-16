@@ -9,7 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class BlogService {
 
-  uri = 'http://localhost:3000/blogs';
+  uri = 'http://localhost:3000/api/v1/Blogs';
 
   constructor(
     private http: HttpClient,

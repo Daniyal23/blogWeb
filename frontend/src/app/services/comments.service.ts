@@ -11,7 +11,7 @@ export class CommentsService {
 
 
 
-  uri = 'http://localhost:3000/comments';
+  uri = 'http://localhost:3000/api/v1/Comments';
 
   constructor(
     private http: HttpClient,

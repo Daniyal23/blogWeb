@@ -3,10 +3,10 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
-const users = require("./routes/users");
-const blogs = require("./routes/blogs");
+//const users = require("./routes/users");
+//const blogs = require("./routes/blogs");
 //const interactions = require("./routes/interactions");
-const comments = require("./routes/comments");
+//const comments = require("./routes/comments");
 const passport = require("passport");
 const dotenv = require('dotenv');
 var path = require("path");
@@ -43,11 +43,12 @@ require('./middleware/auth')(passport);
 
 // Routes
 // app.use('/api/auth', require('./routes/auth'));
-app.use("/users", users);
+//app.use("/users", users);
+require("./routes")(app);
 //app.use("/blogs", blogs);
 //app.use("/interactions", interactions);
-app.use("/comments", comments);
-app.use('/blogs', blogs)
+//app.use("/comments", comments);
+//app.use('/blogs', blogs)
 
 ///////////////
 app.get("/", function (req, res) {

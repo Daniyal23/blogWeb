@@ -18,7 +18,7 @@ export class AuthenticationService {
   public user1: User = new User();
 
   //uri = uriGlobal + "users";
-  uri = 'http://localhost:3000/users';
+  uri = 'http://localhost:3000/api/v1/Users';
 
 
   constructor(private http: HttpClient, private router: Router) {
