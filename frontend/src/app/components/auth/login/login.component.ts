@@ -52,55 +52,21 @@ export class LoginComponent implements OnInit {
       this.gettcheck = 1;
     }
     if (this.tok) {
-      //console.log(this.tok, "tok")
-      if (this.tok.error === "Password incorrect" && this.checkingerror == 0) {
-        // console.log("laa");
-        this.errorss = [];
-        //this.check = 0;
-        this.checkingerror = 1;
-        //this.snackBar.open("Invalid Username or password");
-        this.snackBar.open("Invalid Username or password", null, {
-          duration: 2000,
-          panelClass: ['error-snackbar'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
-
-      }
-      else if (this.tok.error === "account not approved" && this.checkingerror == 0) {
-        //console.log("error", this.tok.error)
-        // console.log("laa");
-        this.errorss = [];
-        //this.check = 0;
-        this.checkingerror = 1;
-        //this.snackBar.open("Invalid Username or password");
-        this.snackBar.open("Account Not Approved", null, {
-          duration: 2000,
-          panelClass: ['error-snackbar'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
-
-      }
-      else if (this.tok.error === "Account not found" && this.checkingerror == 0) {
-        //console.log("error", this.tok.error)
-        // console.log("laa");
-        this.errorss = [];
-        //this.check = 0;
-        this.checkingerror = 1;
-        //this.snackBar.open("Invalid Username or password");
-        this.snackBar.open("Account Does Not Exist", null, {
-          duration: 2000,
-          panelClass: ['error-snackbar'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
-
-      }
-
-
-
-      else if (this.tok && this.check === 0 && this.tok.error != "Password incorrect") {
+        if (this.tok.error !== "" && this.checkingerror == 0) {
+          // console.log("laa");
+          this.errorss = [];
+          //this.check = 0;
+          this.checkingerror = 1;
+          //this.snackBar.open("Invalid Username or password");
+          this.snackBar.open(this.tok.error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+  
+        }
+      if (this.tok && this.check === 0 && this.tok.error===undefined) {
         this.errorss = null;
         //  console.log(this.tok, "wewfw");
         this.check = 1;
@@ -144,11 +110,22 @@ export class LoginComponent implements OnInit {
     //console.log(this.user, "in login component");
 
 
-    this.authService.mylogin(this.users).subscribe((data: any) =>
-      this.tok = data
-      //console.log(data)
-    );
+    this.authService.mylogin(this.users)   .subscribe((response) => {                           //Next callback
+      this.tok = response;
+    },
+    (error) => {                              //Error callback
+      // console.error(error.error.data.error)
+      this.tok=error.error.data
+      // this.tok.error = error;
 
+      //throw error;   //You can also throw the error to a global error handler
+    })
+  //   .subscribe((data: any) =>
+  // // this.tok = data
+  // console.log(data)
+  //   );
+ 
+  
   }
 
 }
