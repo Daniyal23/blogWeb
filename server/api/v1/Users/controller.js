@@ -13,7 +13,7 @@ dotenv.config();
 module.exports = {
   createAdmin: async (req, res) => {
     try {
-      console.log('in create admin');
+
       var UserName = 'admin';
       var Email = 'admin@admin.com';
       var Password = '12345678';
@@ -27,7 +27,7 @@ module.exports = {
         UserName,
       });
       if (user)
-        return HTTPRESPONSE.BAD_REQUEST('Username already exists', {
+        return HTTPRESPONSE.CONFLICT('Username already exists', {
           error: 'username exists',
         });
 
@@ -39,7 +39,10 @@ module.exports = {
         if (response) FoundUser = users[index];
       });
       if (FoundUser._id)
-        return HTTPRESPONSE.BAD_REQUEST('email already exists');
+        return HTTPRESPONSE.CONFLICT('email already exists', {
+          error: 'email exists',
+        });
+
 
       const salt = await bcrypt.genSalt(10);
       Email = await bcrypt.hash(Email, salt);
@@ -57,7 +60,7 @@ module.exports = {
       // return res.json({ success: 'Added' });
       return HTTPRESPONSE.CREATED('Admin registered successfully', data);
     } catch (err) {
-      // console.log("i am here man");
+
       return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
   },
@@ -69,7 +72,10 @@ module.exports = {
       const user = await User.findOne({
         UserName,
       });
-      if (user) return HTTPRESPONSE.BAD_REQUEST('Username already exists');
+      if (user) return HTTPRESPONSE.CONFLICT('Username already exists', {
+        error: 'Username exists',
+      });
+
 
       let users = await User.find();
       const checkmail = await Promise.all(
@@ -79,7 +85,10 @@ module.exports = {
         if (response) FoundUser = users[index];
       });
       if (FoundUser._id)
-        return HTTPRESPONSE.BAD_REQUEST('email already exists');
+        return HTTPRESPONSE.CONFLICT('Email already exists', {
+          error: 'Email exists',
+        });
+
 
       const salt = await bcrypt.genSalt(10);
       Email = await bcrypt.hash(Email, salt);
@@ -92,10 +101,12 @@ module.exports = {
         Avatar,
       });
 
-      await newUser.save(function (error, obj) {
-        if (error) res.send(error);
-        return res.json({ success: 'Added' });
-      });
+      const data = await newUser.save()
+      if (!data) { return HTTPRESPONSE.CONFLICT('Error occurred', error); }
+      else {
+        return HTTPRESPONSE.SUCCESS('Added');
+      }
+
     } catch (error) {
       return HTTPRESPONSE.CONFLICT('Error occurred', error);
     }
@@ -110,26 +121,20 @@ module.exports = {
       let token = null;
 
       let users = await User.find();
-      //console.log(users, "dds");
+
       if (!users) {
         return HTTPRESPONSE.BAD_REQUEST('No users', {
           error: 'No users',
         });
-        // return res.json({ error: 'Password incorrect' });
+
       }
 
       for await (let item of users) {
-        //users.forEach((item) => {
-        //console.log(item.Email, "jeje");
-        console.log("item->", item);
         temp = await bcrypt.compareSync(email, item.Email);
-        console.log(temp, "1");
         if (temp == true) {
           temp2 = bcrypt.compareSync(password, item.Password);
-          console.log(temp2, "2");
           if (temp2 == true) {
             //User Matched
-            console.log("item", item);
             if (item.status != 'approved') {
               //   return res.json({ error: 'account not approved' });
               return HTTPRESPONSE.CONFLICT('account not approved', {
@@ -151,16 +156,13 @@ module.exports = {
             });
           }
         } else {
-          //console.log("else tokem", token);
           temp == false;
-          // return HTTPRESPONSE.NOT_FOUND('Account not found', {
-          //   error: 'Account not found',
-          // });
+
         }
       }
-      // console.log(temp,temp2,"this is the error  ")
+
       if (token) {
-        // res.json();
+
 
         return HTTPRESPONSE.SUCCESS('User Lgged in', {
           success: true,
@@ -224,7 +226,7 @@ module.exports = {
 
   getUsersById: async (req, res) => {
     try {
-      //console.log(req.param.id)
+
       let user = await User.findOne({ _id: req.params.id });
       if (user) {
         return HTTPRESPONSE.SUCCESS('user found', user);
@@ -241,7 +243,7 @@ module.exports = {
 
   getUserAccountType: async (req, res) => {
     try {
-      //console.log(req.param.id)
+
       let user = await User.findOne({ _id: req.params.id });
       if (user) {
         return HTTPRESPONSE.SUCCESS('User Lgged in', user.accountType);

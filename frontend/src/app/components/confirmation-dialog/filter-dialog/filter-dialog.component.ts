@@ -20,7 +20,7 @@ export class FilterDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.message);
+    //console.log(this.message);
   }
 
   onConfirm(inp): void {

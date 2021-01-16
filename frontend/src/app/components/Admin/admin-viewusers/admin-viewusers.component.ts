@@ -40,10 +40,10 @@ class forcheckbox {
 
 export class AdminViewusersComponent implements OnInit {
 
-  public users: User[] = [];
-  public user: any[] = [];
-  public blogs: Blog[] = [];
-  public comments: Comment[] = [];
+  //public users: User[] = [];
+  public user: any[];
+  public blogs: Blog[];
+  public comments: Comment[];
 
   public usertype: any;
   constructor(
@@ -83,7 +83,7 @@ export class AdminViewusersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
 
 
       if (dialogResult == true) {
@@ -133,15 +133,15 @@ export class AdminViewusersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult == "No of Blogs") {
-          console.log("in blogs");
+          //console.log("in blogs");
           this.filtered = dialogResult;
           this.userInfolist.sort((a, b) => b.noBlogs - a.noBlogs);
         }
         else if (dialogResult == 'No of Likes') {
-          console.log("in likes");
+          //console.log("in likes");
           this.filtered = dialogResult;
 
           this.userInfolist.sort((a, b) => b.noLikes - a.noLikes);
@@ -186,7 +186,7 @@ export class AdminViewusersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult[0] == "username") {
           this.userInfolistmain = this.userInfolist;
@@ -217,61 +217,54 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   ngAfterViewChecked() {
-    if (this.user.length > 0 && this.blogs.length > 0 && this.comments.length > 0) {
-
+    if (this.user != undefined && this.blogs != undefined && this.comments != undefined && this.check == 0) {
       this.user.splice(this.user.findIndex(a => a._id == this.AuthService.getuserdetails().id), 1);
+
       this.user = this.user.filter(a => a.status != 'blocked');
       this.populate();
       this.check = 1;
+
+
       //console.log(this.user, " users");
     }
-    if (this.comments.length > 0) {
-      // console.log(this.comments, "commentns");
-    }
-    if (this.blogs.length > 0) {
-      //console.log(this.blogs,"blogs");
-    }
+
     this.cdr.detectChanges();
   }
 
   getusers() {
     this.userService.getAllUsers().subscribe(data => {
       this.user = data["data"];
-      this.users= data["data"];
+      console.log(data);
+      // this.users = data["data"];
 
     })
-    //  console.log("hello");
-    this.user.forEach(value => {
-      //   console.log(value, 'daasd')
-    })
+
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
       this.blogs = data["data"];
+      console.log(data);
     })
-    this.blogs.forEach(value => {
-      //console.log(value, "getblogs")
-    }
-    )
+
 
   }
   getcomments() {
     this.commentService.getAllComments().subscribe(data => {
       this.comments = data["data"];
+      console.log(data);
     })
-    this.comments.forEach(value => {
-      //console.log(value, "get comment")
-    })
+
   }
   populate() {
 
     for (var i = 0; i < this.user.length; i++) {
+      //console.log(this.user)
       this.userInfolist[i] = new userInfo();
       this.userInfolist[i]._id = this.user[i]._id;
       this.userInfolist[i].userName = this.user[i].UserName;
       this.userInfolist[i].status = this.user[i].status;
       this.userInfolist[i].accountType = this.user[i].accountType;
-      
+
 
       //      this.userInfolist[i].status = "mod"
       if (this.blogs.length <= 0) {
@@ -289,7 +282,7 @@ export class AdminViewusersComponent implements OnInit {
             this.userInfolist[i].noReports += value.interactionIdList.filter(a => a.userId == this.user[i]._id && a.InteractionType == "Report").length;
           }
           else {
-            console.log("No blogs");
+            //console.log("No blogs");
           }
         })
       }
@@ -301,7 +294,7 @@ export class AdminViewusersComponent implements OnInit {
     // console.log(this.userInfolist, "user infos");
   }
   statusUp(inp, inp2) {
-    console.log(inp, inp2);
+    //console.log(inp, inp2);
     this.userInfolist[this.userInfolist.findIndex(a => a.userName == inp2)].status = inp;
     //this.user[this.user.findIndex(a=> a.userName==inp2)].status=inp
 
@@ -328,17 +321,17 @@ export class AdminViewusersComponent implements OnInit {
 
   }
   updateAccount(inp, inp2) {
-    console.log(inp, "here");
-    console.log(this.userInfolist,"userinfolist");
-    console.log(this.user);
-    console.log(this.users);
-    console.log(this.users.findIndex(a => a.id == inp));
+    // console.log(inp, "here");
+    //console.log(this.userInfolist, "userinfolist");
+    //console.log(this.user);
+    //console.log(this.users);
+    //console.log(this.users.findIndex(a => a.id == inp));
     this.user[this.user.findIndex(a => a._id == inp)].accountType = inp2;
-    console.log('1');
+    // console.log('1');
     this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
       console.log(data);
     });
-    console.log('1');
+    //console.log('1');
     this.userInfolist[this.userInfolist.findIndex(a => a._id == inp)].accountType = inp2;
 
   }
@@ -348,6 +341,7 @@ export class AdminViewusersComponent implements OnInit {
   block(inp) {
     //console.log(inp, this.user.findIndex(a => a._id == inp))
     this.user[this.user.findIndex(a => a._id == inp)].status = "blocked";
+    this.userInfolist.splice(this.userInfolist.findIndex(a => a._id == inp), 1)
     //console.log(this.user);
     this.userService.updateUser(inp, this.user.find(a => a._id == inp)).subscribe(data => {
       console.log(data);

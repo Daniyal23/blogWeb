@@ -22,7 +22,7 @@ export class SearchDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.message);
+    // console.log(this.message);
   }
 
   onConfirm(inp, inp2): void {

@@ -37,7 +37,7 @@ export class AdminViewblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult == true) {
         this.delete(inp1);
         this.snackBar.open("Deleted successfully", null, {
@@ -66,7 +66,7 @@ export class AdminViewblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult == "created on") {
           this.filtered = dialogResult;
@@ -105,7 +105,7 @@ export class AdminViewblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult[0] == "username") {
           this.blogmain = this.blogs;

@@ -27,7 +27,7 @@ export class AdminBlogeditComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private snackBar: MatSnackBar,
     private router: Router,
-    
+
 
 
 
@@ -41,44 +41,76 @@ export class AdminBlogeditComponent implements OnInit {
   public imgcheck: number = 0;
   public img: any;
 
+  public editorContent: string = "";
+  public displayman: any;
 
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '15rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['bold']
-    ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
+  public options: Object = {
+    attribution: false,
+    toolbarButtons: {
+      'moreText': {
+        'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
       },
-      {
-        name: 'redText',
-        class: 'redText'
+      'moreParagraph': {
+        'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
       },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
+      'moreRich': {
+        'buttons': ['insertLink', 'insertImage', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly', 'insertHR']
       },
-    ],
-    //uploadUrl: 'v1/image',
-    // upload: (file: File) => {this.handleFileSelect(file)},
-    //uploadWithCredentials: false,
-    sanitize: true,
 
-  };
+    },
+    direction: 'rtl',
+
+    charCounterCount: true,
+    imageManagerDeleteMethod: "POST",
+    imageManagerDeleteURL: 'http://localhost:3000/delete_image',
+    // Set the image upload parameter.
+    imageUpload: true,
+    // Set the image upload URL.
+    imageUploadURL: 'http://localhost:3000/image_upload',
+    imageDefaultDisplay: 'inline-block',
+    // Additional upload params.
+    imageUploadParams: { id: 'my_editor' },
+
+    // Set request type.
+    imageUploadMethod: 'POST',
+    imageManagerLoadMethod: "GET",
+
+    // Set max image size to 5MB.
+    imageMaxSize: 5 * 1024 * 1024,
+
+    // Allow to upload PNG and JPG.
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    events: {
+      'froalaEditor.initialized': function () {
+        //console.log('initialized');
+      },
+      'froalaEditor.image.beforeUpload': function (e, editor, images) {
+        //Your code 
+        //console.log("in upload")
+        if (images.length) {
+          //console.log("in if ", images);
+          // Create a File Reader.
+          const reader = new FileReader();
+          // Set the reader to insert images when they are loaded.
+          reader.onload = (ev) => {
+            const result = ev.target['result'];
+            editor.image.insert(result, null, null, editor.image.get());
+            // console.log(ev, editor.image, ev.target['result'])
+          };
+          // Read image as base64.
+          reader.readAsDataURL(images[0]);
+        }
+        // Stop default upload chain.
+        return false;
+      }
+
+    }
+  }
+
   public check = 0;
   public returnUrl: string;
 
- 
+
   ngOnInit(): void {
     this.AuthService.checkaccessregular();
     this.getblogbyid();

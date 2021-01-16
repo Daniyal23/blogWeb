@@ -80,7 +80,7 @@ export class AdminAllcommentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+
       if (result != undefined) {
         if (result == "") {
           this.snackBar.open("Comment Cannot be Empty", null, {
@@ -90,7 +90,7 @@ export class AdminAllcommentsComponent implements OnInit {
             verticalPosition: 'top'
           });
         } else {
-          console.log("in else", result);
+
           this.comment = result;
           if (inp.content != this.comment) {
             inp.content = this.comment;
@@ -117,7 +117,7 @@ export class AdminAllcommentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+
       if (dialogResult == true) {
         this.deletecomment(inp1);
         this.snackBar.open("Deleted successfully", null, {
@@ -147,7 +147,7 @@ export class AdminAllcommentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+
       if (dialogResult != false) {
         if (dialogResult == "Ascending Date") {
           this.filtered = dialogResult;
@@ -179,7 +179,7 @@ export class AdminAllcommentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+
       if (dialogResult != false) {
         if (dialogResult[0] == "username") {
           this.displaylistmain = this.displaylist;
@@ -205,7 +205,7 @@ export class AdminAllcommentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("hello");
+
     this.AuthService.checkaccessregular();
     this.AuthService.checkaccessblogger();
     this.userdetails = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
@@ -229,11 +229,11 @@ export class AdminAllcommentsComponent implements OnInit {
         }
       });
       this.dateset();
-      console.log(this.displaylist, "yo");
+
       this.cdr.detectChanges();
     }
     if (this.donecheck != "" && this.donecount == 0) {
-      console.log("yoyoyoyoyo");
+
       if (this.donecheck == "Update complete") {
         this.snackBar.open("Comment Edit Successful", null, {
           duration: 2000,
@@ -266,7 +266,7 @@ export class AdminAllcommentsComponent implements OnInit {
   }
   dateset() {
     for (var i = 0; i < this.displaylist.length; i++) {
-      console.log(this.displaylist[i].comment.datePublished.toString());
+      //console.log(this.displaylist[i].comment.datePublished.toString());
       this.date = this.displaylist[i].comment.datePublished.toString();
       this.date = (this.date.split("T")[0]);
       var a = this.date.split("-");
@@ -292,7 +292,7 @@ export class AdminAllcommentsComponent implements OnInit {
   }
 
   editcomment(inp) {
-    console.log(inp, "edit comment");
+    //console.log(inp, "edit comment");
 
   }
   deletecomment(inp) {

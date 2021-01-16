@@ -64,9 +64,9 @@ export class MyblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
 
-      console.log(result);
+      //console.log(result);
       if (result == 'Yes') {
         this.delete(inp);
         this.snackBar.open("Deleted successfully", null, {
@@ -94,7 +94,7 @@ export class MyblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult == "created on") {
           this.filtered = dialogResult;
@@ -134,7 +134,7 @@ export class MyblogsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
 
         if (dialogResult[0] == 'blogname') {
@@ -161,7 +161,7 @@ export class MyblogsComponent implements OnInit {
 
     this.getblogs();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
-    console.log(this.returnUrl, "yo");
+    //console.log(this.returnUrl, "yo");
   }
   ngAfterViewChecked() {
     if (this.blogs.length > 0 && this.check == 0) {

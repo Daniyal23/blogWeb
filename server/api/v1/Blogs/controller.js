@@ -36,17 +36,17 @@ module.exports = {
   },
 
   getAllBlogs: async (req, res) => {
-    //console.log("in list all");
+
     try {
       let blogs = await Blog.find();
 
       if (!blogs) {
-        //console.log("error");
+
         return HTTPRESPONSE.NOT_FOUND('Blog not found', {
           error: 'Blog not found',
         });
       }
-      //console.log("done");
+
       else {
         return HTTPRESPONSE.SUCCESS('Blog list found', blogs);
 
@@ -57,7 +57,7 @@ module.exports = {
   },
 
   getBlogsById: async (req, res) => {
-    console.log(req.param.id)
+
     try {
       let blog = await Blog.findOne({ _id: req.params.id });
       if (blog) {

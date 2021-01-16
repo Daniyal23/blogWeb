@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
   user: User = new User();
   user1: User = new User();
 
+  public tok: any;
 
 
   constructor(
@@ -59,7 +60,34 @@ export class RegisterComponent implements OnInit {
       { validator: this.matchValidator }
     );
   }
+  public checksuccess = 0;
+  public checkerror = 0;
 
+  ngAfterViewChecked() {
+    if (this.tok)
+
+      if (this.tok.error == undefined && this.checksuccess == 0) {
+        this.checksuccess = 1;
+        this.snackBar.open('Registration Successful', "", {
+          duration: 4000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+        //this.AuthService.signup2(this.user);
+        this.router.navigate(['/login']);
+      }
+      else if (this.checkerror == 0) {
+        this.checkerror = 1;
+        //console.log("this.tok", this.tok.error)
+        this.snackBar.open(this.tok.error, "", {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+  }
   get registerFormControl() {
     return this.registerForm.controls;
   }
@@ -121,37 +149,18 @@ export class RegisterComponent implements OnInit {
       this.user.UserName = this.registerForm.controls["username"].value;
 
       // console.log(this.user, "dwd");
-      this.AuthService.signup(this.user).subscribe(res => {
+      this.checkerror = 0;
+      this.checksuccess = 0;
+      this.AuthService.signup(this.user).subscribe(response => {
+        this.tok = response;
+      },
+        (error) => {                           //Error callback
+          this.tok = error.error.data
+          //console.log(JSON.stringify(res));
 
-        //console.log(JSON.stringify(res));
-        if (res == "email already exists") {
-          this.snackBar.open('Email already exists', "", {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
         }
-        else if (res == "Username already exists") {
-          this.snackBar.open('Username already exists', "", {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-        }
-        else {
-          this.snackBar.open('Registration Successful', "", {
-            duration: 4000,
-            panelClass: ['success-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          //this.AuthService.signup2(this.user);
-          this.router.navigate(['/login']);
-        }
+      )
 
-      });
     }
 
   }

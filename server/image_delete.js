@@ -5,12 +5,12 @@ var fs = require("fs");
 var sha1 = require("sha1");
 
 function delet(req, callback) {
-    console.log("in delete folder");
+    //console.log("in delete folder");
     fs.unlink("./assets/" + req.file.filename, (err) => {
         if (err) {
-            console.log("failed to delete local image:" + err);
+            // console.log("failed to delete local image:" + err);
         } else {
-            console.log('successfully deleted local image');
+            //console.log('successfully deleted local image');
         }
     });
 }

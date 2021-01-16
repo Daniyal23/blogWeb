@@ -50,19 +50,19 @@ export class EditprofileComponent implements OnInit {
   matchValidator(group: FormGroup) {
     let pass = group.controls.password.value;
     let confirmPass = group.controls.repeatPassword.value;
-    console.log(pass, confirmPass, "passwords");
+    //console.log(pass, confirmPass, "passwords");
     return pass === confirmPass ? null : { notSame: true }
   }
   checkinput(group: FormGroup) {
     let pass = group.controls.password.value;
     let confirmPass = group.controls.repeatPassword.value;
-    console.log(pass, confirmPass, "passwords");
+    // console.log(pass, confirmPass, "passwords");
     return pass === confirmPass ? null : { notSame: true }
   }
 
 
   imageSelect(v, a) {
-    console.log(v, a);
+    // console.log(v, a);
     this.selected = a;
     this.selectedImage = v;
     // this.registerForm.setValue({ image: v });
@@ -73,14 +73,14 @@ export class EditprofileComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.registerForm.controls["password"].value, "wfa");
+    // console.log(this.registerForm.controls["password"].value, "wfa");
     if (this.registerForm.controls["password"].value == '') {
       console.log("true");
     }
     // stop here if form is invalid
 
     if (this.selectedImage == "" && this.registerForm.controls["password"].value == '') {
-      console.log("invalid");
+      // console.log("invalid");
       this.snackBar.open("Nothing Changed Redirecting to blogs", null, {
         duration: 2000,
         panelClass: ['success-snackbar'],
@@ -102,8 +102,10 @@ export class EditprofileComponent implements OnInit {
     }
 
 
-    console.log(this.user, "dwd");
-    this.userService.updateUser(this.user._id, this.user);
+    // console.log(this.user, "dwd");
+    this.userService.updateUser(this.user._id, this.user).subscribe(data => {
+      console.log(data);
+    });
     this.snackBar.open("User Updated", null, {
       duration: 2000,
       panelClass: ['success-snackbar'],
@@ -120,7 +122,7 @@ export class EditprofileComponent implements OnInit {
 
   getuserbyid() {
     this.userService.getUsersById(this.authService.getuserdetails().id).subscribe(data => {
-      this.user = data;
+      this.user = data['data'];
 
     })
 

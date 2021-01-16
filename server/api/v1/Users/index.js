@@ -18,9 +18,8 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     let data = await controller.login(req, res);
-    // console.log(res);
-    // res.status(200).send(data);
-    console.log(data, "dsfsd");
+
+
     SEND_RESPONSE(res, data);
   } catch (error) {
     // res.status(500).send(error);
@@ -103,9 +102,7 @@ router.post('/createAdmin', async (req, res) => {
     // res.status(200).send(data);
     SEND_RESPONSE(res, data);
   } catch (error) {
-    // console.log("came heress");
-    // console.log(error);
-    // res.status(500).send( error);
+
     SEND_RESPONSE(res, error);
   }
 });

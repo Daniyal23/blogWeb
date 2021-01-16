@@ -120,7 +120,7 @@ export class BlogDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      // console.log(dialogResult);
       //console.log(result);
       if (dialogResult == true) {
         if (inp3 == "delete") {
@@ -415,7 +415,10 @@ export class BlogDetailsComponent implements OnInit {
     var a;
     //console.log(this.comment, "here");
     this.newcommentid = "";
-    this.commentService.addComments(this.comment).subscribe(res => { this.newcommentid = res.toString() });
+    this.commentService.addComments(this.comment).subscribe(res => {
+      //console.log(res, "dv");
+      this.newcommentid = res['data'];
+    });
     this.newcomment = 0;
     this.commentContent = "";
 

@@ -7,7 +7,6 @@ let { SEND_RESPONSE } = require('../../../utils/helpers');
 router.get('/getAllBlogs', async (req, res) => {
   try {
     let data = await controller.getAllBlogs(req, res);
-    // console.log(data);
     SEND_RESPONSE(res, data);
   } catch (error) {
     SEND_RESPONSE(res, error);

@@ -43,7 +43,7 @@ export class AdminUserapproveComponent implements OnInit {
     })
   }
   approve(inp) {
-    console.log(inp);
+    //console.log(inp);
     this.user[this.user.findIndex(a => a._id == inp)].status = "approved";
     this.userService.updateUser(this.user[this.user.findIndex(a => a._id == inp)]._id, this.user[this.user.findIndex(a => a._id == inp)]).subscribe(data => {
       console.log(data);

@@ -236,7 +236,7 @@ export class CommentComponent implements OnInit {
 
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
-      console.log("this.interact", this.interact);
+      //console.log("this.interact", this.interact);
       this.comment.interactionList.push(this.interact);
       this.commentService.updateComment(this.comment._id, this.comment).subscribe(data => {
         console.log(data);
@@ -251,7 +251,7 @@ export class CommentComponent implements OnInit {
       this.interact.timestamp = new Date();
       this.interact.InteractionType = inp;
       //console.log("interaction func else2");
-      console.log("this.interact", this.interact);
+      //console.log("this.interact", this.interact);
       this.comment.interactionList.push(this.interact);
       this.commentService.updateComment(this.comment._id, this.comment).subscribe(data => {
         console.log(data);
@@ -274,7 +274,7 @@ export class CommentComponent implements OnInit {
       if (aa >= 0) {
         this.comment.interactionList[aa].InteractionType = inp;
         this.comment.interactionList[aa].timestamp = new Date();
-        console.log("this.interact1", this.interact);
+        //console.log("this.interact1", this.interact);
         this.commentService.updateComment(this.comment._id, this.comment).subscribe(data => {
           console.log(data);
         });;
@@ -284,7 +284,7 @@ export class CommentComponent implements OnInit {
       var a = this.comment.interactionList.indexOf(a => a.userId == this.userdetials.id);
       this.comment.interactionList[a].InteractionType = inp;
       this.comment.interactionList[a].timestamp = new Date();
-      console.log("this.interact2", this.interact);
+      //console.log("this.interact2", this.interact);
       this.commentService.updateComment(this.comment._id, this.comment).subscribe(data => {
         console.log(data);
       });;

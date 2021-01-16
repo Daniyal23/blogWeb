@@ -39,7 +39,7 @@ module.exports = {
 
 
     getAllComments: async (req, res) => {
-        //console.log("in list all");
+
         try {
             let comments = await Comments.find()
             if (comments) {
@@ -58,7 +58,7 @@ module.exports = {
 
 
     getCommentsById: async (req, res) => {
-        //console.log(req.param.id)
+
         try {
             let comnt = await Comments.findOne({ '_id': (req.params.id) })
             if (comnt) {
@@ -91,7 +91,7 @@ module.exports = {
     },
     updateComment: async (req, res) => {
         try {
-            //console.log("in update")
+
             let cmt = await Comments.findById(req.params.id)
             if (cmt) {
 

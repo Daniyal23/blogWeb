@@ -3,10 +3,6 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
-//const users = require("./routes/users");
-//const blogs = require("./routes/blogs");
-//const interactions = require("./routes/interactions");
-//const comments = require("./routes/comments");
 const passport = require("passport");
 const dotenv = require('dotenv');
 var path = require("path");
@@ -37,20 +33,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
 // //Passport Config
-require('./middleware/auth')(passport);
+require('./config/passport')(passport);
 
 
 
 // Routes
-// app.use('/api/auth', require('./routes/auth'));
-//app.use("/users", users);
 require("./routes")(app);
-//app.use("/blogs", blogs);
-//app.use("/interactions", interactions);
-//app.use("/comments", comments);
-//app.use('/blogs', blogs)
 
-///////////////
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
@@ -58,15 +47,15 @@ app.use(express.static(__dirname + '/'));
 
 // Image POST handler.
 app.post("/image_upload", function (req, res) {
-    console.log("img");
+    //console.log("img");
     upload_image(req, function (err, data) {
 
         if (err) {
             return res.status(404).end(JSON.stringify(err));
         }
         setTimeout(function () {
-            console.log('hello world!');
-            console.log("http://localhost:3000/" + data.link, "from server")
+            // console.log('hello world!');
+            // console.log("http://localhost:3000/" + data.link, "from server")
             data.link = "http://localhost:3000" + data.link;
             res.send(data);
         }, 5000);
@@ -76,7 +65,7 @@ app.post("/image_upload", function (req, res) {
 
 app.post('/delete_image', function (req, res) {
 
-    console.log("in delete");
+    //console.log("in delete");
     delete_image(req, function (err, data) {
 
         if (err) {

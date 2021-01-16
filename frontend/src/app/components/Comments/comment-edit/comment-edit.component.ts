@@ -85,7 +85,7 @@ export class CommentEditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult == true) {
         this.deletecomment(inp1);
         this.snackBar.open("Deleted successfully", null, {
@@ -113,7 +113,7 @@ export class CommentEditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
         if (dialogResult == "Ascending Date") {
           this.filtered = dialogResult;
@@ -146,7 +146,7 @@ export class CommentEditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      //console.log(dialogResult);
       if (dialogResult != false) {
 
         if (dialogResult[0] == 'blogname') {
@@ -245,7 +245,7 @@ export class CommentEditComponent implements OnInit {
       }
     }
     if (this.commentcount == 0 && this.commentdata != "") {
-      console.log(this.commentdata);
+      //console.log(this.commentdata);
       if (this.commentdata == "Deleted Successfully")
         this.snackBar.open("Comment Deleted Successful", null, {
           duration: 2000,

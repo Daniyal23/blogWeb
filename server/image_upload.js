@@ -63,7 +63,7 @@ function upload(req, callback) {
     // Handle file arrival.
     busboy.on("file", function (fieldname, file, filename, encoding, mimetype) {
         // Check fieldname:
-        console.log(fieldname);
+        //console.log(fieldname);
         if ("file" != fieldname) {
             // Stop receiving from this stream.
             file.resume();
