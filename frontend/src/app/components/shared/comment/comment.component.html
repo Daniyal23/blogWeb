@@ -25,9 +25,9 @@
 
 	<mat-card-footer class="rtl">
 		<div class="rtl" style="cursor: pointer;">
-			<i class="material-icons" *ngIf="reportComment==0" mat-button (click)="nbrreport()">report_problem</i>
+			<i class="material-icons" *ngIf="reportComment==0" mat-button (click)="confirmReport()">report_problem</i>
 
-			<i class="material-icons" *ngIf="reportComment==1" mat-button (click)="nbrDeReport()"
+			<i class="material-icons" *ngIf="reportComment==1" mat-button (click)="confirmdeReport()"
 				style="color: red;">report_problem</i>
 
 			<i class="material-icons" *ngIf="disliked==0" mat-button (click)="nbrCommentDislike()">thumb_down_alt</i>

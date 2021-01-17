@@ -1,9 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Comment } from 'src/app/models/comments';
 import { Interaction } from 'src/app/models/interaction';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommentsService } from 'src/app/services/comments.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirmation-dialog/confirm-dialog/confirm-dialog.component';
+
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -13,6 +17,8 @@ export class CommentComponent implements OnInit {
   @Input() comment: any;
   constructor(private AuthService: AuthenticationService
     , private commentService: CommentsService,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private router: Router,) { }
   public date: string = "";
@@ -24,6 +30,75 @@ export class CommentComponent implements OnInit {
   public dislikedComment = 0;
   public likedComment = 0;
   public changeLike = 0;
+
+
+
+  confirmReport(): void {
+    const message = 'Are you sure you want to Report ?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      // console.log(dialogResult);
+      //console.log(result);
+      if (dialogResult == true) {
+        
+          this.nbrreport();
+          this.snackBar.open("Reported successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        
+        
+      }
+      else {
+
+      }
+
+    });
+  }
+  confirmdeReport(): void {
+    const message = 'Are you sure you want to Remove Report ?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      // console.log(dialogResult);
+      //console.log(result);
+      if (dialogResult == true) {
+        
+          this.nbrDeReport();
+          this.snackBar.open("Report Removed successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        
+        
+      }
+      else {
+
+      }
+
+    });
+  }
+
+
+
+
 
   ngOnInit(): void {
 

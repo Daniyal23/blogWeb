@@ -142,6 +142,69 @@ export class BlogDetailsComponent implements OnInit {
 
     });
   }
+  
+  confirmReport(): void {
+    const message = 'Are you sure you want to Report ?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      // console.log(dialogResult);
+      //console.log(result);
+      if (dialogResult == true) {
+        
+          this.nbrreport();
+          this.snackBar.open("Reported successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        
+        
+      }
+      else {
+
+      }
+
+    });
+  }
+  confirmdeReport(): void {
+    const message = 'Are you sure you want to Remove Report ?';
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      // console.log(dialogResult);
+      //console.log(result);
+      if (dialogResult == true) {
+        
+          this.nbrDeReport();
+          this.snackBar.open("Report Removed successfully", null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        
+        
+      }
+      else {
+
+      }
+
+    });
+  }
 
   ngOnInit(): void {
     this.getblogbyid();
