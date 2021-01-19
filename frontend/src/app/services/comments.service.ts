@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
 import { Comment } from '../models/comments';
+import{uriGlobal} from '../services/global';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CommentsService {
 
 
 
-  uri = 'http://localhost:3000/api/v1/Comments';
+  uri = uriGlobal+'Comments';
 
   constructor(
     private http: HttpClient,

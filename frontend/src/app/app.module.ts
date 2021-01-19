@@ -44,6 +44,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchDialogComponent } from './components/confirmation-dialog/search-dialog/search-dialog.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import 'froala-editor/js/plugins.pkgd.min.js';
+import{ProfileDisplayComponent} from './components/shared/profile-display/profile-display.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,7 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     ConfirmDialogComponent,
     FilterDialogComponent,
     SearchDialogComponent,
-  
+    ProfileDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,8 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     MatDialogModule,
     MatCheckboxModule,
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    NgxLoadingModule.forRoot({})
 
 
   ],

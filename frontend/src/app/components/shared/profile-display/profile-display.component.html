@@ -1,0 +1,14 @@
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  
+<div class="card" *ngIf="account" style="margin-top:30px;">
+  
+  <img style="width:100%" alt="Angular Logo" [src]="userdetails.avatar">
+  <h1>{{account.UserName}}</h1>
+  <p class="title">Country: {{account.Country}}</p>
+  <p>Type: {{account.accountType}}</p>
+  
+  <a href="/editprofile" class="button"><button>Edit Profile</button></a>
+                
+  
+</div>

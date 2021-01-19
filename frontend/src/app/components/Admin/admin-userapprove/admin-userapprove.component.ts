@@ -12,29 +12,33 @@ export class AdminUserapproveComponent implements OnInit {
   public users: any[] = [];
   public user: any[] = [];
   public check: number = 0;
+  public loading=false;
   constructor(
     public userService: UserService, private authService: AuthenticationService, private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+    this.loading=true;
     this.authService.checkaccessregular();
     this.authService.checkaccessmoderator();
     this.authService.checkaccessblogger();
     this.getusers();
+    
   }
   ngAfterViewChecked() {
     if (this.user.length > 0) {
-      this.users = this.user.filter(a => a.status == "notapproved")
+      this.users = this.user.filter(a => a.status == "notapproved" || a.status == "blocked")
       this.check = 1;
-
+      this.loading=false;
       //console.log(this.user, " users");
     }
+    
     this.cdr.detectChanges();
 
   }
   getusers() {
     this.userService.getAllUsers().subscribe(data => {
-      this.user = data;
+      this.user = data["data"];
 
     })
     //  console.log("hello");

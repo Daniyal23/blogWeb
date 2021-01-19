@@ -16,6 +16,7 @@ import { CommentEditComponent } from './components/Comments/comment-edit/comment
 import { EditprofileComponent } from './components/auth/editprofile/editprofile.component';
 import { AdminAllcommentsComponent } from './components/admin/admin-allcomments/admin-allcomments.component';
 import { MyblogsComponent } from './components/blog/myblogs/myblogs.component';
+import { ProfileDisplayComponent } from './components/shared/profile-display/profile-display.component';
 
 
 const routes: Routes = [
@@ -123,6 +124,13 @@ const routes: Routes = [
   {
     path: 'myblogs',
     component: MyblogsComponent,
+    canActivate: [AuthGuard],
+    children: [
+    ]
+  },
+  {
+    path: 'profile',
+    component: ProfileDisplayComponent,
     canActivate: [AuthGuard],
     children: [
     ]

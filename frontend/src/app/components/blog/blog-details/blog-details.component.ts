@@ -41,6 +41,7 @@ export class BlogDetailsComponent implements OnInit {
   ) { }
   public blogs?;
   public img: any;
+  public loading=false;
   public imgsrcs: Array<any> = [];
   public interact: Interaction = new Interaction();
   public reports: Interaction = new Interaction();
@@ -207,6 +208,7 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading=true;
     this.getblogbyid();
     this.userdetials = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     //console.log(this.userdetials);
@@ -218,6 +220,7 @@ export class BlogDetailsComponent implements OnInit {
     }
   }
   ngAfterViewChecked() {
+
     if (this.blogs && this.done == 0) {
 
 
@@ -226,7 +229,7 @@ export class BlogDetailsComponent implements OnInit {
         //console.log("here");
         this.blogs.blogHeaderImage[key] = this.sanitizer.bypassSecurityTrustUrl(key);
         this.imgsrcs.push(this.sanitizer.bypassSecurityTrustUrl(key));
-
+        
       }
       this.img = this.imgsrcs[this.imgsrcs.length - 1];
       //console.log(this.img);
@@ -274,6 +277,8 @@ export class BlogDetailsComponent implements OnInit {
       }
 
       this.getCommentbyid();
+      this.loading=false;
+      
     }
 
     if (this.newcommentid != "" && this.newcomment == 0) {
@@ -315,6 +320,7 @@ export class BlogDetailsComponent implements OnInit {
           horizontalPosition: 'right',
           verticalPosition: 'top'
         });
+        window.location.reload();
       }
     }
     this.cdr.detectChanges();
@@ -481,6 +487,7 @@ export class BlogDetailsComponent implements OnInit {
     this.commentService.addComments(this.comment).subscribe(res => {
       //console.log(res, "dv");
       this.newcommentid = res['data'];
+
     });
     this.newcomment = 0;
     this.commentContent = "";

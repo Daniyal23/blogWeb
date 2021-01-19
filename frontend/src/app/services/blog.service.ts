@@ -3,13 +3,13 @@ import { Blog } from '../models/blog';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
-
+import{uriGlobal} from '../services/global';
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  uri = 'http://localhost:3000/api/v1/Blogs';
+  uri = uriGlobal+'Blogs';
 
   constructor(
     private http: HttpClient,

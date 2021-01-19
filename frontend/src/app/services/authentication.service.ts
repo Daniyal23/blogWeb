@@ -7,6 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { User } from '../models/users';
 import * as moment from "moment";
 //import { uriGlobal } from './conf';
+import{uriGlobal} from '../services/global';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class AuthenticationService {
   public user1: User = new User();
 
   //uri = uriGlobal + "users";
-  uri = 'http://localhost:3000/api/v1/Users';
+  uri = uriGlobal+'Users';
 
 
   constructor(private http: HttpClient, private router: Router) {

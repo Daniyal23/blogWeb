@@ -23,7 +23,7 @@ export class BlogAddComponent implements OnInit {
     private router: Router,
   ) { }
 
-
+  public loading=false;
   public editorContent: string = "";
   public displayman: any;
 
@@ -155,6 +155,7 @@ export class BlogAddComponent implements OnInit {
   }
 
   Publish() {
+    this.loading=true;
     if (this.imgsrcs[0] == "/assets/noimage.png") {
       this.snackBar.open("Header Image is required", null, {
         duration: 2000,
@@ -162,6 +163,7 @@ export class BlogAddComponent implements OnInit {
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      this.loading=false;
       return;
     }
     if (this.htmlContent == '') {
@@ -171,6 +173,7 @@ export class BlogAddComponent implements OnInit {
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      this.loading=false;
       return;
     }
     if (this.title == '') {
@@ -180,6 +183,7 @@ export class BlogAddComponent implements OnInit {
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      this.loading=false;
       return;
     }
 
@@ -202,13 +206,14 @@ export class BlogAddComponent implements OnInit {
       //  console.log(this.blogobj);
       localStorage.setItem('blog', JSON.stringify(this.blogobj));
       this.blogService.addBlog(this.blogobj);
-
+      this.loading=false;
       this.snackBar.open("Blog Successfully Added", null, {
         duration: 2000,
         panelClass: ['success-snackbar'],
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      
       this.router.navigate(['/blog']);
     }
   }

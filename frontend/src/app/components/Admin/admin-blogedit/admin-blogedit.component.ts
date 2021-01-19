@@ -40,7 +40,7 @@ export class AdminBlogeditComponent implements OnInit {
   public imgsrcs: Array<any> = ["/assets/noimage.png"];
   public imgcheck: number = 0;
   public img: any;
-
+  public loading=false;
   public editorContent: string = "";
   public displayman: any;
 
@@ -112,6 +112,7 @@ export class AdminBlogeditComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loading=true;
     this.AuthService.checkaccessregular();
     this.getblogbyid();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
@@ -130,7 +131,9 @@ export class AdminBlogeditComponent implements OnInit {
       this.img = this.imgsrcs[this.imgsrcs.length - 1];
       this.imgsrcs = [];
       this.imgsrcs.push(this.img);
+      this.loading=false;
     }
+
     this.cdr.detectChanges();
 
   }

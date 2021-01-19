@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   returnUrl: string;
+  public loading=false;
 
   constructor(
     private userService: UserService,
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
   public gettcheck = 0;
 
   ngOnInit(): void {
+    
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'blog';
     this.authService.admin().subscribe(data => {
 
@@ -94,7 +96,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
+    this.loading=true;
     //console.log("in login", this.password, this.email);
     if (this.email == null || this.password == null) {
       return;
@@ -112,9 +114,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.mylogin(this.users).subscribe((response) => {                           //Next callback
       this.tok = response;
+      this.loading=false;
     },
       (error) => {                              //Error callback
         this.tok = error.error.data
+        this.loading=false;
       })
     //   .subscribe((data: any) =>
     // // this.tok = data

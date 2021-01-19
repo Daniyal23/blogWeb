@@ -18,6 +18,7 @@ import { SearchDialogComponent, SearchDialogModel } from '../../confirmation-dia
 export class AdminViewblogsComponent implements OnInit {
   public blogs: any[] = [];
   public blogmain: any[] = [];
+  public loading=false;
   constructor(
     public blogService: BlogService,
     private AuthService: AuthenticationService,
@@ -130,14 +131,17 @@ export class AdminViewblogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading=true;
     this.AuthService.checkaccessblogger();
     this.AuthService.checkaccessmoderator();
     this.AuthService.checkaccessregular();
     this.getblogs();
+
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
       this.blogs = data["data"];
+      this.loading=false;
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")

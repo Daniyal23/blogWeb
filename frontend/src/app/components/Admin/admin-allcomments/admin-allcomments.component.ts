@@ -63,7 +63,7 @@ export class AdminAllcommentsComponent implements OnInit {
   blogdata: any = "";
   blogcount = 0;
 
-
+   public loading=false;
   constructor(
     private commentService: CommentsService,
     private AuthService: AuthenticationService,
@@ -205,7 +205,7 @@ export class AdminAllcommentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+     this.loading=true;
     this.AuthService.checkaccessregular();
     this.AuthService.checkaccessblogger();
     this.userdetails = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
@@ -229,7 +229,7 @@ export class AdminAllcommentsComponent implements OnInit {
         }
       });
       this.dateset();
-
+      this.loading=false;
       this.cdr.detectChanges();
     }
     if (this.donecheck != "" && this.donecount == 0) {

@@ -44,6 +44,7 @@ export class AdminViewusersComponent implements OnInit {
   public user: any[];
   public blogs: Blog[];
   public comments: Comment[];
+  public loading=false;
 
   public usertype: any;
   constructor(
@@ -206,6 +207,7 @@ export class AdminViewusersComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loading=true;
     this.AuthService.checkaccessblogger();
     this.AuthService.checkaccessmoderator();
     this.AuthService.checkaccessregular();
@@ -224,7 +226,7 @@ export class AdminViewusersComponent implements OnInit {
       this.populate();
       this.check = 1;
 
-
+      this.loading=false;
       //console.log(this.user, " users");
     }
 

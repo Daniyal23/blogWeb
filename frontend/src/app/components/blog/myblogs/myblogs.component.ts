@@ -42,6 +42,7 @@ export class DialogOverviewExampleDialogforAllComments {
 export class MyblogsComponent implements OnInit {
   public blogs: any[] = [];
   public blogmain: any[] = [];
+  public loading=false;
 
   public check = 0;
   returnUrl: string;
@@ -157,6 +158,7 @@ export class MyblogsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.loading=true;
     this.AuthService.checkaccessregular();
 
     this.getblogs();
@@ -168,12 +170,15 @@ export class MyblogsComponent implements OnInit {
 
       this.blogs = this.blogs.filter(a => a.creatorId == this.AuthService.getuserdetails().id);
       this.check = 1;
+      this.loading=false;
     }
+   
     this.cdr.detectChanges();
   }
   getblogs() {
     this.blogService.getAllBlogs().subscribe(data => {
       this.blogs = data["data"];
+      this.loading=false;
     })
     this.blogs.forEach(value => {
       //console.log(value, "getblogs")

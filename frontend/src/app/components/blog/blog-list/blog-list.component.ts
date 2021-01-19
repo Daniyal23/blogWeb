@@ -13,6 +13,7 @@ export class BlogListComponent implements OnInit {
   public blogs: Blog[] = [];
   public loggedin = 0;
   public check: number = 0;
+  public loading=false;
   constructor(
     private blogService: BlogService,
     private AuthService: AuthenticationService,
@@ -22,6 +23,7 @@ export class BlogListComponent implements OnInit {
   checker = 0;
   ngOnInit(): void {
     //console.log("in bloglist");
+    this.loading=true;
     this.blogService.getAllBlogs().subscribe((data1) => {
 
       this.blogs = data1["data"];
@@ -42,9 +44,11 @@ export class BlogListComponent implements OnInit {
   }
   ngAfterViewChecked() {
     if (this.blogs.length > 0 && this.checker == 0) {
-      this.blogs = this.blogs.filter(a => a.status == "show");
+      this.blogs = this.blogs.filter(a => a.status == "show" && a.isApproved == true);
       this.checker = 1;
+      this.loading=false;
     }
+    this.loading=false;
     this.cdr.detectChanges();
   }
 

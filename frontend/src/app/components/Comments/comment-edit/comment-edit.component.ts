@@ -50,7 +50,7 @@ export class CommentEditComponent implements OnInit {
   public displaylist: display[] = [];
   public displaylistmain: display[] = [];
 
-
+ 
   public check = 0;
   public date: string = "";
 
@@ -197,8 +197,9 @@ export class CommentEditComponent implements OnInit {
       }
     });
   }
-
+  public loading = false;
   ngOnInit(): void {
+    this.loading=true;
     //console.log("hello");
     this.userdetails = this.AuthService.parseJwt(localStorage.getItem("currentUser"));
     this.getcomments();
@@ -221,6 +222,7 @@ export class CommentEditComponent implements OnInit {
         }
       });
       this.dateset();
+      this.loading=false;
       // console.log(this.displaylist, "yo");
     }
     if (this.donecheck != "" && this.donecount == 0) {

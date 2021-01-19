@@ -23,25 +23,25 @@
         <div *ngIf="loggedin==1 && accounttype!=''">
             <br><br><br>
             <div *ngIf="accounttype=='regular'" class="offset-5">
-                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
 
             </div>
             <div *ngIf="accounttype=='blogger'" class="offset-5">
-                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
                 <li><a href="/myblogs">My Blogs</a></li>
 
             </div>
             <div *ngIf="accounttype=='moderator'" class="offset-4">
-                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
                 <li><a href="/myblogs">My Blogs</a></li>
                 <li><a href="/admin/allcomments">Comments</a></li>
 
             </div>
             <div *ngIf="accounttype=='admin'" class="offset-3">
-                <li><a href="/editprofile">Edit Profile</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/commentedit">My Comments</a></li>
                 <li><a href="/myblogs">My Blogs</a></li>
                 <li><a href="/admin/allcomments">Comments</a></li>
